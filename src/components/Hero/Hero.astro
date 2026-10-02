@@ -1,0 +1,268 @@
+---
+// Hero Section — huitquatre
+import WebsiteWindow from "./WebsiteWindow.astro"
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero__layout">
+      <div class="hero__content">
+        <h1 class="hero__title">
+          <span class="hero__title-line">Votre site web.</span>
+          <span class="hero__title-line hero__title-accent">Enfin simple.</span>
+        </h1>
+
+        <p class="hero__subtitle">
+          huitquatre crée, héberge et maintient votre site.<br />
+          Vous, vous profitez. <strong>Pas de frais récurrents.</strong>
+        </p>
+
+        <div class="hero__cta">
+          <a href="#solutions" class="btn">
+            <span class="btn__icon-wrap is--default">
+              <span class="btn__icon-bg"></span>
+              <svg
+                class="btn__icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                ><path
+                  d="M14 19L21 12L14 5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path><path
+                  d="M21 12H2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path></svg
+              >
+            </span>
+            <span class="btn__text-wrap">
+              <span class="btn__text">Comment ça marche</span>
+            </span>
+            <span class="btn__icon-wrap is--hover">
+              <span class="btn__icon-bg"></span>
+              <svg
+                class="btn__icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                ><path
+                  d="M14 19L21 12L14 5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path><path
+                  d="M21 12H2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path></svg
+              >
+            </span>
+          </a>
+          <a href="#devis" class="btn" data-btn-theme="secondary">
+            <span class="btn__icon-wrap is--default">
+              <span class="btn__icon-bg"></span>
+              <svg
+                class="btn__icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                ><path
+                  d="M14 19L21 12L14 5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path><path
+                  d="M21 12H2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path></svg
+              >
+            </span>
+            <span class="btn__text-wrap">
+              <span class="btn__text">Devis en ligne</span>
+            </span>
+            <span class="btn__icon-wrap is--hover">
+              <span class="btn__icon-bg"></span>
+              <svg
+                class="btn__icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                ><path
+                  d="M14 19L21 12L14 5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path><path
+                  d="M21 12H2"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-miterlimit="10"></path></svg
+              >
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <WebsiteWindow />
+      </div>
+    </div>
+
+    <div class="hero__scroll-indicator">
+      <span>Défiler</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-secondary);
+  }
+
+  .hero__layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2xl);
+    width: 100%;
+    padding: var(--space-3xl) 0;
+  }
+
+  .hero__content {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .hero__visual {
+    flex: 1;
+    max-width: 500px;
+    height: 420px;
+    position: relative;
+  }
+
+  .hero__title {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__title-line {
+    display: block;
+  }
+
+  .hero__title-accent {
+    color: var(--color-accent);
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-neutral);
+    max-width: 600px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero__subtitle strong {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .hero__cta {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .hero__scroll-indicator {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    opacity: 0;
+    animation: fadeIn 0.3s ease 0.05s forwards;
+  }
+
+  .hero__scroll-indicator span {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral);
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-neutral), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scrollPulse {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scaleY(0.5);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .hero__layout {
+      flex-direction: column;
+      text-align: center;
+      padding: var(--space-2xl) 0;
+    }
+
+    .hero__content {
+      max-width: 100%;
+    }
+
+    .hero__title {
+      font-size: var(--text-2xl);
+    }
+
+    .hero__subtitle {
+      max-width: 100%;
+    }
+
+    .hero__cta {
+      justify-content: center;
+    }
+
+    .hero__visual {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: 280px;
+      margin-top: var(--space-xl);
+    }
+
+    .hero__scroll-indicator {
+      display: none;
+    }
+  }
+</style>

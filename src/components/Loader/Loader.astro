@@ -1,0 +1,200 @@
+---
+// Loader Component — huitquatre
+---
+
+<div class="logo-intro">
+  <div class="loader">
+    <div class="loader__wordmark">
+      <div class="loader__start">
+        <span class="loader__letter">h</span>
+        <span class="loader__letter">u</span>
+        <span class="loader__letter">i</span>
+        <span class="loader__letter">t</span>
+      </div>
+
+
+      <div class="loader__mark-container">
+        <svg
+          class="loader__mark"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            class="loader__rect"
+            d="M99.758 64h115.219a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103H99.758a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 99.758 64"
+          ></path>
+          <path
+            class="loader__rect"
+            d="M235.184 226.524h115.22a10.103 10.103 0 0 1 10.104 10.104v88.142a10.103 10.103 0 0 1-10.104 10.104h-115.22a10.103 10.103 0 0 1-10.103-10.104v-88.142a10.103 10.103 0 0 1 10.103-10.104"
+          ></path>
+          <path
+            class="loader__rect"
+            d="M302.898 64h47.506a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103h-47.506a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 302.898 64"
+          ></path>
+          <path
+            class="loader__rect"
+            d="M99.758 226.524h47.506a10.103 10.103 0 0 1 10.103 10.104v88.142a10.103 10.103 0 0 1-10.103 10.104h-47.506a10.103 10.103 0 0 1-10.104-10.104v-88.142a10.103 10.103 0 0 1 10.104-10.104"
+          ></path>
+        </svg>
+      </div>
+
+
+      <div class="loader__end">
+        <span class="loader__letter">q</span>
+        <span class="loader__letter">u</span>
+        <span class="loader__letter">a</span>
+        <span class="loader__letter">t</span>
+        <span class="loader__letter">r</span>
+        <span class="loader__letter">e</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .logo-intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #ffffff;
+    overflow: hidden;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+  }
+
+  .logo-intro::before {
+    content: none;
+  }
+
+
+  .loader {
+    position: relative;
+    z-index: 2;
+  }
+
+
+  .loader__wordmark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .loader__start,
+  .loader__end {
+    display: flex;
+    align-items: center;
+  }
+
+
+  .loader__letter {
+    font-family: var(--font-body);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #000000;
+    line-height: 1;
+    display: inline-block;
+  }
+
+
+  .loader__mark-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0;
+    overflow: visible;
+    position: relative;
+  }
+
+
+  .loader__mark {
+    width: clamp(2.5rem, 6vw, 5rem);
+    height: auto;
+    transform: translateX(0.1em);
+    position: relative;
+    z-index: 2;
+  }
+
+
+  .loader__rect {
+    fill: #000000;
+  }
+</style>
+
+
+<script>
+  import { gsap } from "gsap"
+  import { MorphSVGPlugin } from "gsap/MorphSVGPlugin"
+
+  gsap.registerPlugin(MorphSVGPlugin)
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const startLetters = document.querySelectorAll(
+      ".loader__start .loader__letter"
+    )
+    const endLetters = document.querySelectorAll(".loader__end .loader__letter")
+    const markContainer = document.querySelector(".loader__mark-container")
+    const loaderMark = document.querySelector(".loader__mark")
+    const rects = document.querySelectorAll(".loader__rect")
+    const logoIntro = document.querySelector(".logo-intro")
+
+    if (!startLetters.length || !endLetters.length || !markContainer) return
+
+    gsap.set([startLetters, endLetters], { yPercent: 100 })
+    gsap.set(markContainer, { width: 0 })
+
+    const circlePath =
+      "M200,64 C275.06,64 336,124.94 336,200 C336,275.06 275.06,336 200,336 C124.94,336 64,275.06 64,200 C64,124.94 124.94,64 200,64 Z"
+
+    const tl = gsap.timeline({ delay: 0.15 })
+    document.body.style.overflow = "hidden"
+
+    tl.to(logoIntro, {
+      backgroundColor: "#D4FF00",
+      duration: 1.2,
+      ease: "expo.in",
+    }, 0)
+
+    tl.to(
+      startLetters,
+      { yPercent: 0, stagger: 0.025, duration: 0.8, ease: "expo.out" },
+      0
+    )
+    tl.to(
+      endLetters,
+      { yPercent: 0, stagger: 0.025, duration: 0.8, ease: "expo.out" },
+      0
+    )
+    tl.to(
+      markContainer,
+      { width: "clamp(2.5rem, 6vw, 5rem)", duration: 0.6, ease: "expo.inOut" },
+      0.8
+    )
+    tl.to(
+      startLetters,
+      { x: "-=0.15em", duration: 0.6, ease: "expo.inOut" },
+      0.8
+    )
+    tl.to(endLetters, { x: "+=0.25em", duration: 0.6, ease: "expo.inOut" }, 0.8)
+    tl.to(
+      rects,
+      { morphSVG: circlePath, duration: 0.8, ease: "expo.inOut" },
+      1.5
+    )
+    tl.to(loaderMark, { scale: 100, duration: 0.6, ease: "expo.inOut" }, 2)
+
+    tl.to(logoIntro, {
+      opacity: 0,
+      duration: 0.1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        logoIntro.style.display = "none"
+        document.body.style.overflow = ""
+        window.dispatchEvent(new Event("loaderComplete"))
+      }
+    })
+  })
+</script>

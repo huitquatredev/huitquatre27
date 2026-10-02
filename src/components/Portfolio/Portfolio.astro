@@ -1,0 +1,224 @@
+---
+// Portfolio — Case-study list with cursor-following video preview (Osmo-style)
+const projects = [
+  {
+    slug: "architea",
+    name: "Architea",
+    desc: "Réseau national de contractants généraux — direction artistique, automatisations CRM et SEO",
+  },
+  {
+    slug: "laparentelle",
+    name: "La Parent'elle",
+    desc: "Lieu femme & famille — site, réservation d'ateliers en ligne et rappels automatisés",
+  },
+  {
+    slug: "pilates",
+    name: "Pilates nomade",
+    desc: "Centre bien-être — réservation de cours en ligne et automatisations",
+  },
+  {
+    slug: "steltis",
+    name: "Steltis Avocats",
+    desc: "Avocats fiscalistes — refonte, automatisations et SEO",
+  },
+  {
+    slug: "tattoo",
+    name: "Bastia Tattoo / Graphicaderme",
+    desc: "Tatouage & piercing — galerie portfolio, RDV en ligne et suivi client automatisé",
+  },
+  {
+    slug: "velletaz",
+    name: "Velletaz Groupe",
+    desc: "Pépinières viticoles — refonte, automatisations commerciales et SEO",
+  },
+];
+---
+
+<section class="portfolio" id="realisations">
+  <div class="portfolio__header">
+    <p class="portfolio__eyebrow">Ils sont déjà passés à la sérénité</p>
+    <h2 class="portfolio__title">Portfolio</h2>
+  </div>
+
+  <div class="portfolio__list" data-portfolio-list>
+    {projects.map((p, i) => (
+      <a class="portfolio__row" href={`/realisations/${p.slug}`} data-slug={p.slug} style={`--i:${i}`}>
+        <span class="portfolio__index">0{i + 1}</span>
+        <span class="portfolio__main">
+          <span class="portfolio__name">{p.name}</span>
+          <span class="portfolio__desc">{p.desc}</span>
+        </span>
+        <img
+          class="portfolio__thumb"
+          src={`/videos/${p.slug}-poster.jpg`}
+          alt={`Aperçu du site ${p.name}`}
+          loading="lazy"
+        />
+        <span class="portfolio__arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    ))}
+  </div>
+
+  <div class="portfolio__follower" data-portfolio-follower aria-hidden="true">
+    {projects.map((p) => (
+      <video data-video={p.slug} muted loop playsinline preload="metadata" poster={`/videos/${p.slug}-poster.jpg`}>
+        <source src={`/videos/${p.slug}.webm`} type="video/webm" />
+        <source src={`/videos/${p.slug}.mp4`} type="video/mp4" />
+      </video>
+    ))}
+  </div>
+</section>
+
+<style>
+  .portfolio {
+    background-color: var(--color-secondary);
+    padding: var(--space-3xl) var(--container-padding);
+  }
+  .portfolio__header { max-width: var(--container-max); margin: 0 auto var(--space-xl); }
+  .portfolio__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .portfolio__title {
+    color: var(--color-accent); font-size: var(--text-4xl);
+    text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05;
+  }
+
+  .portfolio__list { max-width: var(--container-max); margin: 0 auto; }
+  .portfolio__row {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: var(--space-md);
+    padding: var(--space-lg) var(--space-sm);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background-color var(--transition-base);
+    transition-delay: calc(var(--i) * 60ms);
+  }
+  .portfolio__row:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .portfolio__row.is-in { opacity: 1; transform: none; }
+  .portfolio__row:hover { background-color: rgba(255,255,255,0.02); }
+  .portfolio__index {
+    font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-neutral);
+  }
+  .portfolio__main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .portfolio__name {
+    font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700;
+    color: var(--color-primary); line-height: 1.1;
+    transition: color var(--transition-base), transform var(--transition-base);
+  }
+  .portfolio__row:hover .portfolio__name { color: var(--color-accent); transform: translateX(8px); }
+  .portfolio__desc { font-size: var(--text-sm); color: var(--color-neutral); }
+  .portfolio__thumb { display: none; }
+  .portfolio__arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15); color: var(--color-primary);
+    transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+  }
+  .portfolio__row:hover .portfolio__arrow {
+    background-color: var(--color-accent); color: #000; border-color: var(--color-accent);
+    transform: rotate(45deg);
+  }
+
+  .portfolio__follower {
+    position: fixed; top: 0; left: 0; z-index: 50;
+    width: min(400px, 28vw); aspect-ratio: 16/10;
+    border-radius: 14px; overflow: hidden; pointer-events: none;
+    opacity: 0; will-change: transform;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 60px -20px rgba(212,255,0,0.25);
+  }
+  .portfolio__follower.is-visible { opacity: 1; }
+  .portfolio__follower video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  .portfolio__follower video.is-active { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .portfolio__title { font-size: var(--text-2xl); }
+    .portfolio__follower { display: none; }
+    .portfolio__row { grid-template-columns: auto 1fr auto; }
+    .portfolio__thumb {
+      display: block; grid-column: 1 / -1; order: -1;
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px;
+    }
+    .portfolio__name { font-size: var(--text-xl); }
+    .portfolio__row { opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const list = document.querySelector('[data-portfolio-list]') as HTMLElement;
+    const follower = document.querySelector('[data-portfolio-follower]') as HTMLElement;
+    if (!list || !follower) return;
+
+    /* Reveal rows on scroll */
+    const rows = Array.from(list.querySelectorAll<HTMLElement>('.portfolio__row'));
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.15 });
+    rows.forEach((r) => io.observe(r));
+
+    /* Cursor follower — fine pointers only */
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canHover || reduceMotion) return;
+
+    const videos = Array.from(follower.querySelectorAll<HTMLVideoElement>('video'));
+    let tx = 0, ty = 0, cx = 0, cy = 0, scale = 0.85, targetScale = 0.85;
+    let raf: number | null = null;
+
+    function tick() {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      scale += (targetScale - scale) * 0.12;
+      follower.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%) scale(${scale})`;
+      if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1 || Math.abs(targetScale - scale) > 0.001) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = null;
+      }
+    }
+    function start() { if (raf === null) raf = requestAnimationFrame(tick); }
+
+    function show(slug: string) {
+      for (const v of videos) {
+        const active = v.dataset.video === slug;
+        v.classList.toggle('is-active', active);
+        if (active) v.play().catch(() => {});
+        else v.pause();
+      }
+      follower.classList.add('is-visible');
+      targetScale = 1;
+      start();
+    }
+    function hide() {
+      follower.classList.remove('is-visible');
+      targetScale = 0.85;
+      for (const v of videos) v.pause();
+      start();
+    }
+
+    window.addEventListener('mousemove', (e: MouseEvent) => {
+      tx = e.clientX;
+      ty = e.clientY;
+      start();
+    }, { passive: true });
+
+    for (const row of rows) {
+      const slug = (row as HTMLElement).dataset.slug || '';
+      row.addEventListener('mouseenter', () => show(slug));
+      row.addEventListener('focus', () => show(slug));
+      row.addEventListener('blur', hide);
+    }
+    list.addEventListener('mouseleave', hide);
+  });
+</script>
