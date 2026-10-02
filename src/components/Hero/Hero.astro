@@ -116,9 +116,10 @@ import WebsiteWindow from "./WebsiteWindow.astro"
       </div>
     </div>
 
-    <div class="hero__scroll-indicator">
-      <span>Défiler</span>
-      <div class="hero__scroll-line"></div>
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      <div class="hero__mouse">
+        <div class="hero__wheel"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -189,26 +190,28 @@ import WebsiteWindow from "./WebsiteWindow.astro"
     bottom: var(--space-xl);
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
     opacity: 0;
     animation: fadeIn 0.3s ease 0.05s forwards;
   }
 
-  .hero__scroll-indicator span {
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-neutral);
+  .hero__mouse {
+    width: 26px;
+    height: 42px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 14px;
+    position: relative;
   }
 
-  .hero__scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--color-neutral), transparent);
-    animation: scrollPulse 2s ease infinite;
+  .hero__wheel {
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: wheelScroll 2s ease infinite;
   }
 
   @keyframes fadeIn {
@@ -217,15 +220,24 @@ import WebsiteWindow from "./WebsiteWindow.astro"
     }
   }
 
-  @keyframes scrollPulse {
-    0%,
-    100% {
-      opacity: 0.3;
-      transform: scaleY(0.5);
-    }
-    50% {
+  @keyframes wheelScroll {
+    0% {
       opacity: 1;
-      transform: scaleY(1);
+      top: 8px;
+    }
+    70% {
+      opacity: 0;
+      top: 20px;
+    }
+    100% {
+      opacity: 0;
+      top: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__wheel {
+      animation: none;
     }
   }
 

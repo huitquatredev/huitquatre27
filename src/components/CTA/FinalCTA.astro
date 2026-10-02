@@ -1,0 +1,165 @@
+---
+// FinalCTA — full accent breakout: lime section, black type, marquee band
+const marqueeItems = ["Sans abonnement", "Sans surprise", "En ligne en 30 jours", "Design inclus"];
+---
+
+<section class="final" id="devis">
+  <div class="final__marquee" aria-hidden="true">
+    <div class="final__track">
+      {[0, 1].map(() => (
+        <span class="final__chunk">
+          {[0, 1, 2].map(() =>
+            marqueeItems.map((item) => (
+              <span class="final__item">{item}<span class="final__star">✦</span></span>
+            ))
+          )}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="final__body" data-reveal>
+    <h2 class="final__title">
+      <span class="final__line">Votre site</span>
+      <span class="final__line final__line--outline">en 30 jours.</span>
+    </h2>
+    <p class="final__price">1 990 €, une fois. Ou 4 × 497,50 € sans frais.</p>
+    <a href="#devis" class="btn btn--large" data-btn-theme="inverted">
+      <span class="btn__icon-wrap is--default">
+        <span class="btn__icon-bg"></span>
+        <svg
+          class="btn__icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          ><path
+            d="M14 19L21 12L14 5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-miterlimit="10"></path><path
+            d="M21 12H2"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-miterlimit="10"></path></svg
+        >
+      </span>
+      <span class="btn__text-wrap">
+        <span class="btn__text">Démarrer mon projet</span>
+      </span>
+      <span class="btn__icon-wrap is--hover">
+        <span class="btn__icon-bg"></span>
+        <svg
+          class="btn__icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          ><path
+            d="M14 19L21 12L14 5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-miterlimit="10"></path><path
+            d="M21 12H2"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-miterlimit="10"></path></svg
+        >
+      </span>
+    </a>
+    <p class="final__note">Réponse sous 24 h ouvrées. Sans engagement.</p>
+  </div>
+</section>
+
+<style>
+  .final {
+    background: var(--color-accent);
+    color: #000;
+    overflow: hidden;
+  }
+  .final__marquee {
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    padding: var(--space-sm) 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .final__track {
+    display: inline-flex;
+    animation: marquee 22s linear infinite;
+  }
+  .final__marquee:hover .final__track { animation-play-state: paused; }
+  .final__chunk { display: inline-flex; }
+  .final__item {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+  .final__star { font-size: var(--text-base); margin: 0 var(--space-md); }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  .final__body {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--container-padding) var(--space-3xl);
+    text-align: center;
+  }
+  .final__title {
+    font-size: clamp(3rem, 11vw, 10rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .final__line { display: block; }
+  .final__line--outline {
+    color: transparent;
+    -webkit-text-stroke: 3px #000;
+  }
+  .final__price {
+    margin-top: var(--space-md);
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+  .final__body .btn { margin-top: var(--space-lg); }
+  .final__note {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  [data-reveal].is-in { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .final__line--outline { -webkit-text-stroke-width: 2px; }
+    [data-reveal] { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .final__track { animation: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const body = document.querySelector('.final [data-reveal]');
+    if (!body) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add('is-in');
+          io.disconnect();
+        }
+      }
+    }, { threshold: 0.15 });
+    io.observe(body);
+  });
+</script>

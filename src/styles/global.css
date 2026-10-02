@@ -303,6 +303,12 @@ p {
   border: 1px solid var(--color-accent);
 }
 
+/* Inverted — black pill for accent backgrounds */
+.btn[data-btn-theme="inverted"] {
+  --btn-color: var(--color-accent);
+  --btn-color-background: var(--color-black);
+}
+
 /* Large variant */
 .btn--large {
   --btn-height: 3.25em;
@@ -366,7 +372,7 @@ p {
    ============================================ */
 ::selection {
   background-color: var(--color-accent);
-  color: var(--color-white);
+  color: var(--color-black);
 }
 
 /* ============================================

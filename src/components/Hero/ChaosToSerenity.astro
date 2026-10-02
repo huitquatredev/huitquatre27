@@ -1,0 +1,828 @@
+---
+// ChaosToSerenity — one sticky, one scrub timeline.
+// Chaos title in → WP degrades → title morphs in place while WP fades out
+// → Storyblok fades in and animates. "Passez du chaos..." is fully gone.
+---
+
+<section class="duo" id="chaos-serenite">
+  <div class="duo__sticky">
+    <div class="duo__header">
+      <h2 class="duo__title" data-chaos-title>
+        <span class="duo__word"><span class="duo__letter">P</span><span class="duo__letter">a</span><span class="duo__letter">s</span><span class="duo__letter">s</span><span class="duo__letter">e</span><span class="duo__letter">z</span></span>
+        <span class="duo__word">&nbsp;</span>
+        <span class="duo__word"><span class="duo__letter">d</span><span class="duo__letter">u</span></span>
+        <span class="duo__word">&nbsp;</span>
+        <span class="duo__word duo__accent"><span class="duo__letter">c</span><span class="duo__letter">h</span><span class="duo__letter">a</span><span class="duo__letter">o</span><span class="duo__letter">s</span><span class="duo__letter">.</span><span class="duo__letter">.</span><span class="duo__letter">.</span></span>
+      </h2>
+      <h2 class="duo__title" data-serenity-title style="display:none">
+        <span class="duo__word"><span class="duo__letter">.</span><span class="duo__letter">.</span><span class="duo__letter">.</span></span>
+        <span class="duo__word">&nbsp;</span>
+        <span class="duo__word"><span class="duo__letter">à</span></span>
+        <span class="duo__word">&nbsp;</span>
+        <span class="duo__word"><span class="duo__letter">l</span><span class="duo__letter">a</span></span>
+        <span class="duo__word">&nbsp;</span>
+        <span class="duo__word duo__accent"><span class="duo__letter">s</span><span class="duo__letter">é</span><span class="duo__letter">r</span><span class="duo__letter">é</span><span class="duo__letter">n</span><span class="duo__letter">i</span><span class="duo__letter">t</span><span class="duo__letter">é</span></span>
+      </h2>
+    </div>
+
+      <div class="duo__scene" id="duo-scene">
+      <div class="duo__glow"></div>
+      <div class="duo__stage" data-duo-stage>
+        <div class="float float--warning" data-wp-float>
+          <div class="float__inner">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="#f0c040"><path d="M8 1L1 14h14L8 1z"/></svg>
+            WordPress 6.7
+          </div>
+        </div>
+        <div class="float float--error" data-wp-float>
+          <div class="float__inner float__inner--error">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="#ff5555"><circle cx="8" cy="8" r="7"/><path d="M8 4v5m0 2v1" stroke="#fff" stroke-width="2"/></svg>
+            Sécurité
+          </div>
+        </div>
+        <div class="float float--perf" data-wp-float>
+          <div class="float__inner float__inner--bad">
+            <div class="float__score"><span id="float-perf">74</span><span class="float__unit">/100</span></div>
+            <span class="float__label">PageSpeed</span>
+          </div>
+        </div>
+        <div class="float float--plugins" data-wp-float>
+          <div class="float__inner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>
+            <span class="float__plugins-count" id="float-plugins">1</span> plugins
+          </div>
+        </div>
+        <div class="float float--cost" data-wp-float>
+          <div class="float__inner">
+            <div class="float__score"><span id="float-cost">240</span><span class="float__unit">€/an</span></div>
+          </div>
+        </div>
+
+        <div class="duo__wp" data-duo-wp>
+          <div class="wp__shine"></div>
+          <div class="wp__chrome">
+            <div class="wp__dots"><span></span><span></span><span></span></div>
+            <div class="wp__url">wordpress.com/wp-admin</div>
+          </div>
+          <div class="wp__body">
+            <div class="wp__admin-bar">
+              <div class="wp__admin-logo">
+                <svg class="wp__admin-icon" viewBox="0 0 122.52 122.523" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor"><path d="m8.708 61.26c0 20.802 12.089 38.779 29.619 47.298l-25.069-68.686c-2.916 6.536-4.55 13.769-4.55 21.388z"/><path d="m96.74 58.608c0-6.495-2.333-10.993-4.334-14.494-2.664-4.329-5.161-7.995-5.161-12.324 0-4.831 3.664-9.328 8.825-9.328.233 0 .454.029.681.042-9.35-8.566-21.807-13.796-35.489-13.796-18.36 0-34.513 9.42-43.91 23.688 1.233.037 2.395.063 3.382.063 5.497 0 14.006-.667 14.006-.667 2.833-.167 3.167 3.994.337 4.329 0 0-2.847.335-6.015.501l19.138 56.925 11.501-34.493-8.188-22.434c-2.83-.166-5.511-.501-5.511-.501-2.832-.166-2.5-4.496.332-4.329 0 0 8.679.667 13.843.667 5.496 0 14.006-.667 14.006-.667 2.835-.167 3.168 3.994.337 4.329 0 0-2.853.335-6.015.501l18.992 56.494 5.242-17.517c2.272-7.269 4.001-12.49 4.001-16.989z"/><path d="m62.184 65.857-15.768 45.819c4.708 1.384 9.687 2.141 14.846 2.141 6.12 0 11.989-1.058 17.452-2.979-.141-.225-.269-.464-.374-.724z"/><path d="m107.376 36.046c.226 1.674.354 3.471.354 5.404 0 5.333-.996 11.328-3.996 18.824l-16.053 46.413c15.624-9.111 26.133-26.038 26.133-45.426.001-9.137-2.333-17.729-6.438-25.215z"/><path d="m61.262 0c-33.779 0-61.262 27.481-61.262 61.26 0 33.783 27.483 61.263 61.262 61.263 33.778 0 61.265-27.48 61.265-61.263-.001-33.779-27.487-61.26-61.265-61.26zm0 119.715c-32.23 0-58.453-26.223-58.453-58.455 0-32.23 26.222-58.451 58.453-58.451 32.229 0 58.45 26.221 58.45 58.451 0 32.232-26.221 58.455-58.45 58.455z"/></g></svg>
+                WordPress
+              </div>
+              <div class="wp__admin-notifications">
+                <span class="wp__badge wp__badge--alert">3</span>
+                <span class="wp__badge">7</span>
+              </div>
+            </div>
+            <div class="wp__layout">
+              <aside class="wp__sidebar">
+                <nav class="wp__nav">
+                  <div class="wp__nav-item wp__nav-item--active">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+                    Tableau de bord
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12v1H2V4zm0 3.5h12v1H2v-1zM2 11h12v1H2v-1z"/></svg>
+                    Articles
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12v1H2V4zm0 3.5h12v1H2v-1zM2 11h12v1H2v-1z"/></svg>
+                    Pages
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6"/></svg>
+                    Médias
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 3h10v10H3V3z"/></svg>
+                    Plugins
+                    <span class="wp__nav-badge" id="wp-plugin-count">1</span>
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2l6 12H2L8 2z"/></svg>
+                    Apparence
+                  </div>
+                  <div class="wp__nav-item">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="3"/><path d="M8 1v2m0 10v2m11-7h-2M3 8H1m15.36-5.36l-1.42 1.42M4.06 11.94l-1.42 1.42m12.72 0l-1.42-1.42M4.06 4.06L2.64 2.64"/></svg>
+                    Réglages
+                  </div>
+                </nav>
+              </aside>
+              <main class="wp__main">
+                <div class="wp__content">
+                  <div class="wp__notification wp__notification--warning" id="notif-update">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 14h14L8 1z"/></svg>
+                    Mise à jour disponible : WordPress 6.7
+                  </div>
+                  <div class="wp__notification wp__notification--error" id="notif-security">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7"/><path d="M8 4v5m0 2v1" stroke="#fff" stroke-width="1.5"/></svg>
+                    Erreur de sécurité détectée
+                  </div>
+                  <div class="wp__notification" id="notif-plugin">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6"/></svg>
+                    Plugin "Maintenance Mode" actif
+                  </div>
+                  <div class="wp__widgets">
+                    <div class="wp__widget">
+                      <div class="wp__widget-header">Performance</div>
+                      <div class="wp__widget-value wp__widget-value--orange" id="wp-perf">74</div>
+                      <div class="wp__widget-label">PageSpeed</div>
+                    </div>
+                    <div class="wp__widget">
+                      <div class="wp__widget-header">Sécurité</div>
+                      <div class="wp__widget-value wp__widget-value--good" id="wp-secu">BON</div>
+                      <div class="wp__widget-label">Évaluation</div>
+                    </div>
+                    <div class="wp__widget">
+                      <div class="wp__widget-header">Coûts</div>
+                      <div class="wp__widget-value" id="wp-cost">240€/an</div>
+                      <div class="wp__widget-label">Hébergement</div>
+                    </div>
+                  </div>
+                </div>
+              </main>
+            </div>
+          </div>
+        </div>
+
+        <div class="float float--sb-publish" data-sb-float>
+          <div class="float__inner float__inner--good">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 14L14 2M14 2H6M14 2v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Publier
+          </div>
+        </div>
+        <div class="float float--sb-seo" data-sb-float>
+          <div class="float__inner float__inner--good">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            SEO
+            <span class="float__badge">100</span>
+          </div>
+        </div>
+        <div class="float float--sb-perf" data-sb-float>
+          <div class="float__inner float__inner--good">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M9 1L3 9h4l-1 6 6-8H8l1-6z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Perf
+            <span class="float__badge">100</span>
+          </div>
+        </div>
+        <div class="float float--sb-ai" data-sb-float>
+          <div class="float__inner float__inner--good float__inner--icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg>
+          </div>
+        </div>
+        <div class="float float--sb-check" data-sb-float>
+          <div class="float__inner float__inner--good float__inner--icon">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.3"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="duo__sb" data-duo-sb>
+          <div class="sb__shine"></div>
+          <div class="sb__chrome">
+            <div class="sb__dots"><span></span><span></span><span></span></div>
+            <div class="sb__url">app.storyblok.com</div>
+          </div>
+          <div class="sb__body">
+            <div class="sb__topbar">
+              <div class="sb__brand">
+                <svg class="sb__brand-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+                Storyblok
+                <span class="sb__space">huitquatre</span>
+              </div>
+              <div class="sb__topbar-actions">
+                <span class="sb__publish-btn">Publier</span>
+              </div>
+            </div>
+            <div class="sb__layout">
+              <aside class="sb__sidebar">
+                <div class="sb__sidebar-title">Blocs</div>
+                <nav class="sb__nav">
+                  <div class="sb__nav-item sb__nav-item--active">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="12" height="4" rx="1"/><rect x="2" y="8" width="7" height="6" rx="1"/><rect x="11" y="8" width="3" height="6" rx="1"/></svg>
+                    Hero
+                  </div>
+                  <div class="sb__nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12v1H2V4zm0 3.5h12v1H2v-1zM2 11h12v1H2v-1z"/></svg>
+                    Texte
+                  </div>
+                  <div class="sb__nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6"/></svg>
+                    Image
+                  </div>
+                  <div class="sb__nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M3 3h10v10H3V3z"/></svg>
+                    Galerie
+                  </div>
+                  <div class="sb__nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="5" width="12" height="6" rx="2"/></svg>
+                    CTA
+                  </div>
+                </nav>
+              </aside>
+              <main class="sb__main">
+                <div class="sb__content">
+                  <div class="sb__notification sb__notification--success" id="sb-notif-publish">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Publié — site à jour
+                  </div>
+                  <div class="sb__notification sb__notification--success" id="sb-notif-seo">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    SEO 100/100 — parfait
+                  </div>
+                  <div class="sb__preview">
+                    <div class="sb__preview-hero">
+                      <div class="sb__preview-title"></div>
+                      <div class="sb__preview-title sb__preview-title--short"></div>
+                      <div class="sb__preview-btn"></div>
+                    </div>
+                    <div class="sb__preview-blocks">
+                      <div class="sb__preview-block"><div class="sb__preview-icon"></div><div class="sb__preview-line"></div></div>
+                      <div class="sb__preview-block"><div class="sb__preview-icon sb__preview-icon--accent"></div><div class="sb__preview-line"></div></div>
+                      <div class="sb__preview-block"><div class="sb__preview-icon"></div><div class="sb__preview-line"></div></div>
+                    </div>
+                  </div>
+                  <div class="sb__widgets">
+                    <div class="sb__widget">
+                      <div class="sb__widget-header">Performance</div>
+                      <div class="sb__widget-value sb__widget-value--good">100</div>
+                      <div class="sb__widget-label">PageSpeed</div>
+                    </div>
+                    <div class="sb__widget">
+                      <div class="sb__widget-header">Sécurité</div>
+                      <div class="sb__widget-value sb__widget-value--good">OK</div>
+                      <div class="sb__widget-label">Évaluation</div>
+                    </div>
+                    <div class="sb__widget">
+                      <div class="sb__widget-header">Coûts</div>
+                      <div class="sb__widget-value sb__widget-value--accent">Inclus</div>
+                      <div class="sb__widget-label">Maintenance</div>
+                    </div>
+                  </div>
+                </div>
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .duo { height: 400vh; background-color: var(--color-secondary); }
+  .duo__sticky {
+    position: sticky; top: 0; height: 100vh;
+    display: flex; flex-direction: column; align-items: flex-start;
+    padding: var(--space-3xl) var(--container-padding); overflow: hidden;
+  }
+  .duo__header { text-align: left; z-index: 2; width: 100%; max-width: var(--container-max); margin: 0 auto; }
+  .duo__title {
+    color: var(--color-primary); font-size: var(--text-4xl);
+    text-transform: uppercase; letter-spacing: -0.03em;
+    display: flex; flex-wrap: wrap;
+  }
+  .duo__word { display: inline-flex; white-space: nowrap; }
+  .duo__letter { display: inline-block; opacity: 0; transform: translateY(20px); }
+  .duo__accent { color: var(--color-accent); }
+
+  .duo__scene {
+    position: relative; width: 100%; max-width: 1000px; margin: 0 auto;
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    perspective: 900px;
+  }
+  .duo__glow {
+    position: absolute; width: 60%; height: 50%; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(212,255,0,0.12) 0%, transparent 70%);
+    filter: blur(50px); pointer-events: none; z-index: 0;
+    transition: opacity 0.5s ease; opacity: 0.5;
+  }
+  .duo__stage {
+    position: relative; width: 100%; max-width: 700px; height: 450px; z-index: 1;
+    transform-style: preserve-3d;
+  }
+
+  .float {
+    position: absolute; will-change: transform;
+    pointer-events: none; z-index: 2; opacity: 0;
+  }
+  .float__inner {
+    display: flex; align-items: center; gap: 8px; padding: 12px 20px;
+    border-radius: 12px; background: rgba(26,26,26,0.85);
+    backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8); font-family: var(--font-body);
+    font-size: 16px; font-weight: 500; white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 40px -10px rgba(212,255,0,0.1);
+  }
+  .float__inner svg { flex-shrink: 0; opacity: 0.7; }
+  .float__inner--icon { padding: 10px; border-radius: 12px; }
+  .float__inner--error { border-color: rgba(255,51,51,0.3); background: rgba(60,20,20,0.85); color: #f09090; }
+  .float__inner--bad { color: #f09090; }
+  .float__inner--good { border-color: rgba(40,200,64,0.35); background: rgba(20,50,25,0.85); color: #a0e8b0; }
+  .float__badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 1px 6px; border-radius: 6px;
+    background: rgba(72,199,100,0.2); color: #48c764;
+    font-size: 11px; font-weight: 700;
+  }
+  .float__score { display: flex; align-items: baseline; gap: 0; }
+  .float__label { font-size: 10px; opacity: 0.5; margin-left: 4px; }
+  .float__unit { font-size: 10px; opacity: 0.5; }
+  .float--warning { top: -10px; right: -20px; }
+  .float--warning .float__inner { border-color: rgba(240,192,64,0.3); background: rgba(50,40,15,0.85); color: #f0d080; }
+  .float--error { top: 30%; right: -30px; }
+  .float--perf { bottom: 15%; right: -10px; }
+  .float--plugins { bottom: -10px; left: 10%; }
+  .float--cost { top: 20%; left: -20px; }
+  .float--cost .float__inner { font-size: 18px; padding: 14px 22px; }
+  .float__plugins-count { color: #FF3333; font-weight: 700; }
+  .float--sb-publish { top: 5%; right: 10%; }
+  .float--sb-seo { top: 22%; right: 5%; }
+  .float--sb-perf { bottom: 20%; right: 10%; }
+  .float--sb-ai { top: -6px; left: 10%; }
+  .float--sb-check { top: 45%; right: 5%; }
+
+  .duo__wp {
+    position: absolute; top: 50%; left: 50%;
+    margin-left: -300px; margin-top: -175px;
+    width: 100%; max-width: 600px; border-radius: 12px; overflow: hidden;
+    background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 4px 16px rgba(0,0,0,0.4),
+      0 12px 40px rgba(0,0,0,0.3), 0 0 80px -20px rgba(212,255,0,0.15);
+    z-index: 1; opacity: 0;
+    transform-style: preserve-3d; will-change: transform;
+    transition: box-shadow 0.4s ease;
+  }
+  .duo__sb {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; max-width: 600px; border-radius: 12px; overflow: hidden;
+    background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 4px 16px rgba(0,0,0,0.4),
+      0 12px 40px rgba(0,0,0,0.3), 0 0 80px -20px rgba(212,255,0,0.15);
+    z-index: 1; opacity: 0;
+    transform-style: preserve-3d; will-change: transform;
+    transition: box-shadow 0.4s ease;
+  }
+  .wp__shine, .sb__shine {
+    position: absolute; inset: 0; z-index: 10; pointer-events: none;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 55%, transparent 60%);
+    background-size: 250% 100%; background-position: 200% 0; border-radius: 12px;
+  }
+  .wp__chrome, .sb__chrome {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+    background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .wp__dots, .sb__dots { display: flex; gap: 5px; }
+  .wp__dots span, .sb__dots span { width: 8px; height: 8px; border-radius: 50%; }
+  .wp__dots span:nth-child(1), .sb__dots span:nth-child(1) { background: #ff5f57; }
+  .wp__dots span:nth-child(2), .sb__dots span:nth-child(2) { background: #febc2e; }
+  .wp__dots span:nth-child(3), .sb__dots span:nth-child(3) { background: #28c840; }
+  .wp__url, .sb__url {
+    flex: 1; background: rgba(255,255,255,0.04); padding: 5px 10px;
+    border-radius: 4px; font-size: 11px; color: rgba(255,255,255,0.3); font-family: var(--font-mono);
+  }
+  .wp__body { background: #111; height: 350px; display: flex; flex-direction: column; }
+  .wp__admin-bar {
+    background: #1d2327; padding: 8px 16px; display: flex;
+    justify-content: space-between; align-items: center; font-size: 12px; color: #fff;
+  }
+  .wp__admin-logo { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+  .wp__admin-icon { width: 16px; height: 16px; }
+  .wp__admin-notifications { display: flex; gap: 8px; }
+  .wp__badge { background: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+  .wp__badge--alert { background: var(--color-alert); }
+  .wp__layout { display: flex; flex: 1; overflow: hidden; }
+  .wp__sidebar { width: 180px; background: #1d2327; padding: 16px 0; flex-shrink: 0; }
+  .wp__nav { display: flex; flex-direction: column; }
+  .wp__nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; color: #a7aaad; }
+  .wp__nav-item--active { background: var(--color-accent); color: #000; }
+  .wp__nav-badge {
+    margin-left: auto; background: #28c840; color: #000;
+    padding: 1px 6px; border-radius: 8px; font-size: 10px; font-weight: 700;
+  }
+  .wp__main { flex: 1; background: #0a0a0a; overflow: auto; }
+  .wp__content { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .wp__notification {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    background: rgba(255,255,255,0.05); border-radius: 6px; font-size: 12px;
+    color: rgba(255,255,255,0.7); border-left: 3px solid rgba(255,255,255,0.2);
+    opacity: 0; transform: translateY(-10px);
+  }
+  .wp__notification svg { flex-shrink: 0; opacity: 0.6; }
+  .wp__notification--warning { border-left-color: #dba617; background: rgba(219,166,23,0.1); color: #f0d080; }
+  .wp__notification--error { border-left-color: var(--color-alert); background: rgba(255,51,51,0.1); color: #f09090; }
+  .wp__widgets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+  .wp__widget {
+    background: rgba(255,255,255,0.03); padding: 12px; border-radius: 6px;
+    text-align: center; border: 1px solid rgba(255,255,255,0.05);
+  }
+  .wp__widget-header { font-size: 10px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .wp__widget-value { font-size: 18px; font-weight: 700; color: #dba617; }
+  .wp__widget-value--good { color: #28c840; }
+  .wp__widget-value--orange { color: #dba617; }
+  .wp__widget-value--bad { color: var(--color-alert); }
+  .wp__widget-label { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+
+  .sb__body { background: #111; height: auto; display: flex; flex-direction: column; }
+  .sb__topbar {
+    background: #161616; padding: 8px 16px; display: flex;
+    justify-content: space-between; align-items: center; font-size: 12px; color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .sb__brand { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+  .sb__brand-icon { color: var(--color-accent); }
+  .sb__space {
+    margin-left: 6px; font-weight: 400; font-size: 11px; color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px;
+  }
+  .sb__topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .sb__publish-btn {
+    background: var(--color-accent); color: #000;
+    padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
+  }
+  .sb__layout { display: flex; flex: 1; overflow: hidden; }
+  .sb__sidebar { width: 180px; background: #141414; padding: 16px 0; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.05); }
+  .sb__sidebar-title {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4); padding: 0 16px 8px;
+  }
+  .sb__nav { display: flex; flex-direction: column; }
+  .sb__nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13px; color: #a7aaad; }
+  .sb__nav-item--active { background: rgba(212,255,0,0.12); color: var(--color-accent); border-left: 2px solid var(--color-accent); }
+  .sb__main { flex: 1; background: #0a0a0a; overflow: hidden; }
+  .sb__content { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .sb__notification {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    background: rgba(255,255,255,0.05); border-radius: 6px; font-size: 12px;
+    color: rgba(255,255,255,0.7); border-left: 3px solid rgba(255,255,255,0.2);
+    opacity: 0; transform: translateY(-10px);
+  }
+  .sb__notification svg { flex-shrink: 0; opacity: 0.8; }
+  .sb__notification--success { border-left-color: #28c840; background: rgba(40,200,64,0.1); color: #a0e8b0; }
+  .sb__preview {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px; padding: 14px;
+  }
+  .sb__preview-hero { margin-bottom: 12px; }
+  .sb__preview-title {
+    width: 80%; height: 10px; border-radius: 5px;
+    background: rgba(255,255,255,0.15); margin-bottom: 6px;
+  }
+  .sb__preview-title--short {
+    width: 55%;
+    background: linear-gradient(90deg, rgba(212,255,0,0.4), rgba(212,255,0,0.15));
+  }
+  .sb__preview-btn {
+    width: 70px; height: 22px; border-radius: 5px;
+    background: linear-gradient(135deg, #D4FF00, #BCFF00);
+    margin-top: 10px; box-shadow: 0 2px 12px rgba(212,255,0,0.3);
+  }
+  .sb__preview-blocks { display: flex; gap: 8px; }
+  .sb__preview-block {
+    flex: 1; padding: 10px; border-radius: 8px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+  }
+  .sb__preview-icon {
+    width: 18px; height: 18px; border-radius: 5px;
+    background: rgba(255,255,255,0.08); margin-bottom: 8px;
+  }
+  .sb__preview-icon--accent { background: rgba(212,255,0,0.2); }
+  .sb__preview-line { width: 100%; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); }
+  .sb__widgets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+  .sb__widget {
+    background: rgba(255,255,255,0.03); padding: 12px; border-radius: 6px;
+    text-align: center; border: 1px solid rgba(255,255,255,0.05);
+  }
+  .sb__widget-header { font-size: 10px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .sb__widget-value { font-size: 18px; font-weight: 700; color: #dba617; }
+  .sb__widget-value--good { color: #28c840; }
+  .sb__widget-value--accent { color: var(--color-accent); }
+  .sb__widget-label { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+
+  @media (max-width: 768px) {
+    .duo__title { font-size: var(--text-2xl); }
+    .duo__stage { height: auto; overflow: visible; }
+    .duo__wp {
+      left: 50%; top: 50%;
+      margin-left: 0; margin-top: -170px;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 90vw;
+    }
+    .duo__sb {
+      position: relative; top: auto; left: auto;
+      transform: none; margin: 0 auto;
+      width: 90vw;
+      max-width: 90vw;
+    }
+    .wp__body { height: auto; max-height: 340px; overflow: hidden; }
+    .sb__body { height: auto; max-height: none; overflow: visible; }
+    .sb__main { overflow: visible; }
+    .wp__layout, .sb__layout { flex-direction: column; }
+    .wp__sidebar, .sb__sidebar { width: 100%; padding: 6px 0; overflow: hidden; }
+    .wp__nav, .sb__nav { flex-direction: row; flex-wrap: wrap; gap: 0; }
+    .wp__nav-item, .sb__nav-item { font-size: 10px; padding: 5px 8px; gap: 4px; white-space: nowrap; }
+    .wp__admin-bar, .sb__topbar { padding: 6px 10px; font-size: 10px; }
+    .wp__content, .sb__content { padding: 8px; gap: 6px; overflow: hidden; }
+    .wp__notification { font-size: 10px; padding: 6px 8px; overflow: hidden; text-overflow: ellipsis; }
+    .sb__notification { font-size: 10px; padding: 6px 8px; overflow: hidden; text-overflow: ellipsis; }
+    .wp__widgets, .sb__widgets { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .wp__widget, .sb__widget { padding: 6px; }
+    .wp__widget-value, .sb__widget-value { font-size: 13px; }
+    .wp__widget-header, .sb__widget-header { font-size: 8px; }
+    .wp__widget-label, .sb__widget-label { font-size: 8px; }
+    .float__inner { font-size: 12px; padding: 8px 14px; gap: 5px; }
+    .float__inner svg { width: 12px; height: 12px; }
+    .float--cost .float__inner { font-size: 13px; }
+    .float--warning { top: 5%; right: 10%; }
+    .float--error { top: 30%; right: 5%; }
+    .float--perf { bottom: 20%; right: 10%; }
+    .float--plugins { bottom: 8%; left: 15%; }
+    .float--cost { top: 25%; left: 10%; }
+    .float--sb-publish { top: 5%; right: 10%; }
+    .float--sb-seo { top: 22%; right: 5%; }
+    .float--sb-perf { bottom: 20%; right: 10%; }
+    .float--sb-ai { top: 2%; left: 10%; }
+    .float--sb-check { top: 45%; right: 5%; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const chaosTitle = document.querySelector('#chaos-serenite [data-chaos-title]') as HTMLElement;
+    const serenityTitle = document.querySelector('#chaos-serenite [data-serenity-title]') as HTMLElement;
+    const lettersA = document.querySelectorAll('#chaos-serenite [data-chaos-title] .duo__letter');
+    const lettersB = document.querySelectorAll('#chaos-serenite [data-serenity-title] .duo__letter');
+    const winWP = document.querySelector('[data-duo-wp]') as HTMLElement;
+    const winSB = document.querySelector('[data-duo-sb]') as HTMLElement;
+    const wpFloats = Array.from(document.querySelectorAll<HTMLElement>('#chaos-serenite [data-wp-float]'));
+    const sbFloats = Array.from(document.querySelectorAll<HTMLElement>('#chaos-serenite [data-sb-float]'));
+    const notifUpdate = document.getElementById('notif-update');
+    const notifSecurity = document.getElementById('notif-security');
+    const notifPlugin = document.getElementById('notif-plugin');
+    const notifPublish = document.getElementById('sb-notif-publish');
+    const notifSeo = document.getElementById('sb-notif-seo');
+    const wpPerf = document.getElementById('wp-perf');
+    const wpSecu = document.getElementById('wp-secu');
+    const wpCost = document.getElementById('wp-cost');
+    const pluginBadge = document.getElementById('wp-plugin-count');
+    const floatPerf = document.getElementById('float-perf');
+    const floatPlugins = document.getElementById('float-plugins');
+    const floatCost = document.getElementById('float-cost');
+
+    if (!winWP || !winSB) return;
+
+    const proxy = { pluginCount: 1, perfVal: 74, costVal: 240 };
+
+    // One scrub timeline for the whole sequence
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#chaos-serenite',
+        start: 'top 90%',
+        end: 'bottom bottom',
+        scrub: 0.3,
+      }
+    });
+
+    /* ENTRANCE: chaos title + WP window fade in together */
+    tl.fromTo(lettersA,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, stagger: 0.002, duration: 0.04, ease: 'power2.out' },
+      0);
+    tl.fromTo(winWP,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.03, ease: 'power2.out' },
+      0);
+
+    /* WP ACT: plugins increase + notifications (unchanged choreography) */
+    const pluginSteps = [
+      { pos: 0.08, count: 1, color: '#28c840' },
+      { pos: 0.11, count: 3, color: '#28c840' },
+      { pos: 0.14, count: 5, color: '#28c840' },
+      { pos: 0.17, count: 7, color: '#dba617' },
+      { pos: 0.20, count: 9, color: '#dba617' },
+      { pos: 0.23, count: 11, color: '#FF3333' },
+      { pos: 0.26, count: 12, color: '#FF3333' },
+    ];
+
+    pluginSteps.forEach((step) => {
+      tl.to(proxy, {
+        pluginCount: step.count,
+        duration: 0.001,
+        onUpdate: () => {
+          if (pluginBadge) {
+            pluginBadge.textContent = String(step.count);
+            pluginBadge.style.background = step.color;
+          }
+          if (floatPlugins) floatPlugins.textContent = String(step.count);
+        }
+      }, step.pos);
+    });
+
+    tl.to(notifUpdate, {
+      opacity: 1, y: 0, duration: 0.03, ease: 'power2.out',
+    }, 0.12);
+
+    tl.to(notifSecurity, {
+      opacity: 1, y: 0, duration: 0.03, ease: 'power2.out',
+    }, 0.16);
+
+    tl.to(notifPlugin, {
+      opacity: 1, y: 0, duration: 0.03, ease: 'power2.out',
+    }, 0.20);
+
+    /* WP ACT: values degrade */
+    const perfSteps = [
+      { pos: 0.28, val: 74, cls: 'wp__widget-value--orange' },
+      { pos: 0.32, val: 65, cls: 'wp__widget-value--orange' },
+      { pos: 0.36, val: 55, cls: 'wp__widget-value--orange' },
+      { pos: 0.40, val: 45, cls: 'wp__widget-value--bad' },
+      { pos: 0.44, val: 35, cls: 'wp__widget-value--bad' },
+      { pos: 0.48, val: 28, cls: 'wp__widget-value--bad' },
+      { pos: 0.52, val: 22, cls: 'wp__widget-value--bad' },
+    ];
+
+    perfSteps.forEach((step) => {
+      tl.to(proxy, {
+        perfVal: step.val,
+        duration: 0.001,
+        onUpdate: () => {
+          if (wpPerf) {
+            wpPerf.textContent = String(step.val);
+            wpPerf.className = 'wp__widget-value ' + step.cls;
+          }
+          if (floatPerf) floatPerf.textContent = String(step.val);
+        }
+      }, step.pos);
+    });
+
+    const secuSteps = [
+      { pos: 0.29, text: 'BON', cls: 'wp__widget-value--good' },
+      { pos: 0.33, text: '1 faille', cls: 'wp__widget-value--orange' },
+      { pos: 0.37, text: '2 failles', cls: 'wp__widget-value--orange' },
+      { pos: 0.41, text: '3 failles', cls: 'wp__widget-value--orange' },
+      { pos: 0.45, text: '5 failles', cls: 'wp__widget-value--bad' },
+      { pos: 0.49, text: '7 failles', cls: 'wp__widget-value--bad' },
+      { pos: 0.53, text: '10 failles', cls: 'wp__widget-value--bad' },
+      { pos: 0.57, text: '14 failles', cls: 'wp__widget-value--bad' },
+    ];
+
+    secuSteps.forEach((step) => {
+      tl.to(proxy, {
+        duration: 0.001,
+        onUpdate: () => {
+          if (wpSecu) {
+            wpSecu.textContent = step.text;
+            wpSecu.className = 'wp__widget-value ' + step.cls;
+          }
+        }
+      }, step.pos);
+    });
+
+    const costSteps = [
+      { pos: 0.30, val: 240 },
+      { pos: 0.34, val: 350 },
+      { pos: 0.38, val: 500 },
+      { pos: 0.43, val: 700 },
+      { pos: 0.48, val: 900 },
+      { pos: 0.53, val: 1100 },
+      { pos: 0.57, val: 1250 },
+    ];
+
+    costSteps.forEach((step) => {
+      tl.to(proxy, {
+        costVal: step.val,
+        duration: 0.001,
+        onUpdate: () => {
+          if (wpCost) wpCost.textContent = step.val + '\u20AC/an';
+          if (floatCost) floatCost.textContent = String(step.val);
+        }
+      }, step.pos);
+    });
+
+    /* WP ACT: floats pop out one by one */
+    tl.to(wpFloats[4], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.45);
+    tl.to(wpFloats[0], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.50);
+    tl.to(wpFloats[2], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.55);
+    tl.to(wpFloats[1], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.60);
+    tl.to(wpFloats[3], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.65);
+
+    /* MORPH (0.68 - 0.78): chaos title + WP scene out, serenity title in.
+       "Passez du chaos..." is fully gone afterwards. */
+    tl.to(lettersA, {
+      opacity: 0, y: -24, stagger: 0.002, duration: 0.05, ease: 'power2.in',
+    }, 0.68);
+    tl.fromTo(winWP, { opacity: 1 }, { opacity: 0, duration: 0.06, ease: 'power2.in' }, 0.68);
+    tl.to(wpFloats, { opacity: 0, duration: 0.05, ease: 'power2.in' }, 0.68);
+    tl.set(chaosTitle, { display: 'none' }, 0.73);
+    tl.set(serenityTitle, { display: 'flex' }, 0.73);
+    tl.fromTo(lettersB,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, stagger: 0.002, duration: 0.05, ease: 'power2.out' },
+      0.73);
+
+    /* SERENITY ACT: window fades in right as the morph completes */
+    tl.fromTo(winSB, { opacity: 0 }, { opacity: 1, duration: 0.04, ease: 'power2.out' }, 0.78);
+
+    tl.to(notifPublish, {
+      opacity: 1, y: 0, duration: 0.03, ease: 'power2.out',
+    }, 0.82);
+
+    tl.to(notifSeo, {
+      opacity: 1, y: 0, duration: 0.03, ease: 'power2.out',
+    }, 0.86);
+
+    tl.to(sbFloats[0], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.86);
+    tl.to(sbFloats[1], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.88);
+    tl.to(sbFloats[2], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.90);
+    tl.to(sbFloats[3], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.92);
+    tl.to(sbFloats[4], { opacity: 1, duration: 0.06, ease: 'power2.out' }, 0.94);
+
+    /* 3D tilt on mouse — independent from scroll timeline */
+    const scene = document.getElementById('duo-scene') as HTMLElement;
+    const stage = document.querySelector('[data-duo-stage]') as HTMLElement;
+    const shineWP = document.querySelector('.duo__wp .wp__shine') as HTMLElement;
+    const shineSB = document.querySelector('.duo__sb .sb__shine') as HTMLElement;
+    const glow = document.querySelector('.duo__glow') as HTMLElement;
+    const allFloats = document.querySelectorAll<HTMLElement>('#chaos-serenite .duo__stage .float');
+    if (scene && stage && winWP && winSB) {
+      const MAX_TILT = 12;
+      const EASE = 0.08;
+      let curRx = 0, curRy = 0, tarRx = 0, tarRy = 0;
+      let raf: number | null = null;
+
+      const fData = Array.from(allFloats).map((el, i) => {
+        const depths = [70, 85, 60, 50, 75, 70, 85, 60, 50, 75];
+        return { el, depth: depths[i] || 50, cx: 0, cy: 0, tx: 0, ty: 0 };
+      });
+
+      function settled() {
+        if (Math.abs(tarRx - curRx) > 0.01 || Math.abs(tarRy - curRy) > 0.01) return false;
+        for (const f of fData) if (Math.abs(f.tx - f.cx) > 0.01 || Math.abs(f.ty - f.cy) > 0.01) return false;
+        return true;
+      }
+
+      function tick() {
+        curRx += (tarRx - curRx) * EASE;
+        curRy += (tarRy - curRy) * EASE;
+        stage.style.transform = `rotateX(${curRx}deg) rotateY(${curRy}deg)`;
+        for (const f of fData) {
+          f.cx += (f.tx - f.cx) * (EASE * 1.2);
+          f.cy += (f.ty - f.cy) * (EASE * 1.2);
+          f.el.style.transform = `translate3d(${f.cx}px, ${f.cy}px, ${f.depth}px)`;
+        }
+        if (settled()) { raf = null; return; }
+        raf = requestAnimationFrame(tick);
+      }
+
+      function startLoop() { if (raf === null) raf = requestAnimationFrame(tick); }
+
+      function paintShadows(cDx: number, cDy: number, glowO: number) {
+        const shadow = `
+          0 0 0 1px rgba(255,255,255,0.05),
+          ${-cDx * 8}px ${-cDy * 8 + 12}px 16px rgba(0,0,0,0.4),
+          ${-cDx * 12}px ${-cDy * 12 + 18}px 40px rgba(0,0,0,0.3),
+          ${-cDx * 20}px ${-cDy * 20}px 80px -20px rgba(212,255,0,${0.1 + glowO * 0.15})
+        `;
+        winWP.style.boxShadow = shadow;
+        winSB.style.boxShadow = shadow;
+      }
+
+      scene.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = scene.getBoundingClientRect();
+        const cDx = Math.max(-1, Math.min(1, (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)));
+        const cDy = Math.max(-1, Math.min(1, (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)));
+        tarRy = cDx * MAX_TILT;
+        tarRx = -cDy * MAX_TILT;
+
+        const glowO = 0.5 + Math.abs(cDx * cDy) * 0.5;
+        if (shineWP) shineWP.style.backgroundPosition = `${200 - cDx * 150}% 0`;
+        if (shineSB) shineSB.style.backgroundPosition = `${200 - cDx * 150}% 0`;
+        if (glow) glow.style.opacity = String(glowO);
+        paintShadows(cDx, cDy, glowO);
+        for (const f of fData) {
+          const factor = f.depth / 60;
+          f.tx = cDx * factor * 25;
+          f.ty = -cDy * factor * 25;
+        }
+        startLoop();
+      }, { passive: true });
+
+      scene.addEventListener('mouseleave', () => {
+        tarRx = 0; tarRy = 0;
+        if (shineWP) shineWP.style.backgroundPosition = '200% 0';
+        if (shineSB) shineSB.style.backgroundPosition = '200% 0';
+        if (glow) glow.style.opacity = '0.5';
+        paintShadows(0, 0, 0.5);
+        for (const f of fData) { f.tx = 0; f.ty = 0; }
+        startLoop();
+      }, { passive: true });
+    }
+  });
+</script>
