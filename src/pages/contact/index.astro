@@ -1,0 +1,382 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer/Footer.astro";
+---
+
+<Layout
+  title="Contact — démarrer mon projet | huitquatre"
+  description="Parlez-nous de votre projet : site vitrine, boutique ou refonte. Réponse sous 24 h ouvrées."
+>
+  <main class="contact">
+    <header class="contact__header">
+      <p class="contact__eyebrow">Contact</p>
+      <h1 class="contact__title">Démarrer mon <span class="contact__accent">projet.</span></h1>
+      <p class="contact__subtitle">Ici, pas de formulaire glacial : on discute. Répondez comme à un humain — il y en a un qui lit derrière.</p>
+    </header>
+
+    <div class="chat" data-chat aria-live="polite"></div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* is:global — tout le contenu du chat est créé en JS (innerHTML),
+     sans l'attribut de scope Astro. Préfixe chat__ unique. */
+  .contact { max-width: 760px; margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
+  .contact__eyebrow { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-neutral); margin-bottom: var(--space-sm); }
+  .contact__title { color: var(--color-primary); font-size: var(--text-4xl); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; }
+  .contact__accent { color: var(--color-accent-ink); }
+  .contact__subtitle { font-size: var(--text-lg); color: var(--color-neutral); margin-top: var(--space-md); }
+
+  .chat {
+    margin-top: var(--space-xl);
+    height: min(600px, 72vh);
+    overflow-y: auto;
+    display: flex; flex-direction: column; gap: var(--space-md);
+    padding: var(--space-lg); border-radius: 16px;
+    background: var(--surface); border: 1px solid var(--line);
+    scroll-behavior: smooth;
+  }
+  .chat__row { display: flex; gap: var(--space-sm); align-items: flex-end; animation: chatIn 0.3s ease; }
+  .chat__row--user { justify-content: flex-end; }
+  @keyframes chatIn { from { opacity: 0; transform: translateY(8px); } }
+  .chat__avatar {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px;
+    background: var(--color-accent); display: flex; align-items: center; justify-content: center;
+  }
+  .chat__bubble {
+    max-width: 80%; padding: 10px 16px; border-radius: 16px;
+    font-size: var(--text-base); line-height: 1.5;
+    background: var(--surface-2); color: var(--color-primary);
+    border-bottom-left-radius: 4px;
+  }
+  .chat__row--user .chat__bubble {
+    background: var(--color-accent); color: #000; font-weight: 500;
+    border-bottom-left-radius: 16px; border-bottom-right-radius: 4px;
+  }
+  .chat__bubble--total { border: 1px solid var(--accent-soft-border); }
+  .chat__bubble--total strong { color: var(--color-accent-ink); }
+  .chat__row--user .chat__bubble--total strong { color: #000; }
+  .chat__typing { display: inline-flex; gap: 4px; padding: 4px 0; }
+  .chat__typing span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-neutral); animation: blink 1s infinite;
+  }
+  .chat__typing span:nth-child(2) { animation-delay: 0.15s; }
+  .chat__typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .chat__choices { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 40px; }
+  .chat__chip {
+    padding: 8px 16px; border-radius: 2.5em;
+    border: 1px solid var(--accent-chip-border); color: var(--color-accent-ink);
+    font-size: var(--text-sm); font-weight: 700;
+    transition: background-color var(--transition-base), color var(--transition-base), opacity var(--transition-base);
+  }
+  .chat__chip:hover:not(:disabled) { background: var(--color-accent-light); }
+  .chat__chip:disabled { opacity: 0.4; cursor: default; }
+  .chat__chip small { font-weight: 400; opacity: 0.8; }
+  .chat__chip.is-on { background: var(--color-accent); color: #000; }
+  .chat__input-row { display: flex; gap: 8px; padding-left: 40px; }
+  .chat__input {
+    flex: 1; min-width: 0; padding: 10px 16px; border-radius: 2.5em;
+    background: var(--input-bg); border: 1px solid var(--line-strong);
+    color: var(--color-primary); font-size: var(--text-base); font-family: inherit;
+  }
+  .chat__input:focus { outline: none; border-color: var(--color-accent-ink); }
+  .chat__send {
+    flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--color-accent); color: #000;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat__send:disabled { opacity: 0.5; }
+  .chat__hp { position: absolute; left: -9999px; }
+  .chat__recap { display: flex; flex-direction: column; gap: 4px; font-size: var(--text-sm); }
+  .chat__recap strong { color: var(--color-accent-ink); }
+  .chat__edit {
+    font-size: var(--text-xs); color: var(--color-neutral);
+    text-decoration: underline; text-underline-offset: 3px; margin-left: 6px;
+  }
+  .chat__edit:hover { color: var(--color-accent-ink); }
+  .chat__err { color: var(--color-alert); font-size: var(--text-sm); padding-left: 40px; }
+
+  @media (max-width: 768px) {
+    .contact__title { font-size: var(--text-2xl); }
+    .chat__bubble { max-width: 90%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chat__row, .chat__typing span { animation: none; }
+    .chat { scroll-behavior: auto; }
+  }
+</style>
+
+<script>
+  // Envoi via la fonction serverless /api/contact (Vercel) + Resend.
+  // Clé et destinataire dans les variables d'environnement Vercel :
+  // RESEND_API_KEY (resend.com/api-keys) et CONTACT_TO_EMAIL.
+  const ENDPOINT = "/api/contact";
+  const BASE_PRICE = 1990;
+  const OPTION_PRICES: Record<string, { label: string; price: number }> = {
+    buy: { label: "Bouton acheter", price: 290 },
+    shop: { label: "E-commerce complet", price: 1190 },
+    lang: { label: "Multilingue", price: 390 },
+    booking: { label: "Réservation en ligne", price: 490 },
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const chat = document.querySelector("[data-chat]") as HTMLElement;
+    if (!chat) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, reduceMotion ? 0 : ms));
+    const state: Record<string, string> = { options: "" };
+    const selected = new Set<string>();
+
+    const fmt = (n: number) => n.toLocaleString("fr-FR") + " €";
+    const fmt4 = (n: number) => (n / 4).toFixed(2).replace(".", ",") + " €";
+    const total = () => BASE_PRICE + Array.from(selected).reduce((s, id) => s + (OPTION_PRICES[id]?.price || 0), 0);
+
+    function scrollDown() { chat.scrollTop = chat.scrollHeight; }
+
+    function row(kind: "bot" | "user", html: string): HTMLElement {
+      const div = document.createElement("div");
+      div.className = `chat__row chat__row--${kind}`;
+      div.innerHTML = kind === "bot"
+        ? `<span class="chat__avatar" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 400 400" fill="#000"><path d="M99.758 64h115.219a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103H99.758a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 99.758 64"/><path d="M235.184 226.524h115.22a10.103 10.103 0 0 1 10.104 10.104v88.142a10.103 10.103 0 0 1-10.104 10.104h-115.22a10.103 10.103 0 0 1-10.103-10.104v-88.142a10.103 10.103 0 0 1 10.103-10.104"/><path d="M302.898 64h47.506a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103h-47.506a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 302.898 64"/><path d="M99.758 226.524h47.506a10.103 10.103 0 0 1 10.103 10.104v88.142a10.103 10.103 0 0 1-10.103 10.104h-47.506a10.103 10.103 0 0 1-10.104-10.104v-88.142a10.103 10.103 0 0 1 10.104-10.104"/></svg></span><div class="chat__bubble">${html}</div>`
+        : `<div class="chat__bubble">${html}</div>`;
+      chat.appendChild(div);
+      scrollDown();
+      return div;
+    }
+
+    async function say(html: string) {
+      const typing = row("bot", `<span class="chat__typing" aria-hidden="true"><span></span><span></span><span></span></span>`);
+      await wait(650);
+      typing.querySelector(".chat__bubble")!.innerHTML = html;
+      scrollDown();
+    }
+
+    function choose(choices: { label: string; value: string; hint?: string }[]): Promise<string> {
+      return new Promise((resolve) => {
+        const wrap = document.createElement("div");
+        wrap.className = "chat__choices";
+        wrap.innerHTML = choices.map((c) =>
+          `<button type="button" class="chat__chip" data-value="${c.value}">${c.label}${c.hint ? ` <small>${c.hint}</small>` : ""}</button>`
+        ).join("");
+        chat.appendChild(wrap);
+        scrollDown();
+        wrap.addEventListener("click", (e) => {
+          const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(".chat__chip");
+          if (!btn || btn.disabled) return;
+          wrap.querySelectorAll("button").forEach((b) => ((b as HTMLButtonElement).disabled = true));
+          const label = btn.textContent?.trim() || "";
+          row("user", label);
+          resolve(btn.dataset.value || "");
+        }, { once: false });
+      });
+    }
+
+    function askText(opts: { placeholder?: string; type?: string; optional?: boolean; validate?: (v: string) => string | null }): Promise<string> {
+      return new Promise((resolve) => {
+        const wrap = document.createElement("div");
+        wrap.className = "chat__input-row";
+        wrap.innerHTML = `
+          <input class="chat__input" type="${opts.type || "text"}" placeholder="${opts.placeholder || "Écrivez ici…"}" autocomplete="off" />
+          <button type="button" class="chat__send" aria-label="Envoyer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          ${opts.optional ? `<button type="button" class="chat__chip" data-skip>Passer</button>` : ""}`;
+        chat.appendChild(wrap);
+        scrollDown();
+        const input = wrap.querySelector("input")!;
+        input.focus();
+        const done = (value: string) => {
+          wrap.querySelectorAll("button").forEach((b) => ((b as HTMLButtonElement).disabled = true));
+          input.disabled = true;
+          row("user", value || "<i>Passé</i>");
+          resolve(value);
+        };
+        const submit = () => {
+          const v = input.value.trim();
+          if (!v && opts.optional) return done("");
+          if (opts.validate) {
+            const err = opts.validate(v);
+            if (err) {
+              const p = document.createElement("p");
+              p.className = "chat__err";
+              p.textContent = err;
+              wrap.after(p);
+              setTimeout(() => p.remove(), 2500);
+              return;
+            }
+          } else if (!v) return;
+          done(v);
+        };
+        wrap.querySelector(".chat__send")!.addEventListener("click", submit);
+        input.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
+        wrap.querySelector("[data-skip]")?.addEventListener("click", () => done(""));
+      });
+    }
+
+    async function optionsStep() {
+      await say("Des options vous intéressent ? <strong>Cochez, le total suit en direct.</strong>");
+      const line = row("bot", `<div class="chat__bubble--total">Total estimé : <strong data-total>${fmt(total())}</strong> <span data-per4>(ou 4 × ${fmt4(total())})</span></div>`);
+      const refresh = () => {
+        const t = line.querySelector("[data-total]")!;
+        const p = line.querySelector("[data-per4]")!;
+        t.textContent = fmt(total());
+        p.textContent = `(ou 4 × ${fmt4(total())})`;
+      };
+      const wrap = document.createElement("div");
+      wrap.className = "chat__choices";
+      wrap.innerHTML = Object.entries(OPTION_PRICES).map(([id, o]) =>
+        `<button type="button" class="chat__chip" data-id="${id}">${o.label} <small>+${fmt(o.price)}</small></button>`
+      ).join("") + `<button type="button" class="chat__chip" data-next>Continuer →</button>`;
+      chat.appendChild(wrap);
+      scrollDown();
+      selected.forEach((id) => wrap.querySelector(`[data-id="${id}"]`)?.classList.add("is-on"));
+      await new Promise<void>((resolve) => {
+        wrap.addEventListener("click", (e) => {
+          const next = (e.target as HTMLElement).closest("[data-next]");
+          if (next) {
+            wrap.querySelectorAll("button").forEach((b) => ((b as HTMLButtonElement).disabled = true));
+            const names = Array.from(selected).map((id) => OPTION_PRICES[id].label);
+            row("user", names.length ? names.join(", ") : "Aucune option");
+            state.options = names.join(", ") || "Aucune";
+            resolve();
+            return;
+          }
+          const chip = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-id]");
+          if (!chip || chip.disabled) return;
+          const id = chip.dataset.id!;
+          if (selected.has(id)) { selected.delete(id); chip.classList.remove("is-on"); }
+          else { selected.add(id); chip.classList.add("is-on"); }
+          refresh();
+        });
+      });
+    }
+
+    function esc(s: string) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    async function stepProject() {
+      await say("Pour estimer votre projet au plus juste, commençons par le plus important : <strong>c'est pour quel type de projet ?</strong>");
+      const project = await choose([
+        { label: "Site vitrine", value: "Site vitrine" },
+        { label: "Boutique en ligne", value: "Boutique en ligne" },
+        { label: "Refonte", value: "Refonte d'un site existant" },
+        { label: "Autre", value: "Autre" },
+      ]);
+      state.project = project === "Autre"
+        ? await (async () => { await say("Dites-m'en plus en une phrase."); return await askText({ placeholder: "Ex. site pour mon restaurant…" }); })()
+        : project;
+    }
+
+    async function stepSite() {
+      const hasSite = await choose([
+        { label: "Oui, j'ai déjà un site", value: "oui" },
+        { label: "Non, création", value: "non" },
+      ]);
+      if (hasSite === "oui") {
+        await say("Notez-moi son adresse, j'irai y jeter un œil avant de vous répondre.");
+        state.site = await askText({ placeholder: "monsite.fr", optional: true });
+      } else {
+        state.site = "Création";
+        await say("Parfait, on part d'une page blanche. C'est mon terrain préféré.");
+      }
+    }
+
+    async function stepIdentity() {
+      await say("Comment puis-je vous appeler ?");
+      state.name = await askText({ placeholder: "Votre nom" });
+      await say(`Enchanté ${esc(state.name)} ! <strong>Votre email</strong> pour vous répondre sous 24 h ?`);
+      state.email = await askText({
+        placeholder: "vous@exemple.fr", type: "email",
+        validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "Hmm, cet email semble invalide.",
+      });
+    }
+
+    async function stepMessage() {
+      await say("Dernière étape : <strong>pouvez-vous me dire un mot sur votre projet ?</strong> Activité, envies, délais…");
+      state.message = await askText({ placeholder: "Racontez-moi tout…", optional: true });
+    }
+
+    function clearEnd() {
+      chat.querySelectorAll("[data-recap],[data-send]").forEach((el) => el.remove());
+    }
+
+    async function editStep(kind: string) {
+      clearEnd();
+      if (kind === "project") await stepProject();
+      else if (kind === "site") await stepSite();
+      else if (kind === "options") await optionsStep();
+      else if (kind === "identity") await stepIdentity();
+      else if (kind === "message") await stepMessage();
+      showRecap();
+    }
+
+    function showRecap() {
+      clearEnd();
+      const t = total();
+      const rc = row("bot", `<div class="chat__recap"><strong>Récapitulatif</strong><span>Projet : ${esc(state.project)} <button type="button" class="chat__edit" data-edit="project">Modifier</button></span><span>Site actuel : ${esc(state.site) || "—"} <button type="button" class="chat__edit" data-edit="site">Modifier</button></span><span>Options : ${esc(state.options)} <button type="button" class="chat__edit" data-edit="options">Modifier</button></span><span>Total estimé : ${fmt(t)} (ou 4 × ${fmt4(t)})</span><span>Contact : ${esc(state.name)} — ${esc(state.email)} <button type="button" class="chat__edit" data-edit="identity">Modifier</button></span>${state.message ? `<span>Message : ${esc(state.message)} <button type="button" class="chat__edit" data-edit="message">Modifier</button></span>` : ""}</div>`);
+      rc.dataset.recap = "";
+      rc.querySelectorAll("[data-edit]").forEach((b) =>
+        b.addEventListener("click", () => editStep((b as HTMLElement).dataset.edit || ""))
+      );
+      const send = row("bot", `<button type="button" class="chat__chip" data-send>Envoyer ma demande →</button>`);
+      send.dataset.send = "";
+      send.querySelector("[data-send]")!.addEventListener("click", async (e) => {
+        const btn = e.target as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = "Envoi…";
+        try {
+          const res = await fetch(ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: state.name,
+              email: state.email,
+              project: state.project,
+              site: state.site || "—",
+              options: state.options,
+              total: `${fmt(t)} (ou 4 × ${fmt4(t)})`,
+              message: state.message || "—",
+              _gotcha: "",
+            }),
+          });
+          const data = await res.json().catch(() => ({} as { error?: string }));
+          if (!res.ok) throw new Error(data.error || "Envoi refusé, réessayez.");
+          row("bot", "<strong>Bien reçu ! 🎉</strong> Je vous réponds sous 24 h ouvrées. À très vite.");
+        } catch (err) {
+          row("bot", `<strong>Oups.</strong> ${(err as Error).message} Vous pouvez aussi me décrire votre projet par email le temps que ça remarche.`);
+          btn.disabled = false;
+          btn.textContent = "Réessayer →";
+        }
+        scrollDown();
+      }, { once: true });
+    }
+
+    async function run() {
+      await say("Salut ! 👋 Pour estimer votre projet au plus juste, commençons par le plus important : <strong>c'est pour quel type de projet ?</strong>");
+      // intro text doubles as the project question: skip straight to choices
+      const project = await choose([
+        { label: "Site vitrine", value: "Site vitrine" },
+        { label: "Boutique en ligne", value: "Boutique en ligne" },
+        { label: "Refonte", value: "Refonte d'un site existant" },
+        { label: "Autre", value: "Autre" },
+      ]);
+      state.project = project === "Autre"
+        ? await (async () => { await say("Dites-m'en plus en une phrase."); return await askText({ placeholder: "Ex. site pour mon restaurant…" }); })()
+        : project;
+
+      await stepSite();
+      await optionsStep();
+      await stepIdentity();
+      await stepMessage();
+      showRecap();
+    }
+
+    run();
+  });
+</script>

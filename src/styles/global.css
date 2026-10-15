@@ -11,15 +11,31 @@
    CSS Custom Properties
    ============================================ */
 :root {
-  /* Colors — High Contrast */
-  --color-primary: #FFFFFF;
-  --color-secondary: #000000;
+  color-scheme: light;
+  /* Colors — Atelier Suisse, paper version. White only. */
+  --color-primary: #0A0A0A;
+  --color-secondary: #FFFFFF;
   --color-accent: #D4FF00;
-  --color-accent-light: rgba(212, 255, 0, 0.10);
-  --color-neutral: #777777;
+  --color-accent-light: rgba(78,102,0,0.08);
+  --color-neutral: #595959;
+  --color-muted: rgba(0,0,0,0.6);
   --color-alert: #FF3333;
   --color-white: #FFFFFF;
   --color-black: #000000;
+  /* Accent-ink: accent-as-text (lime fails on white, olive passes). */
+  --color-accent-ink: #4E6600;
+
+  /* Semantic surfaces & lines — black-based on white. */
+  --surface: rgba(0,0,0,0.03);
+  --surface-2: rgba(0,0,0,0.06);
+  --line: rgba(0,0,0,0.12);
+  --line-soft: rgba(0,0,0,0.08);
+  --line-strong: rgba(0,0,0,0.22);
+  --accent-soft-border: rgba(78,102,0,0.35);
+  --accent-chip-border: rgba(78,102,0,0.5);
+  --pill-bg: rgb(255 255 255 / 0.8);
+  --pill-border: rgb(0 0 0 / 0.25);
+  --input-bg: rgba(255,255,255,0.7);
 
   /* Typography */
   --font-body: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -156,7 +172,7 @@ p {
 :root {
   --btn-color: var(--color-black);
   --btn-color-background: var(--color-accent);
-  --btn-color-focus: var(--color-accent);
+  --btn-color-focus: var(--color-accent-ink);
   --btn-height: 2.75em;
   --btn-padding-x: 1em;
   --btn-border-radius: 2.5em;
@@ -291,7 +307,7 @@ p {
 
 /* Secondary — Alt theme */
 .btn[data-btn-theme="secondary"] {
-  --btn-color: var(--color-accent);
+  --btn-color: var(--color-accent-ink);
   --btn-color-background: transparent;
 }
 
@@ -318,7 +334,7 @@ p {
 /* Ghost / Link — no pill */
 .btn--ghost {
   --btn-height: auto;
-  --btn-color: var(--color-accent);
+  --btn-color: var(--color-accent-ink);
   height: auto;
   padding: 0;
   font-weight: 500;
@@ -339,7 +355,7 @@ p {
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-ink);
   border-radius: 0;
   transform-origin: right;
   transform: scaleX(0);
@@ -368,6 +384,15 @@ p {
 }
 
 /* ============================================
+   Loader pre-paint states
+   ============================================ */
+
+/* Incoming transition: solid lime from first paint, pixels take over at DCL */
+html.hq-px-go .px__solid {
+  display: block;
+}
+
+/* ============================================
    Selection
    ============================================ */
 ::selection {
@@ -379,7 +404,7 @@ p {
    Focus States (Accessibility)
    ============================================ */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-accent-ink);
   outline-offset: 2px;
 }
 

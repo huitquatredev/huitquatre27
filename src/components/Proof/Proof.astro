@@ -1,0 +1,131 @@
+---
+// Proof — "Le poids du web": two animated bars making page weight visible.
+// The animation IS the argument: less weight = less CO₂, more speed.
+---
+
+<section class="proof" id="poids">
+  <div class="proof__inner">
+    <p class="proof__eyebrow">La preuve, pas la promesse</p>
+    <h2 class="proof__title">
+      <span class="proof__line">Le web est obèse.</span>
+      <span class="proof__line proof__line--accent">Le vôtre sera athlétique.</span>
+    </h2>
+    <p class="proof__body">
+      La page médiane dépasse les 2&nbsp;Mo. Nos sites visent dix fois moins :
+      chaque kilo-octet superflu est traqué, et l'audit chiffré est livré avec le site.
+    </p>
+
+    <div class="proof__bars" data-bars>
+      <div class="proof__row">
+        <div class="proof__meta"><span>Page web médiane</span><strong>≈ 2,4 Mo</strong></div>
+        <div class="proof__track"><div class="proof__fill proof__fill--heavy" style="--w:100%"></div></div>
+      </div>
+      <div class="proof__row">
+        <div class="proof__meta"><span>Site huitquatre</span><strong>≈ 200 Ko</strong></div>
+        <div class="proof__track"><div class="proof__fill proof__fill--light" style="--w:8%"></div></div>
+      </div>
+    </div>
+
+    <p class="proof__note">−92&nbsp;% de poids → moins de CO₂, plus de vitesse, plus de conversions. Ordre de grandeur (médiane HTTP Archive).</p>
+  </div>
+</section>
+
+<style>
+  .proof {
+    background-color: var(--color-secondary);
+    padding: var(--space-3xl) var(--container-padding);
+  }
+  .proof__inner { max-width: var(--container-max); margin: 0 auto; }
+  .proof__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral);
+    margin-bottom: var(--space-md);
+  }
+  .proof__title {
+    font-size: clamp(2rem, 1.2rem + 4vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+  .proof__line { display: block; }
+  .proof__line--accent { color: var(--color-accent-ink); }
+  .proof__body {
+    font-size: var(--text-lg);
+    color: var(--color-neutral);
+    max-width: 620px;
+    margin-top: var(--space-md);
+  }
+  .proof__bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    max-width: 800px;
+  }
+  .proof__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-neutral);
+    margin-bottom: 6px;
+  }
+  .proof__meta strong { color: var(--color-primary); font-size: var(--text-base); }
+  .proof__track {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 2.5em;
+    overflow: hidden;
+  }
+  .proof__fill {
+    height: 3em;
+    width: var(--w);
+    border-radius: 2.5em;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .proof__row:nth-child(2) .proof__fill { transition-delay: 0.25s; }
+  .proof__fill--heavy { background: var(--color-primary); }
+  .proof__fill--light { background: var(--color-accent); min-width: 3em; }
+  .proof__bars.is-in .proof__fill { transform: scaleX(1); }
+  .proof__note {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-neutral);
+    margin-top: var(--space-md);
+    max-width: 640px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .proof__fill { transform: none; transition: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const bars = document.querySelector("[data-bars]") as HTMLElement | null;
+    if (!bars) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      bars.classList.add("is-in");
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          bars.classList.add("is-in");
+          io.disconnect();
+        }
+      }
+    }, { threshold: 0.4 });
+    io.observe(bars);
+  });
+</script>

@@ -1,0 +1,431 @@
+---
+---
+
+<div class="sidenav">
+  <header class="sidenav__header">
+    <a href="/" class="sidenav__logo" aria-label="huitquatre — accueil">huitquatre<span class="sidenav__logo-dot">.</span></a>
+    <button type="button" data-sidenav-toggle data-sidenav-button class="sidenav__button" aria-expanded="false" aria-controls="sidenav-menu">
+      <span class="sidenav__button-text">
+        <span data-sidenav-label class="sidenav__button-label">Menu</span>
+        <span data-sidenav-label class="sidenav__button-label">Fermer</span>
+      </span>
+      <span data-sidenav-icon class="sidenav__button-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="sidenav__button-icon-svg" aria-hidden="true">
+          <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
+          <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
+          <path d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z" fill="currentColor"></path>
+          <path d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z" fill="currentColor"></path>
+          <path d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z" fill="currentColor"></path>
+          <path d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z" fill="currentColor"></path>
+        </svg>
+      </span>
+    </button>
+  </header>
+  <div data-sidenav-wrap data-nav-state="closed" class="sidenav__nav">
+    <div data-sidenav-overlay data-sidenav-toggle class="sidenav__overlay"></div>
+    <nav data-sidenav-menu id="sidenav-menu" class="sidenav__menu" aria-label="Navigation principale">
+      <div class="sidenav__menu-bg" aria-hidden="true">
+        <div data-sidenav-panel class="sidenav__menu-bg-panel is--first"></div>
+        <div data-sidenav-panel class="sidenav__menu-bg-panel is--second"></div>
+        <div data-sidenav-panel class="sidenav__menu-bg-panel"></div>
+      </div>
+      <div class="sidenav__menu-inner">
+        <ul class="sidenav__menu-list">
+          <li class="sidenav__menu-list-item">
+            <a data-sidenav-link href="/" class="sidenav__menu-link">
+              <span class="sidenav__menu-link-heading">Accueil</span>
+              <span class="sidenav__menu-link-eyebrow">01</span>
+            </a>
+          </li>
+          <li class="sidenav__menu-list-item">
+            <a data-sidenav-link href="/realisations" class="sidenav__menu-link">
+              <span class="sidenav__menu-link-heading">Portfolio</span>
+              <span class="sidenav__menu-link-eyebrow">02</span>
+            </a>
+          </li>
+          <li class="sidenav__menu-list-item">
+            <a data-sidenav-link href="/offre" class="sidenav__menu-link">
+              <span class="sidenav__menu-link-heading">Offre</span>
+              <span class="sidenav__menu-link-eyebrow">03</span>
+            </a>
+          </li>
+          <li class="sidenav__menu-list-item">
+            <a data-sidenav-link href="/faq" class="sidenav__menu-link">
+              <span class="sidenav__menu-link-heading">FAQ</span>
+              <span class="sidenav__menu-link-eyebrow">04</span>
+            </a>
+          </li>
+          <li class="sidenav__menu-list-item">
+            <a data-sidenav-link href="/contact" class="sidenav__menu-link">
+              <span class="sidenav__menu-link-heading">Contact</span>
+              <span class="sidenav__menu-link-eyebrow">05</span>
+            </a>
+          </li>
+        </ul>
+        <div class="sidenav__menu-details">
+          <p data-sidenav-fade class="sidenav__button-label">Contact</p>
+          <div class="sidenav__menu-socials">
+            <a data-sidenav-fade href="/contact" class="sidenav__button-label">Démarrer un projet</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .sidenav__header {
+    z-index: 90;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+    position: fixed;
+    top: 1em;
+    left: 1em;
+    right: 1em;
+    color: var(--color-primary);
+    pointer-events: none;
+  }
+
+  .sidenav__logo {
+    pointer-events: auto;
+    margin-right: auto;
+    background: var(--pill-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 2px solid var(--pill-border);
+    border-radius: 999px;
+  }
+
+  .sidenav__logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125em;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.625em 1.125em;
+  }
+
+  .sidenav__logo-dot {
+    color: var(--color-accent-ink);
+  }
+
+  .sidenav__button {
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.625em;
+    margin: 0;
+    padding: 0.625em 1.125em;
+    background: var(--pill-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 2px solid var(--pill-border);
+    border-radius: 999px;
+    pointer-events: auto;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+
+  .sidenav__button-text {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 1.5em;
+    overflow: hidden;
+  }
+
+  .sidenav__button-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1em;
+    height: 1em;
+    transition: transform 0.4s cubic-bezier(0.65, 0.05, 0, 1);
+  }
+
+  .sidenav__button-icon-svg {
+    width: 100%;
+  }
+
+  .sidenav__button-label {
+    color: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.125em;
+    line-height: 1.4;
+  }
+
+  .sidenav__nav {
+    z-index: 80;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: none;
+    position: fixed;
+    inset: 0;
+  }
+
+  .sidenav__overlay {
+    z-index: 0;
+    cursor: pointer;
+    background-color: rgb(0 0 0 / 0.4);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .sidenav__menu {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5em;
+    width: 35em;
+    max-width: 100%;
+    height: 100%;
+    margin-left: auto;
+    padding-top: 6em;
+    padding-bottom: 2em;
+    position: relative;
+    overflow: auto;
+  }
+
+  .sidenav__menu-bg {
+    z-index: 0;
+    position: absolute;
+    inset: 0;
+  }
+
+  .sidenav__menu-bg-panel {
+    z-index: 0;
+    background-color: #fff;
+    border-top-left-radius: 1.25em;
+    border-bottom-left-radius: 1.25em;
+    position: absolute;
+    inset: 0;
+  }
+
+  .sidenav__menu-bg-panel.is--first {
+    background-color: var(--color-accent);
+  }
+
+  .sidenav__menu-bg-panel.is--second {
+    background-color: #000;
+  }
+
+  .sidenav__menu-inner {
+    z-index: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5em;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+  }
+
+  .sidenav__menu-list {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .sidenav__menu-list-item {
+    height: 4.5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sidenav__menu-link {
+    display: flex;
+    gap: 0.75em;
+    color: #000;
+    width: 100%;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    padding-left: 2em;
+    text-decoration: none;
+  }
+
+  .sidenav__menu-link-heading {
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 4em;
+    font-weight: 700;
+    line-height: 0.75;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    position: relative;
+    margin: 0;
+    transition: transform 0.55s cubic-bezier(0.65, 0.05, 0, 1);
+  }
+
+  .sidenav__menu-link:hover .sidenav__menu-link-heading {
+    transform: translateX(0.15em);
+  }
+
+  .sidenav__menu-link-eyebrow {
+    z-index: 1;
+    color: #000;
+    opacity: 0.45;
+    text-transform: uppercase;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875em;
+    position: relative;
+    margin: 0;
+  }
+
+  .sidenav__menu-details {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.25em;
+    padding-left: 2em;
+    color: #000;
+  }
+
+  .sidenav__menu-details .sidenav__button-label {
+    color: #000;
+  }
+
+  .sidenav__menu-socials {
+    display: flex;
+    flex-flow: row;
+    gap: 1.5em;
+  }
+
+  .sidenav__menu-socials a:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 767px) {
+    .sidenav__header { top: 0.75em; left: 0.75em; right: 0.75em; }
+    .sidenav__logo, .sidenav__button { padding: 0.5em 0.9em; font-size: 0.95em; }
+    .sidenav__menu-socials {
+      gap: 1em;
+    }
+    .sidenav__menu-bg-panel {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .sidenav__menu {
+      width: 100%;
+    }
+
+    .sidenav__menu-list-item {
+      height: 3.5em;
+    }
+
+    .sidenav__menu-link-heading {
+      font-size: 2.75em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidenav__button-icon,
+    .sidenav__menu-link-heading {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap"
+  import { CustomEase } from "gsap/CustomEase"
+
+  gsap.registerPlugin(CustomEase)
+  // Équivalent CustomEase de cubic-bezier(0.65, 0.01, 0.05, 0.99)
+  CustomEase.create("main", "M0,0 C0.65,0.01,0.05,0.99,1,1")
+  gsap.defaults({ ease: "main", duration: 0.7 })
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  const navWrap = document.querySelector("[data-sidenav-wrap]")
+  if (navWrap) {
+    const overlay = navWrap.querySelector("[data-sidenav-overlay]")
+    const menu = navWrap.querySelector("[data-sidenav-menu]")
+    const bgPanels = navWrap.querySelectorAll("[data-sidenav-panel]")
+    const menuToggles = document.querySelectorAll("[data-sidenav-toggle]")
+    const menuLinks = navWrap.querySelectorAll("[data-sidenav-link]")
+    const fadeTargets = navWrap.querySelectorAll("[data-sidenav-fade]")
+    const menuButton = document.querySelector("[data-sidenav-button]")
+    const menuButtonTexts = menuButton?.querySelectorAll("[data-sidenav-label]")
+    const menuButtonIcon = menuButton?.querySelector("[data-sidenav-icon]")
+
+    const tl = gsap.timeline()
+
+    const setExpanded = (open: boolean) =>
+      menuButton?.setAttribute("aria-expanded", String(open))
+
+    const openNav = () => {
+      navWrap.setAttribute("data-nav-state", "open")
+      setExpanded(true)
+      if (reducedMotion) {
+        // ponytail: pas d'anim si reduced-motion, état final direct
+        tl.clear()
+          .set(navWrap, { display: "block" })
+          .set([overlay, bgPanels, menuLinks, fadeTargets], { clearProps: "all", autoAlpha: 1, xPercent: 0, yPercent: 0 })
+        return
+      }
+      tl.clear()
+        .set(navWrap, { display: "block" })
+        .set(menu, { xPercent: 0 }, "<")
+        .fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 })
+        .fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, "<")
+        .fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
+        .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<")
+        .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, "<+=0.35")
+        .fromTo(fadeTargets, { autoAlpha: 0, yPercent: 50 }, { autoAlpha: 1, yPercent: 0, stagger: 0.04 }, "<+=0.2")
+    }
+
+    const closeNav = () => {
+      navWrap.setAttribute("data-nav-state", "closed")
+      setExpanded(false)
+      if (reducedMotion) {
+        tl.clear().set(navWrap, { display: "none" })
+        return
+      }
+      tl.clear()
+        .to(overlay, { autoAlpha: 0 })
+        .to(menu, { xPercent: 120 }, "<")
+        .to(menuButtonTexts, { yPercent: 0 }, "<")
+        .to(menuButtonIcon, { rotate: 0 }, "<")
+        .set(navWrap, { display: "none" })
+    }
+
+    menuToggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        if (navWrap.getAttribute("data-nav-state") === "open") closeNav()
+        else openNav()
+      })
+    })
+
+    // Ferme le menu quand on clique un lien (ancres internes)
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (navWrap.getAttribute("data-nav-state") === "open") closeNav()
+      })
+    })
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navWrap.getAttribute("data-nav-state") === "open") closeNav()
+    })
+  }
+</script>

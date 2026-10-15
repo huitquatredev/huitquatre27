@@ -1,0 +1,167 @@
+---
+// Footer — giant wordmark with clip-path wipe + elastic shapes (Linear-style)
+const letters = ["h", "u", "i", "t", "q", "u", "a", "t", "r", "e"];
+const links = [
+  { label: "Portfolio", href: "/realisations" },
+  { label: "Offre", href: "/offre" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
+---
+
+<footer class="footer" id="footer">
+  <div class="footer__inner">
+    <nav class="footer__nav" aria-label="Pied de page">
+      {links.map((l) => (
+        <a class="footer__link" href={l.href}>{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="footer__row">
+      <p class="footer__tagline">Votre site web. L'esprit tranquille.</p>
+      <p class="footer__copy">© 2026 huitquatre — sans frais récurrents.</p>
+    </div>
+
+    <div class="footer__logo" aria-hidden="true" data-footer-logo>
+      <div class="footer__brandrow">
+      <svg
+        class="footer__mark"
+        data-mark
+        viewBox="0 0 400 400"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M99.758 64h115.219a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103H99.758a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 99.758 64"
+        ></path>
+        <path
+          d="M235.184 226.524h115.22a10.103 10.103 0 0 1 10.104 10.104v88.142a10.103 10.103 0 0 1-10.104 10.104h-115.22a10.103 10.103 0 0 1-10.103-10.104v-88.142a10.103 10.103 0 0 1 10.103-10.104"
+        ></path>
+        <path
+          d="M302.898 64h47.506a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103h-47.506a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 302.898 64"
+        ></path>
+        <path
+          d="M99.758 226.524h47.506a10.103 10.103 0 0 1 10.103 10.104v88.142a10.103 10.103 0 0 1-10.103 10.104h-47.506a10.103 10.103 0 0 1-10.104-10.104v-88.142a10.103 10.103 0 0 1 10.104-10.104"
+        ></path>
+      </svg>
+      <div class="footer__word">
+        {letters.map((letter, i) => (
+          <span class="footer__letter" data-letter={i}>{letter}</span>
+        ))}
+      </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-secondary);
+    border-top: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--container-padding) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+  .footer__nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+  .footer__link {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+    transition: color var(--transition-base);
+  }
+  .footer__link:hover { color: var(--color-accent-ink); }
+  .footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+  .footer__tagline { font-size: var(--text-lg); font-weight: 700; color: var(--color-primary); }
+  .footer__copy { font-size: var(--text-sm); color: var(--color-neutral); }
+
+  .footer__logo { padding-bottom: var(--space-lg); container-type: inline-size; }
+  .footer__brandrow {
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    width: 100%;
+    font-size: 16.7cqw;
+  }
+  .footer__mark {
+    height: 1em;
+    width: auto;
+    flex-shrink: 0;
+  }
+  .footer__mark path { fill: var(--color-accent); }
+  .footer__word {
+    display: flex;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+  .footer__letter { display: inline-block; will-change: clip-path; }
+
+  @media (min-width: 769px) {
+    .footer__nav { grid-template-columns: repeat(4, 1fr); }
+    .footer__link:nth-child(2) { text-align: center; }
+    .footer__link:nth-child(3) { text-align: center; }
+    .footer__link:nth-child(4) { text-align: right; }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const logo = document.querySelector("[data-footer-logo]") as HTMLElement;
+    if (!logo) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    const letters = Array.from(logo.querySelectorAll<HTMLElement>("[data-letter]"));
+    const markPaths = Array.from(logo.querySelectorAll<SVGPathElement>("[data-mark] path"));
+    const spread: Array<[number, number]> = [[1, 1], [-1, -1], [-1, 1], [1, -1]];
+
+    const tl = gsap.timeline({ paused: true });
+
+    const wipes = ["inset(0% 0% 100% 0%)", "inset(100% 0% 0% 0%)"];
+    tl.fromTo(letters,
+      { clipPath: (i) => wipes[i % wipes.length] },
+      { clipPath: "inset(0% 0% 0% 0%)", duration: 0.35, ease: "steps(3)", stagger: 0.05 },
+      0);
+
+    markPaths.forEach((path, i) => {
+      const dir = spread[i % spread.length];
+      tl.fromTo(path,
+        { x: dir[0] * 70, y: dir[1] * 70, opacity: 0 },
+        { x: 0, y: 0, opacity: 1, duration: 0.45, ease: "steps(6)" },
+        0.3 + i * 0.08);
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) tl.play();
+        else tl.reverse();
+      }
+    }, { threshold: 0.3 });
+    io.observe(logo);
+  });
+</script>

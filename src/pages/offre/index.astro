@@ -1,0 +1,251 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FAQ from "../../components/FAQ/FAQ.astro";
+import FinalCTA from "../../components/CTA/FinalCTA.astro";
+import Footer from "../../components/Footer/Footer.astro";
+import { offer } from "../../data/offre";
+import { prixFaq } from "../../data/faq";
+
+const calendar = [
+  {
+    week: "S1",
+    title: "Mise en route",
+    points: [
+      "Visio d'1 h : on crée vos comptes ensemble (GitHub, Storyblok, hébergeur, registrar)",
+      "Accès à l'URL preview : vous suivez l'avancement en temps réel",
+      "Le compteur des 30 jours démarre ici",
+    ],
+  },
+  {
+    week: "S2–S3",
+    title: "Rebranding, design, développement",
+    points: [
+      "Identité : amélioration de l'existant ou création de zéro",
+      "Webdesign sur-mesure, jamais de template",
+      "Intégration, CMS, formulaires, automatisations",
+      "3 allers-retours inclus — au-delà, c'est dit d'avance par devis",
+    ],
+  },
+  {
+    week: "S4",
+    title: "Formation et mise en ligne",
+    points: [
+      "Formation 1:1 en visio + guide sur-mesure écrit pour votre site",
+      "Audits performance et SEO, documentation",
+      "Mise en ligne et vérifications finales",
+    ],
+  },
+];
+
+const tco = [
+  { label: "Création du site", wp: "1 500 – 3 000 €", hq: offer.price },
+  { label: "Hébergement / an", wp: "100 – 300 €", hq: "0 €" },
+  { label: "Maintenance + plugins / an", wp: "300 – 600 €", hq: "0 €" },
+  { label: "Total sur 5 ans", wp: "≈ 2 500 – 4 000 €", hq: `${offer.price}, une fois`, total: true },
+];
+
+const guarantees = [
+  { title: "Zéro frais récurrents", text: "Hébergement et maintenance inclus, sans limite de durée. Seul le nom de domaine (~15 €/an) reste à votre charge." },
+  { title: "Tout est chez vous", text: "Site construit directement sur vos comptes : GitHub, Storyblok, hébergeur. Rien à vous remettre, rien à reprendre." },
+  { title: "30 jours annoncés, 30 jours tenus", text: "Calendrier partagé, URL preview en temps réel. De votre côté : contenus sous 7 jours, retours sous 48 h." },
+  { title: "On sait dire non", text: "Pas d'applis natives, pas de WordPress, pas de template. Une stack, un niveau d'exigence." },
+];
+
+---
+
+<Layout
+  title="L'offre — site complet à 1 990 €, sans frais récurrents | huitquatre"
+  description="Une offre unique : rebranding, design, site en 30 jours pour 1 990 € payés une fois. Hébergement et maintenance inclus."
+>
+  <main class="opage">
+    <header class="opage__hero">
+      <p class="opage__eyebrow">L'offre unique</p>
+      <h1 class="opage__title">Une offre. <span class="opage__accent">Un prix.</span></h1>
+      <p class="opage__subtitle">Rebranding, design, déploiement. Un seul prix, zéro astérisque.</p>
+      <div class="opage__price" data-reveal>
+        <span class="opage__price-value">{offer.price}</span>
+        <span class="opage__price-note">en une fois, ou {offer.installments}</span>
+      </div>
+      <div class="opage__hero-cta" data-reveal>
+        <a href="/contact" class="btn">
+          <span class="btn__icon-wrap is--default">
+            <span class="btn__icon-bg"></span>
+            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+          </span>
+          <span class="btn__text-wrap"><span class="btn__text">Démarrer mon projet</span></span>
+          <span class="btn__icon-wrap is--hover">
+            <span class="btn__icon-bg"></span>
+            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <section class="opage__block" data-reveal>
+      <h2 class="opage__heading">Tout est inclus</h2>
+      <ul class="opage__grid">
+        {offer.included.map((item) => (
+          <li class="opage__item">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><strong>{item.title}</strong><span>{item.desc}</span></div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="opage__block" data-reveal>
+      <h2 class="opage__heading">Options</h2>
+      <ul class="opage__options">
+        {offer.options.map((o) => (
+          <li class="opage__option">
+            <div><strong>{o.name}</strong><span>{o.desc}</span></div>
+            <span class="opage__option-price">{o.price}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="opage__block" data-reveal>
+      <h2 class="opage__heading">Vos 30 jours, semaine par semaine</h2>
+      <ol class="opage__calendar">
+        {calendar.map((s) => (
+          <li class="opage__step">
+            <span class="opage__week">{s.week}</span>
+            <div>
+              <strong>{s.title}</strong>
+              <ul>
+                {s.points.map((p) => (<li>{p}</li>))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="opage__commitments">De votre côté, deux engagements écrits au devis : contenus attendus au maximum 7 jours après la mise en route, retours sur le design attendus au maximum 48 h après leur présentation par huitquatre.</p>
+    </section>
+
+    <section class="opage__block" data-reveal>
+      <h2 class="opage__heading">Le vrai prix, sur 5 ans</h2>
+      <div class="opage__table-wrap">
+        <table class="opage__table">
+          <thead>
+            <tr><th></th><th>WordPress</th><th>huitquatre</th></tr>
+          </thead>
+          <tbody>
+            {tco.map((row) => (
+              <tr class:list={[{ "opage__total": row.total }]}>
+                <th scope="row">{row.label}</th>
+                <td>{row.wp}</td>
+                <td class="opage__hq">{row.hq}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="opage__block" data-reveal>
+      <h2 class="opage__heading">Garanties</h2>
+      <div class="opage__grid">
+        {guarantees.map((g) => (
+          <article class="opage__item">
+            <div><strong>{g.title}</strong><span>{g.text}</span></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+  </main>
+
+  <FAQ items={prixFaq} eyebrow="Tarifs" titleA="Questions" titleB="prix." sectionId="faq-prix" />
+
+  <FinalCTA />
+  <Footer />
+</Layout>
+
+<style>
+  .opage { max-width: var(--container-max); margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
+  .opage__eyebrow { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-neutral); margin-bottom: var(--space-sm); }
+  .opage__title { color: var(--color-primary); font-size: var(--text-4xl); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; }
+  .opage__accent { color: var(--color-accent-ink); }
+  .opage__subtitle { font-size: var(--text-lg); color: var(--color-neutral); max-width: 600px; margin-top: var(--space-md); }
+  .opage__price {
+    display: flex; align-items: baseline; gap: var(--space-md); flex-wrap: wrap;
+    margin-top: var(--space-lg); padding: var(--space-lg); border-radius: 16px;
+    background: var(--color-accent-light); border: 1px solid var(--accent-soft-border);
+  }
+  .opage__price-value { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-accent-ink); }
+  .opage__price-note { font-size: var(--text-base); color: var(--color-neutral); }
+  .opage__hero-cta { margin-top: var(--space-lg); }
+  .opage__block { margin-top: var(--space-2xl); }
+  .opage__heading { font-size: var(--text-2xl); text-transform: uppercase; margin-bottom: var(--space-md); }
+  .opage__grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .opage__item {
+    display: flex; gap: var(--space-sm); align-items: flex-start;
+    padding: var(--space-md); border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line);
+    color: var(--color-accent-ink);
+  }
+  .opage__item svg { flex-shrink: 0; margin-top: 2px; }
+  .opage__item div { display: flex; flex-direction: column; gap: 2px; }
+  .opage__item strong { font-size: var(--text-base); color: var(--color-primary); }
+  .opage__item span { font-size: var(--text-sm); color: var(--color-neutral); }
+  .opage__options { list-style: none; display: flex; flex-direction: column; }
+  .opage__option {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-md); padding: var(--space-md) var(--space-sm);
+    border-top: 1px solid var(--line);
+  }
+  .opage__option:last-child { border-bottom: 1px solid var(--line); }
+  .opage__option div { display: flex; flex-direction: column; gap: 2px; }
+  .opage__option strong { font-size: var(--text-base); color: var(--color-primary); }
+  .opage__option span { font-size: var(--text-sm); color: var(--color-neutral); }
+  .opage__option-price { font-family: var(--font-mono); font-size: var(--text-base); font-weight: 700; color: var(--color-accent-ink); white-space: nowrap; }
+  .opage__calendar { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .opage__step {
+    padding: var(--space-md); border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line);
+  }
+  .opage__week {
+    display: inline-block; font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700;
+    color: #000; background: var(--color-accent); padding: 2px 10px; border-radius: 2.5em; margin-bottom: var(--space-sm);
+  }
+  .opage__step strong { display: block; font-size: var(--text-base); color: var(--color-primary); margin-bottom: var(--space-sm); }
+  .opage__step ul { list-style: disc; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: var(--text-sm); color: var(--color-neutral); }
+  .opage__commitments {
+    margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-neutral);
+    border-left: 3px solid var(--color-accent); padding-left: var(--space-md);
+  }
+  .opage__table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .opage__table { width: 100%; border-collapse: collapse; font-size: var(--text-base); }
+  .opage__table th, .opage__table td { padding: var(--space-md); text-align: left; border-bottom: 1px solid var(--line-soft); }
+  .opage__table thead th { font-family: var(--font-mono); font-size: var(--text-sm); text-transform: uppercase; color: var(--color-neutral); }
+  .opage__table tbody th { color: var(--color-primary); font-weight: 700; }
+  .opage__table td { color: var(--color-neutral); }
+  .opage__hq { color: var(--color-accent-ink) !important; font-weight: 700; }
+  .opage__total th, .opage__total td { border-bottom: none; font-size: var(--text-lg); }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  [data-reveal].is-in { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .opage__title { font-size: var(--text-2xl); }
+    .opage__grid { grid-template-columns: 1fr; }
+    .opage__calendar { grid-template-columns: 1fr; }
+    [data-reveal] { opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const blocks = Array.from(document.querySelectorAll('.opage [data-reveal]'));
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.1 });
+    blocks.forEach((b) => io.observe(b));
+  });
+</script>

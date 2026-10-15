@@ -1,0 +1,194 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { realisations } from "../../data/realisations";
+
+export function getStaticPaths() {
+  return realisations.map((r) => ({ params: { slug: r.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = realisations.find((r) => r.slug === slug);
+if (!project) return Astro.redirect("/#realisations");
+---
+
+<Layout
+  title={`${project.name} — étude de cas huitquatre`}
+  description={`${project.name} : ${project.baseline}`}
+>
+  <main class="case">
+    <p class="case__back"><a href="/realisations">← Réalisations</a></p>
+
+    <header class="case__hero">
+      <p class="case__eyebrow">Étude de cas</p>
+      <h1 class="case__title">{project.name}</h1>
+      <p class="case__baseline">{project.activity} — {project.baseline}</p>
+      <dl class="case__meta">
+        <div><dt>Année</dt><dd>{project.year}</dd></div>
+        <div><dt>Durée</dt><dd>{project.duration}</dd></div>
+        <div><dt>Stack</dt><dd>{project.stack.join(" · ")}</dd></div>
+      </dl>
+      <video
+        class="case__video"
+        muted
+        loop
+        playsinline
+        autoplay
+        preload="metadata"
+        poster={project.poster}
+      >
+        <source src={`/videos/${project.video}.webm`} type="video/webm" />
+        <source src={`/videos/${project.video}.mp4`} type="video/mp4" />
+      </video>
+    </header>
+
+    <section class="case__block">
+      <h2 class="case__heading">Le besoin</h2>
+      <div class="case__grid">
+        {project.need.map((n) => (
+          <article class="case__card">
+            <h3>{n.title}</h3>
+            <p>{n.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="case__block">
+      <h2 class="case__heading">Ce qu'on a fait</h2>
+      <div class="case__grid">
+        {project.work.map((w) => (
+          <article class="case__card">
+            <h3>{w.title}</h3>
+            <p set:html={w.text}></p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="case__block">
+      <h2 class="case__heading">Résultats</h2>
+      <div class="case__results">
+        {project.results.map((r) => (
+          <div class="case__stat">
+            <span class="case__value">{r.value}</span>
+            <span class="case__label">{r.label}</span>
+            {r.note && <span class="case__note">{r.note}</span>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="case__block">
+      <h2 class="case__heading">Ils en parlent</h2>
+      <blockquote class="case__quote">
+        <p>« {project.quote.text} »</p>
+        <footer>— {project.quote.author}</footer>
+      </blockquote>
+    </section>
+
+    <section class="case__block">
+      <h2 class="case__heading">La confiance renouvelée</h2>
+      <ol class="case__timeline">
+        {project.timeline.map((t) => (
+          <li><strong>{t.date}</strong><span>{t.text}</span></li>
+        ))}
+      </ol>
+    </section>
+
+    <footer class="case__cta">
+      <a href="/realisations" class="btn" data-btn-theme="secondary">
+        <span class="btn__text-wrap"><span class="btn__text">Autres réalisations</span></span>
+      </a>
+      <a href="/contact" class="btn">
+        <span class="btn__icon-wrap is--default">
+          <span class="btn__icon-bg"></span>
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+        </span>
+        <span class="btn__text-wrap"><span class="btn__text">Démarrer mon projet</span></span>
+        <span class="btn__icon-wrap is--hover">
+          <span class="btn__icon-bg"></span>
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+        </span>
+      </a>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .case {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--container-padding) var(--space-3xl);
+  }
+  .case__back { margin-bottom: var(--space-lg); }
+  .case__back a { font-size: var(--text-sm); color: var(--color-neutral); }
+  .case__back a:hover { color: var(--color-accent-ink); }
+  .case__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .case__title {
+    font-size: var(--text-4xl); text-transform: uppercase;
+    letter-spacing: -0.03em; line-height: 1.05; color: var(--color-accent-ink);
+  }
+  .case__baseline { font-size: var(--text-lg); color: var(--color-neutral); margin-top: var(--space-sm); max-width: 640px; }
+  .case__meta {
+    display: flex; flex-wrap: wrap; gap: var(--space-lg);
+    margin-top: var(--space-md); padding: var(--space-md) 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .case__meta dt { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-neutral); }
+  .case__meta dd { font-size: var(--text-base); color: var(--color-primary); font-weight: 700; margin-top: 2px; }
+  .case__video {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    border-radius: 16px; margin-top: var(--space-lg); background: #000;
+  }
+  .case__block { margin-top: var(--space-2xl); }
+  .case__heading {
+    font-size: var(--text-2xl); text-transform: uppercase;
+    letter-spacing: -0.02em; margin-bottom: var(--space-md);
+  }
+  .case__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+  .case__card {
+    padding: var(--space-lg); border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line);
+  }
+  .case__card h3 { font-size: var(--text-lg); margin-bottom: var(--space-sm); }
+  .case__card p { color: var(--color-neutral); }
+  .case__card a { color: var(--color-accent-ink); font-weight: 700; }
+  .case__results { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .case__stat {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: var(--space-lg); border-radius: 12px; text-align: center;
+    background: var(--color-accent-light); border: 1px solid var(--accent-soft-border);
+  }
+  .case__value { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-accent-ink); }
+  .case__label { font-size: var(--text-sm); color: var(--color-primary); font-weight: 700; }
+  .case__note { font-size: var(--text-xs); color: var(--color-neutral); }
+  .case__quote {
+    margin: 0; padding: var(--space-lg);
+    border-left: 3px solid var(--color-accent-ink);
+    background: var(--surface); border-radius: 0 12px 12px 0;
+  }
+  .case__quote p { font-size: var(--text-lg); line-height: 1.6; }
+  .case__quote footer { margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-neutral); font-weight: 700; }
+  .case__timeline { list-style: none; display: flex; flex-direction: column; }
+  .case__timeline li {
+    display: flex; gap: var(--space-md); align-items: baseline;
+    padding: var(--space-md) 0; border-top: 1px solid var(--line);
+    font-size: var(--text-base);
+  }
+  .case__timeline li:last-child { border-bottom: 1px solid var(--line); }
+  .case__timeline strong { font-family: var(--font-mono); color: var(--color-accent-ink); min-width: 60px; }
+  .case__cta {
+    display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center;
+    margin-top: var(--space-2xl);
+  }
+
+  @media (max-width: 768px) {
+    .case__title { font-size: var(--text-2xl); }
+    .case__grid { grid-template-columns: 1fr; }
+    .case__results { grid-template-columns: 1fr; }
+  }
+</style>

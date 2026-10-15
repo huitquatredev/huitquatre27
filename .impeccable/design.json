@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T00:00:00.000Z",
+  "title": "Design System: huitquatre",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Acide", "canonical": "#D4FF00", "tonalRamp": ["#2a3300", "#556600", "#7f9900", "#aacc00", "#D4FF00", "#e0ff33", "#ecff66", "#f8ffcc"] },
+      "ink": { "role": "neutral", "displayName": "Noir atelier", "canonical": "#000000", "tonalRamp": ["#000000", "#0a0a0a", "#141414", "#1a1a1a", "#262626", "#333333", "#4d4d4d", "#666666"] },
+      "paper": { "role": "neutral", "displayName": "Blanc", "canonical": "#FFFFFF", "tonalRamp": ["#ffffff", "#f2f2f2", "#e6e6e6", "#d9d9d9", "#cccccc", "#bfbfbf", "#a6a6a6", "#8c8c8c"] },
+      "gray": { "role": "neutral", "displayName": "Gris franc", "canonical": "#777777", "tonalRamp": ["#1a1a1a", "#2e2e2e", "#454545", "#5c5c5c", "#777777", "#8f8f8f", "#adadad", "#c9c9c9"] },
+      "muted": { "role": "neutral", "displayName": "Blanc atténué", "canonical": "rgba(255,255,255,0.6)", "tonalRamp": ["rgba(255,255,255,0.15)", "rgba(255,255,255,0.25)", "rgba(255,255,255,0.35)", "rgba(255,255,255,0.45)", "rgba(255,255,255,0.55)", "rgba(255,255,255,0.65)", "rgba(255,255,255,0.75)", "rgba(255,255,255,0.9)"] },
+      "alert": { "role": "neutral", "displayName": "Rouge alerte", "canonical": "#FF3333", "tonalRamp": ["#330a0a", "#661414", "#992020", "#cc2b2b", "#FF3333", "#ff5c5c", "#ff8585", "#ffcccc"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Section titles, uppercase, two-beat punchlines." },
+      "headline": { "displayName": "Headline", "purpose": "XXL prices and proof figures." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs, FAQ answers, chat." },
+      "label": { "displayName": "Label", "purpose": "Eyebrows, indexes, units, scores." }
+    },
+    "shadows": [
+      { "name": "halo-focus", "value": "radial-gradient(ellipse, rgba(212,255,0,0.12) 0%, transparent 70%) + blur(50px)", "purpose": "Guide the eye to the focal scene. One halo per focal point." },
+      { "name": "float-ambient", "value": "0 4px 20px rgba(0,0,0,0.3)", "purpose": "Lift floating pills off dark backgrounds." }
+    ],
+    "motion": [
+      { "name": "ease-enter", "value": "expo.out with 0.6–0.8s durations", "purpose": "Entrances: letters, windows, cards." },
+      { "name": "ease-scrub", "value": "scrub 0.3 timelines", "purpose": "Scroll-driven scenes (chaos degradation, stacking)." },
+      { "name": "ease-pixel", "value": "steps() + expo.inOut 0.4–0.6s", "purpose": "Pixel language only: transitions, loader, footer." },
+      { "name": "ease-exit", "value": "power2.in", "purpose": "Exits and morphs." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" },
+      { "name": "tablet", "value": "1024px" },
+      { "name": "desktop", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one action per screen. Lime pill, sliding arrow icon on hover.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Démarrer mon projet <span class=\"ds-btn-arrow\">→</span></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:0.75em;background:#D4FF00;color:#000;font-weight:700;text-transform:uppercase;border-radius:2.5em;padding:1em 1.5em;text-decoration:none;transition:transform 0.3s ease;}.ds-btn-primary:hover{transform:scale(1.03);}.ds-btn-primary:focus-visible{outline:2px solid #D4FF00;outline-offset:2px;}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet alternative next to primary. Transparent with lime border.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Tout voir</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;background:transparent;color:#D4FF00;border:1px solid #D4FF00;font-weight:700;text-transform:uppercase;border-radius:2.5em;padding:1em 1.5em;text-decoration:none;}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "button-secondary",
+      "description": "Selectable option pill. Fills lime when on.",
+      "html": "<button class=\"ds-chip\">Boutique en ligne</button> <button class=\"ds-chip ds-chip--on\">Site vitrine</button>",
+      "css": ".ds-chip{background:transparent;color:#D4FF00;border:1px solid rgba(212,255,0,0.5);border-radius:2.5em;padding:8px 16px;font-weight:700;cursor:pointer;}.ds-chip--on{background:#D4FF00;color:#000;}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat dark container for grouped content. No shadow, thin white border.",
+      "html": "<div class=\"ds-card\"><strong>Rebranding</strong><span>On part de votre existant qu'on améliore, ou on crée de zéro.</span></div>",
+      "css": ".ds-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:4px;}.ds-card strong{color:#fff;}.ds-card span{color:rgba(255,255,255,0.6);font-size:0.9rem;}"
+    },
+    {
+      "name": "Accordion",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Native details/summary FAQ row. Plus rotates into lime disc when open.",
+      "html": "<details class=\"ds-acc\" open><summary>Y a-t-il des frais récurrents ?<span>+</span></summary><div><p>Non. 1 990 € en une fois.</p></div></details>",
+      "css": ".ds-acc{border-top:1px solid rgba(255,255,255,0.08);}.ds-acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:1rem 0.5rem;font-weight:700;color:#fff;}.ds-acc summary::-webkit-details-marker{display:none;}.ds-acc summary:hover{color:#D4FF00;}.ds-acc summary span{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);}.ds-acc[open] summary span{transform:rotate(45deg);background:#D4FF00;color:#000;border-color:#D4FF00;}.ds-acc p{color:rgba(255,255,255,0.6);padding-bottom:1rem;}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "button-primary",
+      "description": "Pill field, dark with lime focus ring.",
+      "html": "<input class=\"ds-input\" placeholder=\"Votre nom\" />",
+      "css": ".ds-input{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:2.5em;padding:10px 16px;color:#fff;font-size:1rem;}.ds-input:focus{outline:none;border-color:#D4FF00;}"
+    },
+    {
+      "name": "Score Badge",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Floating metric pill. Green for good scores, red for alerts.",
+      "html": "<span class=\"ds-badge\">100</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;padding:1px 6px;border-radius:6px;background:rgba(72,199,100,0.2);color:#48c764;font-size:11px;font-weight:700;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Atelier Suisse",
+    "overview": "Une grille suisse rigoureuse tendue sur un fond noir massif, percutée d'un lime électrique. La typographie fait la hiérarchie, l'accent ne décore jamais : il signale. Le ton est électrique et vif, les composants tactiles — tout invite au clic, rien ne ressemble à un template corporate.",
+    "keyCharacteristics": [
+      "Noir dominant, lime parcimonieux mais franc.",
+      "Titres monumentaux uppercase, filets de texte aérés en dessous.",
+      "Boutons pilule à double icône animée (système Osmo).",
+      "Cartes plates, halos lumineux, zéro ombre portée."
+    ],
+    "rules": [
+      { "name": "The Signal Rule", "body": "L'Acide signale une action, un prix ou un état — jamais une décoration.", "section": "colors" },
+      { "name": "The Muted Floor Rule", "body": "Aucun texte informatif sous rgba(255,255,255,0.6).", "section": "colors" },
+      { "name": "The Two-Beat Rule", "body": "Les titres claquent en deux temps, le second en Acide.", "section": "typography" },
+      { "name": "The Halo Rule", "body": "Un halo = un point focal. Jamais de halo décoratif sans contenu.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do réserver l'Acide aux actions, prix et états.",
+      "Do garder les micro-textes au-dessus du plancher atténué.",
+      "Do animer en expo/power avec sorties scrubbed ; pixel et steps uniquement pour le langage transition.",
+      "Do respecter prefers-reduced-motion sur chaque animation."
+    ],
+    "donts": [
+      "Don't mettre de dégradé bleu, de photo stock souriante ou de section générique.",
+      "Don't utiliser d'ombres portées — halos seulement.",
+      "Don't descendre les bordures de cartes sous blanc 8% (5% réservé aux imbrications).",
+      "Don't inventer une variante de bouton : primary, secondary, inverted, point."
+    ]
+  }
+}

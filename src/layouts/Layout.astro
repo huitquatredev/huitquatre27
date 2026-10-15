@@ -8,6 +8,9 @@ const {
   title = 'huitquatre — Création de sites internet performants et écologiques',
   description = 'huitquatre crée des sites internet performants, écologiques et faciles à gérer. Un seul paiement, hébergement et maintenance offerts.'
 } = Astro.props;
+
+import SideNav from "../components/SideNav/SideNav.astro";
+import Transition from "../components/Transition/Transition.astro";
 ---
 
 <!DOCTYPE html>
@@ -23,9 +26,23 @@ const {
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Skip states synchronously before first paint -->
+  <script is:inline>
+    try {
+      if (window.sessionStorage.getItem("hq-loader-seen")) {
+        document.documentElement.classList.add("hq-loader-seen");
+      }
+      if (window.sessionStorage.getItem("hq-px-go")) {
+        document.documentElement.classList.add("hq-px-go");
+      }
+    } catch (e) { /* private mode: play everything */ }
+  </script>
 </head>
-<body>
+<body id="top">
+  <SideNav />
   <slot />
+  <Transition />
 </body>
 </html>
 

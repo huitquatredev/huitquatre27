@@ -1,52 +1,31 @@
 ---
+import { portfolio, type PortfolioItem } from "../../data/realisations";
+
+interface Props {
+  items?: PortfolioItem[];
+  more?: boolean;
+  intro?: string;
+}
+
+const { items = portfolio, more = false, intro } = Astro.props;
 // Portfolio — Case-study list with cursor-following video preview (Osmo-style)
-const projects = [
-  {
-    slug: "architea",
-    name: "Architéa",
-    desc: "Réseau national de contractants généraux — direction artistique, CMS sur mesure, automatisations CRM et SEO",
-  },
-  {
-    slug: "laparentelle",
-    name: "La Parent'elle",
-    desc: "Lieu dédié à la femme et la famille — CMS sur mesure, réservation d'ateliers en ligne et rappels automatisés",
-  },
-  {
-    slug: "pilates",
-    name: "Pilates nomade",
-    desc: "Centre bien-être — réservation de cours en ligne et automatisations",
-  },
-  {
-    slug: "steltis",
-    name: "Steltis Avocats",
-    desc: "Avocats fiscalistes — direction artistique, automatisations et SEO",
-  },
-  {
-    slug: "tattoo",
-    name: "Bastia Tattoo / Graphicaderme",
-    desc: "Tatouage & piercing — galerie portfolio, RDV en ligne et suivi client automatisé",
-  },
-  {
-    slug: "velletaz",
-    name: "Velletaz Groupe",
-    desc: "Pépinières viticoles — refonte, automatisations commerciales et SEO",
-  },
-];
 ---
 
 <section class="portfolio" id="realisations">
   <div class="portfolio__header">
     <p class="portfolio__eyebrow">Ils sont déjà passés à la sérénité</p>
     <h2 class="portfolio__title">Portfolio</h2>
+    {intro && <p class="portfolio__intro">{intro}</p>}
   </div>
 
   <div class="portfolio__list" data-portfolio-list>
-    {projects.map((p, i) => (
+    {items.map((p, i) => (
       <a class="portfolio__row" href={`/realisations/${p.slug}`} data-slug={p.slug} style={`--i:${i}`}>
         <span class="portfolio__index">0{i + 1}</span>
         <span class="portfolio__main">
           <span class="portfolio__name">{p.name}</span>
           <span class="portfolio__desc">{p.desc}</span>
+          <span class="portfolio__stats">{p.stats.join("  ·  ")}</span>
         </span>
         <img
           class="portfolio__thumb"
@@ -61,8 +40,26 @@ const projects = [
     ))}
   </div>
 
+  {more && (
+    <div class="portfolio__more">
+      <a class="btn" data-btn-theme="secondary" href="/realisations">
+        <span class="btn__icon-wrap is--default">
+          <span class="btn__icon-bg"></span>
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+        </span>
+        <span class="btn__text-wrap">
+          <span class="btn__text">Tout voir</span>
+        </span>
+        <span class="btn__icon-wrap is--hover">
+          <span class="btn__icon-bg"></span>
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+        </span>
+      </a>
+    </div>
+  )}
+
   <div class="portfolio__follower" data-portfolio-follower aria-hidden="true">
-    {projects.map((p) => (
+    {items.map((p) => (
       <video data-video={p.slug} muted loop playsinline preload="metadata" poster={`/videos/${p.slug}-poster.jpg`}>
         <source src={`/videos/${p.slug}.webm`} type="video/webm" />
         <source src={`/videos/${p.slug}.mp4`} type="video/mp4" />
@@ -82,23 +79,28 @@ const projects = [
     color: var(--color-neutral); margin-bottom: var(--space-sm);
   }
   .portfolio__title {
-    color: var(--color-accent); font-size: var(--text-4xl);
+    color: var(--color-accent-ink); font-size: var(--text-4xl);
     text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05;
+  }
+  .portfolio__intro {
+    font-size: var(--text-lg); color: var(--color-neutral);
+    max-width: 640px; margin-top: var(--space-md);
   }
 
   .portfolio__list { max-width: var(--container-max); margin: 0 auto; }
+  .portfolio__more { max-width: var(--container-max); margin: var(--space-lg) auto 0; text-align: center; }
   .portfolio__row {
     display: grid; grid-template-columns: auto 1fr auto;
     align-items: center; gap: var(--space-md);
     padding: var(--space-lg) var(--space-sm);
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--line);
     opacity: 0; transform: translateY(24px);
     transition: opacity 0.6s ease, transform 0.6s ease, background-color var(--transition-base);
     transition-delay: calc(var(--i) * 60ms);
   }
-  .portfolio__row:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .portfolio__row:last-child { border-bottom: 1px solid var(--line); }
   .portfolio__row.is-in { opacity: 1; transform: none; }
-  .portfolio__row:hover { background-color: rgba(255,255,255,0.02); }
+  .portfolio__row:hover { background-color: var(--surface); }
   .portfolio__index {
     font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-neutral);
   }
@@ -108,13 +110,17 @@ const projects = [
     color: var(--color-primary); line-height: 1.1;
     transition: color var(--transition-base), transform var(--transition-base);
   }
-  .portfolio__row:hover .portfolio__name { color: var(--color-accent); transform: translateX(8px); }
+  .portfolio__row:hover .portfolio__name { color: var(--color-accent-ink); transform: translateX(8px); }
   .portfolio__desc { font-size: var(--text-sm); color: var(--color-neutral); }
+  .portfolio__stats {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    color: var(--color-accent-ink); margin-top: 2px;
+  }
   .portfolio__thumb { display: none; }
   .portfolio__arrow {
     display: flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.15); color: var(--color-primary);
+    border: 1px solid var(--line-strong); color: var(--color-primary);
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
   }
   .portfolio__row:hover .portfolio__arrow {

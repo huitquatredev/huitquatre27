@@ -1,30 +1,54 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import Loader from "../components/Loader/Loader.astro"
 import Hero from "../components/Hero/Hero.astro"
-import ChaosToSerenity from "../components/Hero/ChaosToSerenity.astro"
+import Proof from "../components/Proof/Proof.astro"
 import Portfolio from "../components/Portfolio/Portfolio.astro"
+import { portfolio, featuredSlugs } from "../data/realisations"
 import Prompts from "../components/Prompts/Prompts.astro"
 import Offer from "../components/Offer/Offer.astro"
 import FAQ from "../components/FAQ/FAQ.astro"
+import { generalFaq } from "../data/faq"
 import FinalCTA from "../components/CTA/FinalCTA.astro"
+import Footer from "../components/Footer/Footer.astro"
 ---
 
 <Layout>
-  <Loader />
   <Hero />
-  <ChaosToSerenity />
-  <Portfolio />
+  <Proof />
+  <Portfolio items={portfolio.filter((p) => featuredSlugs.includes(p.slug))} more />
   <Prompts />
   <Offer />
-  <FAQ />
+  <FAQ items={generalFaq.slice(0, 4)} more="/faq" />
   <FinalCTA />
+  <Footer />
 </Layout>
 
 <script>
+  function landOnHash() {
+    // Land on the requested anchor once the loader is gone.
+    // Instant + re-asserted: a single smooth scroll gets cancelled
+    // by images/fonts shifting the layout right after load.
+    if (window.location.hash.length <= 1) return
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual"
+    const go = () => {
+      const el = document.getElementById(window.location.hash.slice(1))
+      if (!el) return
+      if (Math.abs(el.getBoundingClientRect().top) > 4) {
+        el.scrollIntoView({ behavior: "instant", block: "start" })
+      }
+    }
+    go()
+    window.requestAnimationFrame(go)
+    window.setTimeout(go, 300)
+    window.setTimeout(go, 1200)
+  }
   window.addEventListener("loaderComplete", () => {
     document.querySelector(".hero")?.classList.add("hero--visible")
+    landOnHash()
   })
+  // Loader may have been skipped synchronously before this listener attached
+  const intro = document.querySelector(".logo-intro") as HTMLElement | null
+  if (intro && getComputedStyle(intro).display === "none") landOnHash()
 </script>
 
 <style is:global>

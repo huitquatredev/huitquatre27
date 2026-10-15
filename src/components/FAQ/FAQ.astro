@@ -1,39 +1,23 @@
 ---
-// FAQ — native details accordion, schema generated from the same data
-const items = [
-  {
-    q: "Le site m'appartient-il vraiment ?",
-    a: "Oui, par construction : tout est créé <strong>directement sur vos comptes</strong> — votre GitHub, votre Storyblok, votre registrar, votre hébergeur. <strong>Rien n'a besoin de vous être remis</strong>, et il n'y a aucun départ à organiser : c'est chez vous dès le premier jour.",
-  },
-  {
-    q: "Y a-t-il des frais récurrents ?",
-    a: "Non. <strong>1 990 € en une fois</strong>, ou 4 × 497,50 € sans frais. Hébergement et maintenance inclus, <strong>sans limite de durée</strong>. Deux limites à connaître, sans langue de bois : la bande passante de l'hébergeur suffit jusqu'à environ <strong>un million de visites mensuelles</strong> (nos sites sont légers), et Storyblok inclut <strong>20 000 contenus</strong>. Si votre succès dépasse ça, tout scale facilement — prévenez-nous, on sera ravis de vous aider à basculer. Seul le nom de domaine reste à votre charge.",
-  },
-  {
-    q: "Puis-je modifier mon site moi-même ?",
-    a: "Oui, <strong>sans coder</strong> : vous <strong>créez de nouvelles pages</strong> ET modifiez celles qui existent — réorganisez les blocs, ajoutez ou supprimez des sections, changez textes et photos. Formation en visio et <strong>guide sur-mesure</strong> écrit pour votre site (pas une doc générique) inclus pour partir autonome.",
-  },
-  {
-    q: "En combien de temps mon site est-il en ligne ?",
-    a: "<strong>30 jours</strong> dès la mise en route : comptes créés ensemble, 3 semaines de design et développement avec <strong>3 allers-retours</strong>, puis formation, audits et lancement.",
-  },
-  {
-    q: "Et si je veux changer de prestataire ?",
-    a: "C'est simple : tout étant <strong>déjà sur vos comptes</strong>, il suffit d'y inviter quelqu'un d'autre. <strong>Pas de migration</strong>, pas de rachat, pas de pénalité — ni de prise d'otage possible.",
-  },
-  {
-    q: "Pourquoi pas WordPress ?",
-    a: "Mises à jour, failles de sécurité, conflits de plugins, frais récurrents : WordPress demande un entretien permanent. Un site statique supprime ces problèmes à la racine — <strong>rien à pirater, rien à mettre à jour</strong>.",
-  },
-  {
-    q: "Mon site sera-t-il visible sur Google ?",
-    a: "Le SEO technique est inclus : chargement <strong>quasi instantané</strong>, structure propre, sitemap, <strong>balises schema</strong> automatiques pour les besoins courants — et sur-mesure pour les besoins spécifiques. C'est la base saine sur laquelle votre contenu peut se classer.",
-  },
-  {
-    q: "Que se passe-t-il après la mise en ligne ?",
-    a: "Vous êtes suivi : <strong>support pendant 1 an</strong>, hébergement et maintenance inclus. Et grâce au CMS, le quotidien (textes, photos, pages) se fait <strong>sans nous</strong>.",
-  },
-];
+import type { FaqItem } from "../../data/faq";
+
+interface Props {
+  items: FaqItem[];
+  eyebrow?: string;
+  titleA?: string;
+  titleB?: string;
+  more?: string;
+  sectionId?: string;
+}
+
+const {
+  items,
+  eyebrow = "FAQ",
+  titleA = "Questions ?",
+  titleB = "Réponses.",
+  more,
+  sectionId = "faq",
+} = Astro.props;
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -46,10 +30,10 @@ const faqSchema = {
 };
 ---
 
-<section class="faq" id="faq">
+<section class="faq" id={sectionId}>
   <div class="faq__header">
-    <p class="faq__eyebrow">FAQ</p>
-    <h2 class="faq__title">Questions ? <span class="faq__accent">Réponses.</span></h2>
+    <p class="faq__eyebrow">{eyebrow}</p>
+    <h2 class="faq__title">{titleA} <span class="faq__accent">{titleB}</span></h2>
   </div>
 
   <div class="faq__list" data-faq-list>
@@ -65,6 +49,12 @@ const faqSchema = {
       </details>
     ))}
   </div>
+
+  {more && (
+    <div class="faq__more">
+      <a href={more}>Toutes les questions →</a>
+    </div>
+  )}
 
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 </section>
@@ -83,11 +73,11 @@ const faqSchema = {
     color: var(--color-primary); font-size: var(--text-4xl);
     text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05;
   }
-  .faq__accent { color: var(--color-accent); }
+  .faq__accent { color: var(--color-accent-ink); }
 
   .faq__list { max-width: var(--container-max); margin: 0 auto; }
-  .faq__item { border-top: 1px solid rgba(255,255,255,0.08); }
-  .faq__item:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .faq__item { border-top: 1px solid var(--line); }
+  .faq__item:last-child { border-bottom: 1px solid var(--line); }
   .faq__question {
     list-style: none; cursor: pointer;
     display: flex; align-items: center; justify-content: space-between;
@@ -96,11 +86,11 @@ const faqSchema = {
     color: var(--color-primary);
   }
   .faq__question::-webkit-details-marker { display: none; }
-  .faq__question:hover { color: var(--color-accent); }
+  .faq__question:hover { color: var(--color-accent-ink); }
   .faq__icon {
     flex-shrink: 0; display: flex; align-items: center; justify-content: center;
     width: 36px; height: 36px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid var(--line-strong);
     transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
   }
   .faq__item[open] .faq__icon {
@@ -119,6 +109,10 @@ const faqSchema = {
     max-width: 800px;
   }
   .faq__answer strong { color: var(--color-primary); }
+
+  .faq__more { max-width: var(--container-max); margin: var(--space-lg) auto 0; text-align: center; }
+  .faq__more a { font-size: var(--text-sm); color: var(--color-neutral); text-decoration: underline; text-underline-offset: 4px; }
+  .faq__more a:hover { color: var(--color-accent-ink); }
 
   [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
   [data-reveal].is-in { opacity: 1; transform: none; }

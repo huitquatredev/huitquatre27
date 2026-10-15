@@ -1,30 +1,11 @@
 ---
-// Offer — L'offre unique "Sérénité" : rebranding + webdesign + déploiement
-const included = [
-  { title: "Rebranding", desc: "On part de votre existant qu'on améliore, ou on crée l'identité de zéro : logo, palette, typographies." },
-  { title: "Design", desc: "Carrousel 3D, loader animé, micro-interactions : la finition de ce site, appliquée au vôtre. 3 allers-retours inclus." },
-  { title: "Pages illimitées", desc: "Créez autant de pages que vous voulez, sans surcoût." },
-  { title: "SEO technique", desc: "Sémantique, performance ~100, sitemap : les meilleures pratiques onsite, pas du « SEO de base »." },
-  { title: "CMS Storyblok", desc: "Modifiez textes, photos et pages vous-même, sans coder." },
-  { title: "Formulaire de contact", desc: "Inclus dans l'offre de base, branché et testé." },
-  { title: "Formation 1:1", desc: "Visio personnalisée + guide en ligne accessible depuis votre site." },
-  { title: "Hébergement + maintenance", desc: "Inclus, sans limite de durée. Zéro frais récurrents." },
-  { title: "Support humain", desc: "1 an, par email ou téléphone. Nous avons confiance, nos sites fonctionnent bien." },
-];
+import { offer } from "../../data/offre";
+// Offer — homepage teaser: 6 inclusions, prix, TCO, CTA. Le détail vit sur /offre.
 
-const steps = [
-  { week: "J1", title: "Mise en route", desc: "Comptes créés ensemble en visio. Le compteur des 30 jours démarre ici." },
-  { week: "J2–J20", title: "Design + développement", desc: "Rebranding, design, intégration. 3 allers-retours inclus." },
-  { week: "J21–J30", title: "Formation + mise en ligne", desc: "Visio 1:1, audits, documentation, lancement." },
-];
+const homeIncluded = offer.included.filter((item) =>
+  ["Rebranding", "Design", "Pages illimitées", "SEO technique", "CMS Storyblok", "Support humain"].includes(item.title)
+);
 
-const options = [
-  { name: "Bouton acheter", desc: "Paiement Stripe simple, sans panier. 1,5 % + 0,25 € par transaction pour Stripe.", price: "290 €" },
-  { name: "E-commerce complet", desc: "Panier, stock, livraison, relances panier. Sans abonnement mensuel. 1,5 % + 0,25 € par transaction pour Stripe.", price: "1 190 €" },
-  { name: "Multilingue", desc: "Votre site dans une autre langue.", price: "390 € / langue" },
-  { name: "Réservation en ligne", desc: "Planning, créneaux, rappels automatiques.", price: "490 €" },
-  { name: "Fonctionnalité métier", desc: "Un besoin spécifique ? Parlons-en.", price: "Sur devis" },
-];
 ---
 
 <section class="offer" id="offre">
@@ -33,15 +14,15 @@ const options = [
     <h2 class="offer__title">Tout <span class="offer__accent">compris.</span></h2>
     <p class="offer__subtitle">Rebranding, design, déploiement.</p>
     <div class="offer__price" data-reveal>
-      <span class="offer__price-value">1 990 €</span>
-      <span class="offer__price-note">en une fois, ou 4 × 497,50 € sans frais</span>
+      <span class="offer__price-value">{offer.price}</span>
+      <span class="offer__price-note">en une fois, ou {offer.installments}</span>
     </div>
   </div>
 
   <div class="offer__included" data-reveal>
     <h3 class="offer__block-title">Tout est inclus</h3>
     <ul class="offer__grid">
-      {included.map((item) => (
+      {homeIncluded.map((item) => (
         <li class="offer__item">
           <svg class="offer__check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <div>
@@ -53,49 +34,14 @@ const options = [
     </ul>
   </div>
 
-  <div class="offer__timeline" data-reveal>
-    <h3 class="offer__block-title">En ligne en 30 jours</h3>
-    <div class="offer__track" data-offer-track aria-hidden="true">
-      <span class="offer__track-fill" data-offer-fill></span>
-      <span class="offer__track-dot" style="left:0%"></span>
-      <span class="offer__track-dot" style="left:50%"></span>
-      <span class="offer__track-dot" style="left:100%"></span>
-    </div>
-    <ol class="offer__steps">
-      {steps.map((s) => (
-        <li class="offer__step">
-          <span class="offer__week">{s.week}</span>
-          <div>
-            <strong>{s.title}</strong>
-            <span>{s.desc}</span>
-          </div>
-        </li>
-      ))}
-    </ol>
-    <p class="offer__commitments">On a besoin de vous deux fois : pour les contenus et pour vos retours sur le design. Écrit dans le devis, suivi en temps réel de l'avancement de votre site depuis une URL temporaire.</p>
-  </div>
-
-  <div class="offer__options" data-reveal>
-    <h3 class="offer__block-title">Options</h3>
-    <ul class="offer__options-list">
-      {options.map((o) => (
-        <li class="offer__option">
-          <div>
-            <strong>{o.name}</strong>
-            <span>{o.desc}</span>
-          </div>
-          <span class="offer__option-price">{o.price}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <!-- Calendrier, options et comparatif détaillé : page /offre -->
 
   <div class="offer__tco" data-reveal>
-    <p><strong>Sur 5 ans :</strong> WordPress ≈ 2 500–4 000 € de frais récurrents. <span class="offer__accent">Chez huitquatre, ticket unique : 1 990 €, une fois.</span></p>
+    <p><strong>Sur 5 ans :</strong> WordPress ≈ 2 500–4 000 € de frais récurrents. <span class="offer__accent">Chez huitquatre, ticket unique : {offer.price}, une fois.</span></p>
   </div>
 
   <div class="offer__cta" data-reveal>
-    <a href="#devis" class="btn">
+    <a href="/contact" class="btn">
       <span class="btn__icon-wrap is--default">
         <span class="btn__icon-bg"></span>
         <svg
@@ -141,6 +87,7 @@ const options = [
       </span>
     </a>
     <p class="offer__fineprint">Pas d'applis natives, pas de WordPress — on ne fait que des sites sur notre stack, et on les fait bien. Le site, son code et ses contenus vous appartiennent.</p>
+    <a class="offer__details" href="/offre">Voir l'offre en détail →</a>
   </div>
 </section>
 
@@ -151,13 +98,9 @@ const options = [
   }
   .offer__header,
   .offer__included,
-  .offer__timeline,
-  .offer__options,
   .offer__tco,
   .offer__cta { max-width: var(--container-max); margin: 0 auto; }
-  .offer__included,
-  .offer__timeline,
-  .offer__options { margin-top: var(--space-xl); }
+  .offer__included { margin-top: var(--space-xl); }
   .offer__eyebrow {
     font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
     color: var(--color-neutral); margin-bottom: var(--space-sm);
@@ -166,7 +109,7 @@ const options = [
     color: var(--color-primary); font-size: var(--text-4xl);
     text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05;
   }
-  .offer__accent { color: var(--color-accent); }
+  .offer__accent { color: var(--color-accent-ink); }
   .offer__subtitle {
     font-size: var(--text-lg); color: var(--color-neutral);
     max-width: 600px; margin-top: var(--space-md);
@@ -175,11 +118,11 @@ const options = [
     display: flex; align-items: baseline; gap: var(--space-md); flex-wrap: wrap;
     margin-top: var(--space-lg); padding: var(--space-lg);
     border-radius: 16px; background: var(--color-accent-light);
-    border: 1px solid rgba(212,255,0,0.3);
+    border: 1px solid var(--accent-soft-border);
   }
   .offer__price-value {
     font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-accent-ink);
   }
   .offer__price-note { font-size: var(--text-base); color: var(--color-neutral); }
 
@@ -194,71 +137,23 @@ const options = [
   .offer__item {
     display: flex; gap: var(--space-sm); align-items: flex-start;
     padding: var(--space-md); border-radius: 12px;
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    background: var(--surface); border: 1px solid var(--line);
   }
-  .offer__check { flex-shrink: 0; color: var(--color-accent); margin-top: 2px; }
+  .offer__check { flex-shrink: 0; color: var(--color-accent-ink); margin-top: 2px; }
   .offer__item div { display: flex; flex-direction: column; gap: 2px; }
   .offer__item strong { font-size: var(--text-base); color: var(--color-primary); }
   .offer__item span { font-size: var(--text-sm); color: var(--color-neutral); }
 
-  .offer__track {
-    position: relative; height: 2px; border-radius: 2px;
-    background: rgba(255,255,255,0.1); margin-bottom: var(--space-md);
-  }
-  .offer__track-fill {
-    position: absolute; inset: 0; border-radius: 2px;
-    background: var(--color-accent); transform: scaleX(0); transform-origin: left;
-  }
-  .offer__track-dot {
-    position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%;
-    background: #000; border: 2px solid var(--color-accent);
-    transform: translate(-50%, -50%);
-  }
-  .offer__steps {
-    list-style: none; display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
-  }
-  .offer__step {
-    display: flex; gap: var(--space-sm); align-items: flex-start;
-    padding: var(--space-md); border-radius: 12px;
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-  }
-  .offer__week {
-    font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700;
-    color: #000; background: var(--color-accent);
-    padding: 2px 10px; border-radius: 2.5em; white-space: nowrap;
-  }
-  .offer__step div { display: flex; flex-direction: column; gap: 2px; }
-  .offer__step strong { font-size: var(--text-base); color: var(--color-primary); }
-  .offer__step span { font-size: var(--text-sm); color: var(--color-neutral); }
-  .offer__commitments {
-    margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-neutral);
-    border-left: 3px solid var(--color-accent); padding-left: var(--space-md);
-  }
-
-  .offer__options-list { list-style: none; display: flex; flex-direction: column; }
-  .offer__option {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: var(--space-md); padding: var(--space-md) var(--space-sm);
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  .offer__option:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .offer__option div { display: flex; flex-direction: column; gap: 2px; }
-  .offer__option strong { font-size: var(--text-base); color: var(--color-primary); }
-  .offer__option span { font-size: var(--text-sm); color: var(--color-neutral); }
-  .offer__option-price {
-    font-family: var(--font-mono); font-size: var(--text-base); font-weight: 700;
-    color: var(--color-accent); white-space: nowrap;
-  }
-
   .offer__tco {
     margin-top: var(--space-xl); padding: var(--space-md) var(--space-lg);
-    border-radius: 12px; background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; background: var(--surface);
+    border: 1px solid var(--line);
     font-size: var(--text-base); color: var(--color-primary); text-align: center;
   }
 
   .offer__cta { margin-top: var(--space-xl); text-align: center; }
+  .offer__details { display: inline-block; margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-neutral); text-decoration: underline; text-underline-offset: 4px; }
+  .offer__details:hover { color: var(--color-accent-ink); }
   .offer__fineprint {
     margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-neutral);
     max-width: 600px; margin-left: auto; margin-right: auto;
@@ -270,16 +165,11 @@ const options = [
   @media (max-width: 768px) {
     .offer__title { font-size: var(--text-2xl); }
     .offer__grid { grid-template-columns: 1fr; }
-    .offer__steps { grid-template-columns: 1fr; }
     [data-reveal] { opacity: 1; transform: none; }
   }
 </style>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
-
   document.addEventListener('DOMContentLoaded', () => {
     const blocks = Array.from(document.querySelectorAll('.offer [data-reveal]'));
     const io = new IntersectionObserver((entries) => {
@@ -291,14 +181,5 @@ const options = [
       }
     }, { threshold: 0.1 });
     blocks.forEach((b) => io.observe(b));
-
-    const fill = document.querySelector('[data-offer-fill]');
-    const track = document.querySelector('[data-offer-track]');
-    if (fill && track) {
-      gsap.fromTo(fill, { scaleX: 0 }, {
-        scaleX: 1, ease: 'none',
-        scrollTrigger: { trigger: track, start: 'top 85%', end: 'bottom 40%', scrub: 0.3 },
-      });
-    }
   });
 </script>
