@@ -1,4 +1,5 @@
 ---
+import Button from "../Button/Button.astro";
 // FinalCTA — full accent breakout: lime section, black type, marquee band
 const marqueeItems = ["Sans abonnement", "Sans surprise", "En ligne en 30 jours", "Design inclus"];
 ---
@@ -23,65 +24,21 @@ const marqueeItems = ["Sans abonnement", "Sans surprise", "En ligne en 30 jours"
       <span class="final__line">Votre site</span>
       <span class="final__line final__line--outline">en 30 jours.</span>
     </h2>
-    <p class="final__price">1 990 €, une fois. Ou 4 × 497,50 € sans frais.</p>
-    <a href="/contact" class="btn btn--large" data-btn-theme="inverted">
-      <span class="btn__icon-wrap is--default">
-        <span class="btn__icon-bg"></span>
-        <svg
-          class="btn__icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          ><path
-            d="M14 19L21 12L14 5"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-miterlimit="10"></path><path
-            d="M21 12H2"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-miterlimit="10"></path></svg
-        >
-      </span>
-      <span class="btn__text-wrap">
-        <span class="btn__text">Démarrer mon projet</span>
-      </span>
-      <span class="btn__icon-wrap is--hover">
-        <span class="btn__icon-bg"></span>
-        <svg
-          class="btn__icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          ><path
-            d="M14 19L21 12L14 5"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-miterlimit="10"></path><path
-            d="M21 12H2"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-miterlimit="10"></path></svg
-        >
-      </span>
-    </a>
-    <p class="final__note">Réponse sous 24 h ouvrées. Sans engagement.</p>
+    <p class="final__price">1 990 €, une fois. Ou 4 × 497,50 € sans frais.</p>
+    <Button href="/contact" theme="inverted" size="large">Démarrer mon projet</Button>
+    <p class="final__note">Réponse sous 24 h ouvrées. Sans engagement.</p>
   </div>
 </section>
 
 <style>
   .final {
     background: var(--color-accent);
-    color: #000;
+    color: var(--color-secondary);
     overflow: hidden;
   }
   .final__marquee {
-    border-top: 3px solid #000;
-    border-bottom: 3px solid #000;
+    border-top: 3px solid var(--color-secondary);
+    border-bottom: 3px solid var(--color-secondary);
     padding: var(--space-sm) 0;
     overflow: hidden;
     white-space: nowrap;
@@ -120,14 +77,19 @@ const marqueeItems = ["Sans abonnement", "Sans surprise", "En ligne en 30 jours"
   .final__line { display: block; }
   .final__line--outline {
     color: transparent;
-    -webkit-text-stroke: 3px #000;
+    -webkit-text-stroke: 3px var(--color-secondary);
   }
   .final__price {
     margin-top: var(--space-md);
     font-size: var(--text-xl);
     font-weight: 700;
   }
-  .final__body .btn { margin-top: var(--space-lg); }
+  .final__body :global(.btn) { margin-top: var(--space-lg); }
+  /* Bouton lin sur le fond forêt. */
+  .final :global(.btn[data-btn-theme="inverted"]) {
+    --btn-color: var(--color-primary);
+    --btn-color-background: var(--color-secondary);
+  }
   .final__note {
     margin-top: var(--space-md);
     font-size: var(--text-sm);

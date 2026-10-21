@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button/Button.astro";
+import PriceBand from "../../components/Offer/PriceBand.astro";
 import FAQ from "../../components/FAQ/FAQ.astro";
 import FinalCTA from "../../components/CTA/FinalCTA.astro";
 import Footer from "../../components/Footer/Footer.astro";
@@ -11,7 +13,7 @@ const calendar = [
     week: "S1",
     title: "Mise en route",
     points: [
-      "Visio d'1 h : on crée vos comptes ensemble (GitHub, Storyblok, hébergeur, registrar)",
+      "Visio d'1 h : on crée vos comptes ensemble (GitHub, Storyblok, hébergeur, registrar)",
       "Accès à l'URL preview : vous suivez l'avancement en temps réel",
       "Le compteur des 30 jours démarre ici",
     ],
@@ -38,48 +40,37 @@ const calendar = [
 ];
 
 const tco = [
-  { label: "Création du site", wp: "1 500 – 3 000 €", hq: offer.price },
-  { label: "Hébergement / an", wp: "100 – 300 €", hq: "0 €" },
-  { label: "Maintenance + plugins / an", wp: "300 – 600 €", hq: "0 €" },
-  { label: "Total sur 5 ans", wp: "≈ 2 500 – 4 000 €", hq: `${offer.price}, une fois`, total: true },
+  { label: "Création du site", wp: "1 500 – 3 000 €", hq: offer.price },
+  { label: "Hébergement / an", wp: "100 – 300 €", hq: "0 €" },
+  { label: "Maintenance + plugins / an", wp: "300 – 600 €", hq: "0 €" },
+  { label: "Total sur 5 ans", wp: "≈ 2 500 – 4 000 €", hq: `${offer.price}, une fois`, total: true },
 ];
 
 const guarantees = [
-  { title: "Zéro frais récurrents", text: "Hébergement et maintenance inclus, sans limite de durée. Seul le nom de domaine (~15 €/an) reste à votre charge." },
+  { title: "Zéro frais récurrents", text: "Hébergement et maintenance inclus, sans limite de durée. Seul le nom de domaine (~15 €/an) reste à votre charge." },
   { title: "Tout est chez vous", text: "Site construit directement sur vos comptes : GitHub, Storyblok, hébergeur. Rien à vous remettre, rien à reprendre." },
-  { title: "30 jours annoncés, 30 jours tenus", text: "Calendrier partagé, URL preview en temps réel. De votre côté : contenus sous 7 jours, retours sous 48 h." },
+  { title: "30 jours annoncés, 30 jours tenus", text: "Calendrier partagé, URL preview en temps réel. De votre côté : contenus sous 7 jours, retours sous 48 h." },
   { title: "On sait dire non", text: "Pas d'applis natives, pas de WordPress, pas de template. Une stack, un niveau d'exigence." },
 ];
 
 ---
 
 <Layout
-  title="L'offre — site complet à 1 990 €, sans frais récurrents | huitquatre"
-  description="Une offre unique : rebranding, design, site en 30 jours pour 1 990 € payés une fois. Hébergement et maintenance inclus."
+  title="L'offre — site complet à 1 990 €, sans frais récurrents | huitquatre"
+  description="Une offre unique : rebranding, design, site en 30 jours pour 1 990 € payés une fois. Hébergement et maintenance inclus."
 >
   <main class="opage">
     <header class="opage__hero">
       <p class="opage__eyebrow">L'offre unique</p>
       <h1 class="opage__title">Une offre. <span class="opage__accent">Un prix.</span></h1>
       <p class="opage__subtitle">Rebranding, design, déploiement. Un seul prix, zéro astérisque.</p>
-      <div class="opage__price" data-reveal>
-        <span class="opage__price-value">{offer.price}</span>
-        <span class="opage__price-note">en une fois, ou {offer.installments}</span>
-      </div>
-      <div class="opage__hero-cta" data-reveal>
-        <a href="/contact" class="btn">
-          <span class="btn__icon-wrap is--default">
-            <span class="btn__icon-bg"></span>
-            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
-          </span>
-          <span class="btn__text-wrap"><span class="btn__text">Démarrer mon projet</span></span>
-          <span class="btn__icon-wrap is--hover">
-            <span class="btn__icon-bg"></span>
-            <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
-          </span>
-        </a>
-      </div>
     </header>
+
+    <PriceBand />
+
+    <div class="opage__hero-cta" data-reveal>
+      <Button href="/contact">Démarrer mon projet</Button>
+    </div>
 
     <section class="opage__block" data-reveal>
       <h2 class="opage__heading">Tout est inclus</h2>
@@ -87,7 +78,7 @@ const guarantees = [
         {offer.included.map((item) => (
           <li class="opage__item">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <div><strong>{item.title}</strong><span>{item.desc}</span></div>
+            <div><strong>{item.title}</strong><span set:html={item.desc}></span></div>
           </li>
         ))}
       </ul>
@@ -166,15 +157,8 @@ const guarantees = [
   .opage { max-width: var(--container-max); margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
   .opage__eyebrow { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-neutral); margin-bottom: var(--space-sm); }
   .opage__title { color: var(--color-primary); font-size: var(--text-4xl); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; }
-  .opage__accent { color: var(--color-accent-ink); }
+  .opage__accent { color: var(--color-argile); }
   .opage__subtitle { font-size: var(--text-lg); color: var(--color-neutral); max-width: 600px; margin-top: var(--space-md); }
-  .opage__price {
-    display: flex; align-items: baseline; gap: var(--space-md); flex-wrap: wrap;
-    margin-top: var(--space-lg); padding: var(--space-lg); border-radius: 16px;
-    background: var(--color-accent-light); border: 1px solid var(--accent-soft-border);
-  }
-  .opage__price-value { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-accent-ink); }
-  .opage__price-note { font-size: var(--text-base); color: var(--color-neutral); }
   .opage__hero-cta { margin-top: var(--space-lg); }
   .opage__block { margin-top: var(--space-2xl); }
   .opage__heading { font-size: var(--text-2xl); text-transform: uppercase; margin-bottom: var(--space-md); }
@@ -189,6 +173,7 @@ const guarantees = [
   .opage__item div { display: flex; flex-direction: column; gap: 2px; }
   .opage__item strong { font-size: var(--text-base); color: var(--color-primary); }
   .opage__item span { font-size: var(--text-sm); color: var(--color-neutral); }
+  .opage__item span :global(a) { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .opage__options { list-style: none; display: flex; flex-direction: column; }
   .opage__option {
     display: flex; align-items: center; justify-content: space-between;
@@ -207,7 +192,7 @@ const guarantees = [
   }
   .opage__week {
     display: inline-block; font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700;
-    color: #000; background: var(--color-accent); padding: 2px 10px; border-radius: 2.5em; margin-bottom: var(--space-sm);
+    color: var(--color-secondary); background: var(--color-accent); padding: 2px 10px; border-radius: 2.5em; margin-bottom: var(--space-sm);
   }
   .opage__step strong { display: block; font-size: var(--text-base); color: var(--color-primary); margin-bottom: var(--space-sm); }
   .opage__step ul { list-style: disc; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: var(--text-sm); color: var(--color-neutral); }

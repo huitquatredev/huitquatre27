@@ -1,0 +1,260 @@
+---
+// Manifesto — sticky title scroll (Osmo), 4 layers.
+---
+
+<section id="manifeste" data-sticky-title="wrap" class="mani">
+  <div class="mani__container">
+    <div class="mani__inner">
+      <p
+        data-sticky-title="heading"
+        class="mani__el mani__el--lead is--on-dark">
+        Vous en avez marre de payer chaque mois pour un site qui ne change pas ?
+        Marre des mises à jour qui cassent tout un lundi matin ? Marre de
+        commander une refonte pour déplacer un bouton ?
+      </p>
+      <h2
+        data-sticky-title="heading"
+        class="mani__el mani__el--big mani__el--respirez is--stacked">
+        Respirez.
+      </h2>
+      <p
+        data-sticky-title="heading"
+        class="mani__el mani__el--lead is--stacked">
+        Ici le web redevient simple comme une sieste sous les platanes. Un site
+        payé une fois, léger pour de vrai, à vous pour de bon.
+      </p>
+      <h2
+        data-sticky-title="heading"
+        class="mani__el mani__el--big mani__el--final is--stacked">
+        Bienvenue chez huitquatre
+      </h2>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mani {
+    background-color: var(--color-primary);
+    width: 100%;
+    height: 440vh;
+    position: relative;
+  }
+  .mani__container {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    padding: 0 var(--container-padding);
+  }
+  .mani__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .mani__el {
+    margin: 0;
+    color: var(--color-primary);
+  }
+  .mani__el.is--on-dark {
+    color: var(--color-secondary);
+  }
+  .mani__el.is--stacked {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+  }
+  .mani__el--lead {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 1.2rem + 3.6vw, 3.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .mani__el--big {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3.5rem, 2rem + 8vw, 8rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: none;
+  }
+  /* "Respirez." apparaît sur le fond forêt : lin, puis olive quand le
+     fond passe lin (tween dans la timeline). */
+  .mani__el--respirez {
+    color: var(--color-secondary);
+  }
+  .mani__el--final {
+    font-family: var(--font-body);
+    color: var(--color-argile);
+    font-size: clamp(2.5rem, 1.5rem + 6vw, 6rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mani {
+      height: auto;
+      background-color: var(--color-secondary);
+    }
+    .mani__container {
+      position: static;
+      height: auto;
+      padding: var(--space-3xl) var(--container-padding);
+    }
+    .mani__inner {
+      gap: var(--space-xl);
+    }
+    .mani__el.is--stacked {
+      position: static;
+      transform: none;
+      visibility: visible;
+    }
+    .mani__el.is--on-dark {
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+      border-radius: 12px;
+      padding: var(--space-md);
+    }
+    .mani__el--respirez {
+      color: var(--color-accent-ink);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap"
+  import { ScrollTrigger } from "gsap/ScrollTrigger"
+  import { SplitText } from "gsap/SplitText"
+
+  gsap.registerPlugin(ScrollTrigger, SplitText)
+
+  function initStickyTitleScroll() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const wraps = document.querySelectorAll<HTMLElement>(
+      '[data-sticky-title="wrap"]'
+    )
+
+    wraps.forEach((wrap) => {
+      const headings = Array.from(
+        wrap.querySelectorAll<HTMLElement>('[data-sticky-title="heading"]')
+      )
+      if (!headings.length) return
+
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrap,
+          start: "top 40%",
+          end: "bottom bottom",
+          scrub: true
+        }
+      })
+
+      const revealDuration = 0.7,
+        fadeOutDuration = 0.7,
+        overlapOffset = 0.15,
+        bgTransition = 1
+
+      const root = getComputedStyle(document.documentElement)
+      const lin = root.getPropertyValue("--color-secondary").trim() || "#F7F3E8"
+      const olive =
+        root.getPropertyValue("--color-accent-ink").trim() || "#4E6600"
+
+      // Position de la transition : texte de la couche 2 complètement visible.
+      let transitionAt = 0
+
+      headings.forEach((heading, index) => {
+        // Preserve the full sentence for screen readers.
+        heading.setAttribute("aria-label", heading.textContent ?? "")
+
+        const split = new SplitText(heading, { type: "words,chars" })
+        split.words.forEach((word) => word.setAttribute("aria-hidden", "true"))
+
+        gsap.set(heading, { visibility: "visible" })
+
+        const headingTl = gsap.timeline()
+        headingTl.from(split.chars, {
+          autoAlpha: 0,
+          stagger: { amount: revealDuration, from: "start" },
+          duration: revealDuration
+        })
+
+        if (index < headings.length - 1) {
+          // La couche 2 tient sa pose pendant la transition de fond :
+          // le fond change d'abord, le texte s'efface ensuite.
+          const hold = index === 1 ? bgTransition : 0
+          headingTl.to(
+            split.chars,
+            {
+              autoAlpha: 0,
+              stagger: { amount: fadeOutDuration, from: "start" },
+              duration: fadeOutDuration
+            },
+            `+=${hold}`
+          )
+        }
+
+        if (index === 0) {
+          masterTl.add(headingTl)
+        } else {
+          masterTl.add(headingTl, `-=${overlapOffset}`)
+        }
+
+        if (index === 1) {
+          const start = masterTl.duration() - headingTl.duration()
+          transitionAt = start + revealDuration
+        }
+      })
+
+      if (headings.length < 2) return
+
+      // Forêt → lin, et le texte de la couche 2 lin → olive, ensemble.
+      masterTl.to(
+        wrap,
+        {
+          backgroundColor: lin,
+          duration: bgTransition,
+          ease: "power2.inOut"
+        },
+        transitionAt
+      )
+      masterTl.to(
+        headings[1],
+        { color: olive, duration: bgTransition, ease: "power2.inOut" },
+        transitionAt
+      )
+
+      // Respiration : le poids de « Respirez. » oscille lentement (variable
+      // font). Plage volontairement courte — pas toute l'échelle.
+      const breathe = gsap.to(headings[1], {
+        fontWeight: 200,
+        duration: 1.4,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        paused: true
+      })
+      ScrollTrigger.create({
+        trigger: wrap,
+        start: "top bottom",
+        end: "bottom top",
+        onToggle: (self) => (self.isActive ? breathe.play() : breathe.pause())
+      })
+    })
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initStickyTitleScroll()
+  })
+</script>

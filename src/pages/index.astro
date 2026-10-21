@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import Hero from "../components/Hero/Hero.astro"
-import Proof from "../components/Proof/Proof.astro"
+import Manifesto from "../components/Manifesto/Manifesto.astro"
 import Portfolio from "../components/Portfolio/Portfolio.astro"
 import { portfolio, featuredSlugs } from "../data/realisations"
 import Prompts from "../components/Prompts/Prompts.astro"
@@ -14,7 +14,7 @@ import Footer from "../components/Footer/Footer.astro"
 
 <Layout>
   <Hero />
-  <Proof />
+  <Manifesto />
   <Portfolio items={portfolio.filter((p) => featuredSlugs.includes(p.slug))} more />
   <Prompts />
   <Offer />

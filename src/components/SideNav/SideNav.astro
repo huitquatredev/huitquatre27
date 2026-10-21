@@ -1,29 +1,61 @@
 ---
+
 ---
 
 <div class="sidenav">
-  <header class="sidenav__header">
-    <a href="/" class="sidenav__logo" aria-label="huitquatre — accueil">huitquatre<span class="sidenav__logo-dot">.</span></a>
-    <button type="button" data-sidenav-toggle data-sidenav-button class="sidenav__button" aria-expanded="false" aria-controls="sidenav-menu">
+  <header class="sidenav__header" data-solid="true" data-sidenav-header>
+    <a href="/" class="sidenav__logo" aria-label="huitquatre — accueil"
+      >huitquatre<span class="sidenav__logo-dot">.</span></a
+    >
+    <button
+      type="button"
+      data-sidenav-toggle
+      data-sidenav-button
+      class="sidenav__button"
+      aria-expanded="false"
+      aria-controls="sidenav-menu">
       <span class="sidenav__button-text">
         <span data-sidenav-label class="sidenav__button-label">Menu</span>
         <span data-sidenav-label class="sidenav__button-label">Fermer</span>
       </span>
       <span data-sidenav-icon class="sidenav__button-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="sidenav__button-icon-svg" aria-hidden="true">
-          <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
-          <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
-          <path d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z" fill="currentColor"></path>
-          <path d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z" fill="currentColor"></path>
-          <path d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z" fill="currentColor"></path>
-          <path d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z" fill="currentColor"></path>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          viewBox="0 0 16 16"
+          fill="none"
+          class="sidenav__button-icon-svg"
+          aria-hidden="true">
+          <path
+            d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z"
+            fill="currentColor"></path>
+          <path
+            d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z"
+            fill="currentColor"></path>
+          <path
+            d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z"
+            fill="currentColor"></path>
+          <path
+            d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z"
+            fill="currentColor"></path>
+          <path
+            d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z"
+            fill="currentColor"></path>
+          <path
+            d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z"
+            fill="currentColor"></path>
         </svg>
       </span>
     </button>
   </header>
   <div data-sidenav-wrap data-nav-state="closed" class="sidenav__nav">
-    <div data-sidenav-overlay data-sidenav-toggle class="sidenav__overlay"></div>
-    <nav data-sidenav-menu id="sidenav-menu" class="sidenav__menu" aria-label="Navigation principale">
+    <div data-sidenav-overlay data-sidenav-toggle class="sidenav__overlay">
+    </div>
+    <nav
+      data-sidenav-menu
+      id="sidenav-menu"
+      class="sidenav__menu"
+      aria-label="Navigation principale">
       <div class="sidenav__menu-bg" aria-hidden="true">
         <div data-sidenav-panel class="sidenav__menu-bg-panel is--first"></div>
         <div data-sidenav-panel class="sidenav__menu-bg-panel is--second"></div>
@@ -38,7 +70,10 @@
             </a>
           </li>
           <li class="sidenav__menu-list-item">
-            <a data-sidenav-link href="/realisations" class="sidenav__menu-link">
+            <a
+              data-sidenav-link
+              href="/realisations"
+              class="sidenav__menu-link">
               <span class="sidenav__menu-link-heading">Portfolio</span>
               <span class="sidenav__menu-link-eyebrow">02</span>
             </a>
@@ -62,12 +97,14 @@
             </a>
           </li>
         </ul>
-        <div class="sidenav__menu-details">
+        <!-- <div class="sidenav__menu-details">
           <p data-sidenav-fade class="sidenav__button-label">Contact</p>
           <div class="sidenav__menu-socials">
-            <a data-sidenav-fade href="/contact" class="sidenav__button-label">Démarrer un projet</a>
+            <a data-sidenav-fade href="/contact" class="sidenav__button-label"
+              >Démarrer un projet</a
+            >
           </div>
-        </div>
+        </div> -->
       </div>
     </nav>
   </div>
@@ -84,18 +121,29 @@
     top: 1em;
     left: 1em;
     right: 1em;
-    color: var(--color-primary);
+    color: var(--color-secondary);
     pointer-events: none;
+  }
+  .sidenav__header[data-solid="true"] {
+    color: var(--color-primary);
   }
 
   .sidenav__logo {
     pointer-events: auto;
     margin-right: auto;
-    background: var(--pill-bg);
+    background: transparent;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    border: 2px solid var(--pill-border);
+    border: 1px solid transparent;
     border-radius: 999px;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .sidenav__header[data-solid="true"] .sidenav__logo {
+    background: var(--pill-bg);
+    border-color: rgb(36 56 46 / 0.1);
+    border-width: 1px;
   }
 
   .sidenav__logo {
@@ -121,15 +169,23 @@
     gap: 0.625em;
     margin: 0;
     padding: 0.625em 1.125em;
-    background: var(--pill-bg);
+    background: transparent;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    border: 2px solid var(--pill-border);
+    border: 1px solid transparent;
     border-radius: 999px;
     pointer-events: auto;
     cursor: pointer;
     font: inherit;
     color: inherit;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .sidenav__header[data-solid="true"] .sidenav__button {
+    background: var(--pill-bg);
+    border-color: rgb(0 0 0 / 0.1);
+    border-width: 1px;
   }
 
   .sidenav__button-text {
@@ -206,7 +262,7 @@
 
   .sidenav__menu-bg-panel {
     z-index: 0;
-    background-color: #fff;
+    background-color: var(--color-secondary);
     border-top-left-radius: 1.25em;
     border-bottom-left-radius: 1.25em;
     position: absolute;
@@ -218,7 +274,7 @@
   }
 
   .sidenav__menu-bg-panel.is--second {
-    background-color: #000;
+    background-color: var(--color-argile);
   }
 
   .sidenav__menu-inner {
@@ -254,7 +310,7 @@
   .sidenav__menu-link {
     display: flex;
     gap: 0.75em;
-    color: #000;
+    color: var(--color-primary);
     width: 100%;
     padding-top: 0.75em;
     padding-bottom: 0.75em;
@@ -281,7 +337,7 @@
 
   .sidenav__menu-link-eyebrow {
     z-index: 1;
-    color: #000;
+    color: var(--color-neutral);
     opacity: 0.45;
     text-transform: uppercase;
     font-family: var(--font-mono, monospace);
@@ -297,11 +353,11 @@
     align-items: flex-start;
     gap: 1.25em;
     padding-left: 2em;
-    color: #000;
+    color: var(--color-primary);
   }
 
   .sidenav__menu-details .sidenav__button-label {
-    color: #000;
+    color: var(--color-primary);
   }
 
   .sidenav__menu-socials {
@@ -315,8 +371,16 @@
   }
 
   @media screen and (max-width: 767px) {
-    .sidenav__header { top: 0.75em; left: 0.75em; right: 0.75em; }
-    .sidenav__logo, .sidenav__button { padding: 0.5em 0.9em; font-size: 0.95em; }
+    .sidenav__header {
+      top: 0.75em;
+      left: 0.75em;
+      right: 0.75em;
+    }
+    .sidenav__logo,
+    .sidenav__button {
+      padding: 0.5em 0.9em;
+      font-size: 0.95em;
+    }
     .sidenav__menu-socials {
       gap: 1em;
     }
@@ -355,9 +419,27 @@
   CustomEase.create("main", "M0,0 C0.65,0.01,0.05,0.99,1,1")
   gsap.defaults({ ease: "main", duration: 0.7 })
 
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
+  // Nav discrète sur le hero (transparente), opaque dès qu'on le franchit.
+  // Menu ouvert = toujours opaque (panneau blanc).
+  const header = document.querySelector("[data-sidenav-header]")
+  const hero = document.querySelector(".hero")
   const navWrap = document.querySelector("[data-sidenav-wrap]")
+  const setSolid = (force?: boolean) => {
+    // Menu ouvert = header toujours opaque, sinon le bouton "Fermer" devient
+    // crème sur le panneau crème et disparaît quand on scrolle dans le hero.
+    const navOpen = navWrap?.getAttribute("data-nav-state") === "open"
+    const past =
+      navOpen ||
+      (force ?? (!hero || window.scrollY > hero.offsetHeight - 120))
+    header?.setAttribute("data-solid", String(past))
+  }
+  window.addEventListener("scroll", () => setSolid(), { passive: true })
+  setSolid()
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+
   if (navWrap) {
     const overlay = navWrap.querySelector("[data-sidenav-overlay]")
     const menu = navWrap.querySelector("[data-sidenav-menu]")
@@ -377,27 +459,53 @@
     const openNav = () => {
       navWrap.setAttribute("data-nav-state", "open")
       setExpanded(true)
+      setSolid(true)
       if (reducedMotion) {
         // ponytail: pas d'anim si reduced-motion, état final direct
         tl.clear()
           .set(navWrap, { display: "block" })
-          .set([overlay, bgPanels, menuLinks, fadeTargets], { clearProps: "all", autoAlpha: 1, xPercent: 0, yPercent: 0 })
+          .set([overlay, bgPanels, menuLinks, fadeTargets], {
+            clearProps: "all",
+            autoAlpha: 1,
+            xPercent: 0,
+            yPercent: 0
+          })
         return
       }
       tl.clear()
         .set(navWrap, { display: "block" })
         .set(menu, { xPercent: 0 }, "<")
-        .fromTo(menuButtonTexts, { yPercent: 0 }, { yPercent: -100, stagger: 0.2 })
+        .fromTo(
+          menuButtonTexts,
+          { yPercent: 0 },
+          { yPercent: -100, stagger: 0.2 }
+        )
         .fromTo(menuButtonIcon, { rotate: 0 }, { rotate: 315 }, "<")
         .fromTo(overlay, { autoAlpha: 0 }, { autoAlpha: 1 }, "<")
-        .fromTo(bgPanels, { xPercent: 101 }, { xPercent: 0, stagger: 0.12, duration: 0.575 }, "<")
-        .fromTo(menuLinks, { yPercent: 140, rotate: 10 }, { yPercent: 0, rotate: 0, stagger: 0.05 }, "<+=0.35")
-        .fromTo(fadeTargets, { autoAlpha: 0, yPercent: 50 }, { autoAlpha: 1, yPercent: 0, stagger: 0.04 }, "<+=0.2")
+        .fromTo(
+          bgPanels,
+          { xPercent: 101 },
+          { xPercent: 0, stagger: 0.12, duration: 0.575 },
+          "<"
+        )
+        .fromTo(
+          menuLinks,
+          { yPercent: 140, rotate: 10 },
+          { yPercent: 0, rotate: 0, stagger: 0.05 },
+          "<+=0.35"
+        )
+        .fromTo(
+          fadeTargets,
+          { autoAlpha: 0, yPercent: 50 },
+          { autoAlpha: 1, yPercent: 0, stagger: 0.04 },
+          "<+=0.2"
+        )
     }
 
     const closeNav = () => {
       navWrap.setAttribute("data-nav-state", "closed")
       setExpanded(false)
+      setSolid()
       if (reducedMotion) {
         tl.clear().set(navWrap, { display: "none" })
         return
@@ -425,7 +533,11 @@
     })
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && navWrap.getAttribute("data-nav-state") === "open") closeNav()
+      if (
+        e.key === "Escape" &&
+        navWrap.getAttribute("data-nav-state") === "open"
+      )
+        closeNav()
     })
   }
 </script>

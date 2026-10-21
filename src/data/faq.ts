@@ -13,7 +13,7 @@ export const generalFaq: FaqItem[] = [
   },
   {
     q: "Y a-t-il des frais récurrents ?",
-    a: "Non. <strong>1 990 € en une fois</strong>, ou 4 × 497,50 € sans frais. Hébergement et maintenance inclus, <strong>sans limite de durée</strong>. Deux limites à connaître, sans langue de bois : la bande passante de l'hébergeur suffit jusqu'à environ <strong>un million de visites mensuelles</strong> (nos sites sont légers), et Storyblok inclut <strong>20 000 contenus</strong>. Si votre succès dépasse ça, tout scale facilement — prévenez-nous, on sera ravis de vous aider à basculer. Seul le nom de domaine reste à votre charge.",
+    a: "Non. <strong>1 990 € en une fois</strong>, ou 4 × 497,50 € sans frais. Hébergement et maintenance inclus, <strong>sans limite de durée</strong>. Deux limites à connaître, sans langue de bois : la bande passante de l'hébergeur est de <strong>100 Go/mois</strong> — de l'ordre du <strong>million de visites mensuelles</strong> pour un site de cette légèreté — et Storyblok inclut <strong>20 000 contenus</strong>. Si votre succès dépasse ça, tout scale facilement — prévenez-nous, on sera ravis de vous aider à basculer. Seul le nom de domaine reste à votre charge.",
   },
   {
     q: "Puis-je modifier mon site moi-même ?",
@@ -52,7 +52,7 @@ export const prixFaq: FaqItem[] = [
   },
   {
     q: "Y a-t-il vraiment zéro frais récurrents ?",
-    a: "Oui pour tout ce qui nous concerne : <strong>hébergement, maintenance</strong> (il n'y en a pas sur du statique). Restent à votre charge : le <strong>nom de domaine</strong> (~15 €/an) et les limites généreuses de l'offre — bande passante jusqu'à <strong>100 Go/mois</strong>, <strong>20 000 contenus</strong> Storyblok. Au-delà, on fait évoluer l'architecture ensemble.",
+    a: "Oui pour tout ce qui nous concerne : <strong>hébergement, maintenance</strong> (il n'y en a pas sur du statique). Restent à votre charge : le <strong>nom de domaine</strong> (~15 €/an) et les limites généreuses de l'offre — bande passante jusqu'à <strong>100 Go/mois</strong> (de l'ordre du million de visites mensuelles pour un site de cette légèreté), <strong>20 000 contenus</strong> Storyblok. Au-delà, on fait évoluer l'architecture ensemble.",
   },
   {
     q: "Et si mon projet ne rentre pas dans l'offre ?",

@@ -1,5 +1,6 @@
 ---
 // Prompts — Copy-paste AI prompts + published answers (trust + GEO)
+// Dropping cards stack (Osmo) — pile de cartes à faire glisser.
 const items = [
   {
     icon: "💰",
@@ -52,6 +53,7 @@ const faqSchema = {
     acceptedAnswer: { "@type": "Answer", text: i.answer },
   })),
 };
+
 ---
 
 <section class="prompts" id="prompts">
@@ -64,28 +66,60 @@ const faqSchema = {
     </p>
   </div>
 
-  <div class="prompts__list" data-prompts-list>
-    {items.map((item, i) => (
-      <article class="prompts__card" style={`--i:${i}`}>
-        <div class="prompts__card-head">
-          <span class="prompts__icon" aria-hidden="true">{item.icon}</span>
-          <h3 class="prompts__card-title">{item.title}</h3>
-          <span class="prompts__index">0{i + 1}</span>
-        </div>
-        <div class="prompts__promptbox">
-          <div class="prompts__promptbar">
-            <span class="prompts__dots" aria-hidden="true"><span></span><span></span><span></span></span>
-            <span class="prompts__promptlabel">prompt</span>
-            <button class="prompts__copy" type="button" data-copy-btn>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              <span data-copy-label>Copier</span>
-            </button>
+  <div data-dropping-stack-init class="dropping-stack">
+    <div data-dropping-stack-collection class="dropping-stack__collection">
+      <div class="dropping-stack__list" data-prompts-list>
+        {items.map((item) => (
+          <div data-dropping-stack-item class="dropping-stack__item">
+            <div class="dropping-stack-card">
+              <div class="dropping-stack-card__before"></div>
+              <div class="dropping-stack-card__content">
+                <div class="dropping-stack-card__start">
+                  <div class="dropping-stack-card__visual">
+                    <div class="dropping-stack-card__visual-before"></div>
+                    <span class="dropping-stack-card__emoji" aria-hidden="true">{item.icon}</span>
+                  </div>
+                  <div class="dropping-stack-card__words">
+                    <div class="prompts__promptbar">
+                      <span class="prompts__promptlabel">prompt</span>
+                      <button class="prompts__copy" type="button" data-copy-btn>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <span data-copy-label>Copier</span>
+                      </button>
+                    </div>
+                    <blockquote class="prompts__quote" data-prompt-text>{item.prompt}</blockquote>
+                  </div>
+                </div>
+                <div class="dropping-stack-card__end">
+                  <h3 class="dropping-stack-card__h">{item.title}</h3>
+                  <p class="prompts__answer">
+                    <span class="prompts__answer-label">Notre réponse —</span>{" "}
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <blockquote class="prompts__quote" data-prompt-text>{item.prompt}</blockquote>
+        ))}
+      </div>
+    </div>
+
+    <div class="dropping-stack__controls">
+      <div data-dropping-stack-prev class="dropping-stack__control is--prev" role="button" tabindex="0" aria-label="Question précédente">
+        <div class="dropping-stack__control-circle is--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="dropping-stack__control-svg">
+            <path d="M6.74976 14.25L11.9998 9L6.74976 3.75" stroke="currentColor" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
         </div>
-        <p class="prompts__answer"><span class="prompts__answer-label">Notre réponse —</span> {item.answer}</p>
-      </article>
-    ))}
+      </div>
+      <div data-dropping-stack-next class="dropping-stack__control" role="button" tabindex="0" aria-label="Question suivante">
+        <div class="dropping-stack__control-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="dropping-stack__control-svg">
+            <path d="M6.74976 14.25L11.9998 9L6.74976 3.75" stroke="currentColor" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
@@ -95,12 +129,12 @@ const faqSchema = {
   .prompts {
     background-color: var(--color-secondary);
     padding: var(--space-3xl) var(--container-padding);
+    /* Le carrousel utilise des z-index jusqu'à 2000 : sans isolation, les
+       cartes passent au-dessus du tiroir de navigation (z-index 80/90). */
+    isolation: isolate;
   }
   .prompts__header {
     max-width: var(--container-max); margin: 0 auto var(--space-xl);
-    position: sticky; top: 0; z-index: 5;
-    background-color: var(--color-secondary);
-    padding-top: var(--space-md); padding-bottom: var(--space-md);
   }
   .prompts__eyebrow {
     font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
@@ -110,170 +144,604 @@ const faqSchema = {
     color: var(--color-primary); font-size: var(--text-4xl);
     text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05;
   }
-  .prompts__accent { color: var(--color-accent-ink); }
+  .prompts__accent { color: var(--color-argile); }
   .prompts__subtitle {
     font-size: var(--text-lg); color: var(--color-neutral);
     max-width: 600px; margin-top: var(--space-md);
   }
 
-  .prompts__list {
-    max-width: 900px; margin: 0 auto;
-    display: flex; flex-direction: column; gap: var(--space-lg);
+  /* Dropping cards stack — Osmo resource. */
+  .dropping-stack {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: var(--space-lg);
   }
-  .prompts__card {
-    position: sticky; top: calc(50% + var(--i) * 24px);
+  .dropping-stack__collection {
+    padding-bottom: 7.5em;
+    padding-right: 7.5em;
+  }
+  .dropping-stack__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .dropping-stack__item {
+    position: absolute;
+    will-change: transform, opacity;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .dropping-stack__item:nth-child(1) { position: relative; }
+  .dropping-stack-card {
+    --card-w: min(50em, 100vw - 10em);
+    --card-fg: var(--color-primary);
+    --card-fg-soft: var(--color-neutral);
+    --card-fg-quote: var(--color-primary);
+    --card-line: color-mix(in srgb, var(--color-primary) 25%, transparent);
+    --card-surface: color-mix(in srgb, var(--color-primary) 6%, transparent);
+    display: flex;
+    flex-direction: column;
+    color: var(--card-fg);
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-primary);
+    border-radius: 16px;
+    width: var(--card-w);
+    /* Le ratio 16:10 devient une hauteur plancher : si le texte deborde,
+       la carte grandit au lieu de le tronquer. */
+    min-height: calc(var(--card-w) * 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Toutes les cartes sont en lin, cernées d'un filet forêt : la pile se lit
+     par le trait et le décalage, pas par la couleur. */
+  .dropping-stack-card__before { flex: 0 0 0; }
+  .dropping-stack-card__content {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    gap: var(--space-lg);
+    width: 100%;
+    flex: 1;
+    padding: var(--space-lg);
+  }
+  .dropping-stack-card__start {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+  .dropping-stack-card__visual {
+    background-color: var(--card-surface);
+    border-radius: 12px;
+    width: clamp(5rem, 20%, 10rem);
+    flex: none;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dropping-stack-card__visual-before { padding-top: 62.5%; width: 100%; }
+  .dropping-stack-card__emoji {
+    font-size: clamp(1.5rem, 2.4vw, 2.75rem);
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dropping-stack-card__words {
+    width: 65%;
+    min-width: 0;
     display: flex; flex-direction: column; gap: var(--space-sm);
-    padding: var(--space-lg); border-radius: 16px;
-    background: #141414; border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 -12px 40px rgba(0,0,0,0.45);
-    filter: brightness(1);
-    transform-origin: center center;
-    will-change: transform;
   }
-  .prompts__card:hover { border-color: rgba(212,255,0,0.3); }
-  .prompts__card-head { display: flex; align-items: center; gap: var(--space-sm); }
-  .prompts__icon { font-size: var(--text-xl); }
-  .prompts__card-title {
-    font-size: var(--text-lg); color: #FFFFFF;
-    text-transform: uppercase; letter-spacing: 0; flex: 1;
+  .dropping-stack-card__end {
+    display: flex; flex-direction: column; gap: var(--space-sm);
   }
-  .prompts__index { font-family: var(--font-mono); font-size: var(--text-sm); color: #777777; }
-  .prompts__promptbox {
-    border-radius: 12px; overflow: hidden;
-    background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.08);
+  .dropping-stack-card__h {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4.5vw, 4.75em);
+    font-weight: 700; line-height: 0.9; letter-spacing: -0.03em;
+    color: var(--card-fg); margin: 0;
   }
+
   .prompts__promptbar {
     display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .prompts__dots { display: flex; gap: 5px; }
-  .prompts__dots span { width: 8px; height: 8px; border-radius: 50%; }
-  .prompts__dots span:nth-child(1) { background: #ff5f57; }
-  .prompts__dots span:nth-child(2) { background: #febc2e; }
-  .prompts__dots span:nth-child(3) { background: #28c840; }
   .prompts__promptlabel {
     font-family: var(--font-mono); font-size: var(--text-xs);
-    text-transform: uppercase; letter-spacing: 0.1em; color: #777777;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--card-fg-soft);
     flex: 1;
-  }
-  .prompts__quote {
-    margin: 0; padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-    font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.2;
-    color: rgba(255,255,255,0.9);
-    border-left: 3px solid var(--color-accent);
   }
   .prompts__copy {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 12px; border-radius: 2.5em;
-    background: var(--color-accent); color: #000;
+    background: transparent; color: var(--card-fg);
+    border: 1px solid var(--card-line);
     font-size: var(--text-xs); font-weight: 700;
-    transition: transform var(--transition-base), opacity var(--transition-base);
+    transition: background-color var(--transition-base), transform var(--transition-base);
   }
-  .prompts__copy:hover { transform: scale(1.03); }
+  .prompts__copy:hover { background: var(--card-surface); transform: scale(1.03); }
   .prompts__copy.is-done { opacity: 0.7; }
-  .prompts__answer { font-size: var(--text-sm); color: #777777; line-height: 1.6; }
-  .prompts__answer-label { color: #FFFFFF; font-weight: 700; }
+  .prompts__quote {
+    margin: 0;
+    font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.45;
+    color: var(--card-fg-quote);
+  }
+  .prompts__answer {
+    margin: 0;
+    font-size: var(--text-sm); line-height: 1.2;
+    color: var(--card-fg-soft);
+  }
+  .prompts__answer-label {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--card-fg);
+  }
 
-  @media (max-width: 768px) {
-    .prompts__header { position: static; }
-    .prompts__title { font-size: var(--text-2xl); }
-    .prompts__card { position: relative; top: auto; min-height: 0; transform: none; }
+  .dropping-stack__controls { display: flex; gap: 0.375em; }
+  .dropping-stack__control {
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .dropping-stack__control-circle {
+    color: var(--color-secondary);
+    background-color: var(--color-accent-ink);
+    border-radius: 50%;
+    flex: none;
+    width: 3em; height: 3em;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .dropping-stack__control:hover .dropping-stack__control-circle { transform: translateY(-0.25em); }
+  .dropping-stack__control-circle.is--prev {
+    color: var(--color-primary);
+    background-color: transparent;
+    border: 1px solid var(--line-strong);
+  }
+  .dropping-stack__control-svg { width: 40%; }
+  .dropping-stack__control.is--prev { transform: scaleX(-1); }
+
+  @media screen and (max-width: 991px) {
+  @media screen and (max-width: 991px) {
+    .dropping-stack-card { --card-w: min(50em, 100vw - 8em); }
+  }
+
+  @media screen and (max-width: 767px) {
+    /* Décalage de pile réduit : la carte garde de la largeur pour le texte. */
+    .dropping-stack__collection { padding-bottom: 3em; padding-right: 2em; }
+    .dropping-stack-card { --card-w: min(50em, 100vw - 4em); }
+    .dropping-stack-card__content { padding: 5vw; gap: var(--space-md); }
+    .dropping-stack-card__start { flex-direction: column; gap: var(--space-md); }
+    .dropping-stack-card__h { font-size: 10vw; }
+    .dropping-stack-card__visual { width: clamp(4.5rem, 32%, 7rem); }
+    .dropping-stack-card__words { width: 100%; }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const list = document.querySelector('[data-prompts-list]');
-    if (!list) return;
+  import { gsap } from "gsap";
+  import { Draggable } from "gsap/Draggable";
+  import { CustomEase } from "gsap/CustomEase";
 
-    /* Stacking cards — each card is pinned vertically centered via an exact
-       `top` (real height measured, no translate), and dimmed by live
-       measured overlap. No transform-based centering, so in-flow layout
-       can never overlap the header. */
-    const cards = Array.from(list.querySelectorAll('.prompts__card')) as HTMLElement[];
-    const header = document.querySelector('.prompts__header') as HTMLElement | null;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktop = window.matchMedia('(min-width: 769px)');
-    const promptsActive = () => !reduceMotion.matches && desktop.matches && cards.length > 1;
-    const layoutPrompts = () => {
-      cards.forEach((card, i) => {
-        if (!promptsActive()) {
-          card.style.top = '';
-          return;
-        }
-        card.style.top = `${300 + i * 24}px`;
-      });
-    };
-    const renderPrompts = () => {
-      const active = promptsActive();
-      const vh = window.innerHeight;
-      const rects = cards.map((card) => card.getBoundingClientRect());
-      cards.forEach((card, i) => {
-        if (!active) {
-          card.style.transform = '';
-          card.style.filter = '';
-          return;
-        }
-        const rect = rects[i];
-        const top = i + 1 < rects.length ? rects[i + 1].top : Infinity;
-        const p = Math.min(1, Math.max(0, (rect.bottom - top) / (rect.height * 0.85)));
-        card.style.transform = `scale(${(1 - 0.07 * p).toFixed(4)})`;
-        card.style.filter = `brightness(${(1 - 0.45 * p).toFixed(4)})`;
-      });
-      if (header) {
-        if (!active || rects.length === 0) {
-          header.style.transform = '';
-        } else {
-          const lr = rects[rects.length - 1];
-          const q = Math.min(1, Math.max(0, (vh / 2 + 250 - (lr.top + lr.height / 2)) / 250));
-          header.style.transform = q <= 0 ? '' : `translateY(${(-110 * q).toFixed(2)}%)`;
-        }
-      }
-    };
-    window.addEventListener('scroll', renderPrompts, { passive: true });
-    window.addEventListener('resize', () => {
-      layoutPrompts();
-      renderPrompts();
-    });
-    if (typeof ResizeObserver !== 'undefined' && list instanceof Element) {
-      new ResizeObserver(() => {
-        layoutPrompts();
-        renderPrompts();
-      }).observe(list);
-    }
-    if (document.fonts) document.fonts.ready.then(() => {
-      layoutPrompts();
-      renderPrompts();
-    });
-    layoutPrompts();
-    renderPrompts();
+  gsap.registerPlugin(Draggable, CustomEase);
+  CustomEase.create("osmo", "0.625, 0.05, 0, 1");
 
-    /* Click-to-copy */
-    list.addEventListener('click', async (e: Event) => {
-      const btn = (e.target as HTMLElement).closest('[data-copy-btn]') as HTMLButtonElement | null;
-      if (!btn) return;
-      const card = btn.closest('.prompts__card');
-      const quote = card?.querySelector('[data-prompt-text]');
-      const text = quote?.textContent?.trim() || '';
-      if (!text) return;
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
+  function initDroppingCardsStack() {
+    const stacks = document.querySelectorAll<HTMLElement>("[data-dropping-stack-init]");
+    if (!stacks.length) return;
+
+    // Settings
+    const visibleCount = 4;
+    const minTotalForLoop = 5;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = reduceMotion ? 0.01 : 0.75;
+    const mainEase = reduceMotion ? "none" : "osmo";
+    const dragThresholdPercent = 20;
+
+    const getUnitValue = (val: string, depth: number) => {
+      const num = parseFloat(val) || 0;
+      const unit = String(val).replace(/[0-9.-]/g, "") || "px";
+      return num * depth + unit;
+    };
+
+    stacks.forEach((stackEl) => {
+      const nextBtn = stackEl.querySelector<HTMLElement>("[data-dropping-stack-next]");
+      const prevBtn = stackEl.querySelector<HTMLElement>("[data-dropping-stack-prev]");
+
+      const list = stackEl.querySelector<HTMLElement>(".dropping-stack__list");
+      if (!list) return;
+      let cards = Array.from(list.querySelectorAll<HTMLElement>("[data-dropping-stack-item]"));
+      if (cards.length < 3) return;
+
+      const originalCount = cards.length;
+      if (cards.length < minTotalForLoop) {
+        const setsNeeded = Math.ceil(minTotalForLoop / originalCount);
+        const clonesToAdd = setsNeeded * originalCount - originalCount;
+
+        for (let i = 0; i < clonesToAdd; i++) {
+          const clone = cards[i % originalCount].cloneNode(true) as HTMLElement;
+          clone.setAttribute("aria-hidden", "true");
+          list.appendChild(clone);
+        }
+
+        cards = Array.from(list.querySelectorAll<HTMLElement>("[data-dropping-stack-item]"));
       }
-      const label = btn.querySelector('[data-copy-label]');
-      if (label) label.textContent = 'Copié ✓';
-      btn.classList.add('is-done');
-      window.setTimeout(() => {
-        if (label) label.textContent = 'Copier';
-        btn.classList.remove('is-done');
-      }, 2000);
+
+      const total = cards.length;
+      let activeIndex = 0;
+      let isAnimating = false;
+
+      let dragCard: HTMLElement | null = null;
+      let draggableInstance: Draggable | null = null;
+
+      let limitX = 1;
+      let limitY = 1;
+
+      let offsetX = "0em";
+      let offsetY = "0em";
+
+      let isActive = false;
+
+      const mod = (n: number, m: number) => ((n % m) + m) % m;
+      const cardAt = (offset: number) => cards[mod(activeIndex + offset, total)];
+
+      /* Toutes les cartes font la meme hauteur : la plus petite qui contient
+         le texte le plus long (mesure a la largeur courante). */
+      function syncCardHeight() {
+        const cardEls = Array.from(
+          list.querySelectorAll<HTMLElement>(".dropping-stack-card")
+        );
+        if (!cardEls.length) return;
+        cardEls.forEach((card) => {
+          card.style.height = "";
+          card.style.minHeight = "";
+        });
+        let max = 0;
+        cardEls.forEach((card) => {
+          max = Math.max(max, card.getBoundingClientRect().height);
+        });
+        cardEls.forEach((card) => {
+          card.style.height = `${Math.ceil(max)}px`;
+        });
+      }
+
+      function updateOffsetsFromPadding() {
+        const collectionEl = stackEl.querySelector<HTMLElement>(
+          "[data-dropping-stack-collection]"
+        );
+        if (!collectionEl) return;
+
+        const styles = getComputedStyle(collectionEl);
+
+        const padRight = parseFloat(styles.paddingRight) || 0;
+        const padLeft = parseFloat(styles.paddingLeft) || 0;
+
+        const padBottom = parseFloat(styles.paddingBottom) || 0;
+        const padTop = parseFloat(styles.paddingTop) || 0;
+
+        const steps = Math.max(1, visibleCount - 1);
+
+        const usePadX = Math.max(padRight, padLeft);
+        const usePadY = Math.max(padBottom, padTop);
+
+        const signX = padLeft > padRight ? -1 : 1;
+        const signY = padTop > padBottom ? -1 : 1;
+
+        const xStep = (usePadX / steps) * signX;
+        const yStep = (usePadY / steps) * signY;
+
+        offsetX = xStep + "px";
+        offsetY = yStep + "px";
+      }
+
+      function updateDragLimits() {
+        if (!dragCard) return;
+        const cardRect = dragCard.getBoundingClientRect();
+        limitX = cardRect.width || 1;
+        limitY = cardRect.height || 1;
+      }
+
+      // Sets cards to their static stack positions
+      function applyState() {
+        updateOffsetsFromPadding();
+
+        cards.forEach((card) => {
+          gsap.set(card, {
+            opacity: 0,
+            pointerEvents: "none",
+            zIndex: 0,
+            x: 0,
+            y: 0,
+            xPercent: 0,
+            yPercent: 0,
+          });
+        });
+
+        for (let depth = 0; depth < visibleCount; depth++) {
+          const card = cardAt(depth);
+          const xVal = getUnitValue(offsetX, depth);
+          const yVal = getUnitValue(offsetY, depth);
+
+          const state: gsap.TweenVars = {
+            opacity: 1,
+            zIndex: 999 - depth,
+            pointerEvents: depth === 0 ? "auto" : "none",
+          };
+
+          if (offsetX.includes("%")) state.xPercent = parseFloat(xVal);
+          else state.x = xVal;
+          if (offsetY.includes("%")) state.yPercent = parseFloat(yVal);
+          else state.y = yVal;
+
+          gsap.set(card, state);
+        }
+
+        dragCard = cardAt(0);
+        gsap.set(dragCard, { touchAction: "none" });
+
+        updateDragLimits();
+
+        if (draggableInstance) {
+          draggableInstance.kill();
+          draggableInstance = null;
+        }
+
+        const magnetize = (raw: number, limit: number) => {
+          const sign = Math.sign(raw) || 1;
+          const abs = Math.abs(raw);
+          const out = limit * Math.tanh(abs / limit);
+          return sign * out;
+        };
+
+        draggableInstance = Draggable.create(dragCard, {
+          type: "x,y",
+          inertia: false,
+          onPress: function () {
+            if (isAnimating) return;
+            gsap.killTweensOf(dragCard);
+            gsap.set(dragCard, { zIndex: 2000, opacity: 1 });
+          },
+          onDrag: function () {
+            if (isAnimating) return;
+
+            const x = magnetize(this.x, limitX);
+            const y = magnetize(this.y, limitY);
+
+            gsap.set(dragCard, { x, y, opacity: 1 });
+          },
+          onRelease: function () {
+            if (isAnimating) return;
+
+            const currentX = gsap.getProperty(dragCard, "x") as number;
+            const currentY = gsap.getProperty(dragCard, "y") as number;
+
+            const movedXPercent = (Math.abs(currentX) / limitX) * 100;
+            const movedYPercent = (Math.abs(currentY) / limitY) * 100;
+            const movedPercent = Math.max(movedXPercent, movedYPercent);
+
+            if (movedPercent >= dragThresholdPercent) {
+              animateNext(true, currentX, currentY);
+              return;
+            }
+
+            // Move back to stack if treshold is not reached
+            gsap.to(dragCard, {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: reduceMotion ? 0.01 : 1,
+              ease: reduceMotion ? "none" : "elastic.out(1, 0.7)",
+              onComplete: () => {
+                applyState();
+              },
+            });
+          },
+        })[0];
+      }
+
+      function animateNext(fromDrag = false, releaseX = 0, releaseY = 0) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const outgoing = cardAt(0);
+        const incomingBack = cardAt(visibleCount);
+        const tl = gsap.timeline({
+          defaults: { duration, ease: mainEase },
+          onComplete: () => {
+            activeIndex = mod(activeIndex + 1, total);
+            applyState();
+            isAnimating = false;
+          },
+        });
+
+        gsap.set(outgoing, { zIndex: 2000, opacity: 1 });
+        if (fromDrag) gsap.set(outgoing, { x: releaseX, y: releaseY });
+
+        // Next: Move top card down and fade it out late
+        tl.to(outgoing, { yPercent: 200 }, 0);
+        tl.to(
+          outgoing,
+          { opacity: 0, duration: duration * 0.2, ease: "none" },
+          duration * 0.4
+        );
+
+        // Next: Shift existing stack cards forward
+        for (let depth = 1; depth < visibleCount; depth++) {
+          const xVal = getUnitValue(offsetX, depth - 1);
+          const yVal = getUnitValue(offsetY, depth - 1);
+          const move: gsap.TweenVars = { zIndex: 999 - (depth - 1) };
+
+          if (offsetX.includes("%")) move.xPercent = parseFloat(xVal);
+          else move.x = xVal;
+          if (offsetY.includes("%")) move.yPercent = parseFloat(yVal);
+          else move.y = yVal;
+
+          tl.to(cardAt(depth), move, 0);
+        }
+
+        // Next: Bring new card in from the "invisible" position
+        const backX = getUnitValue(offsetX, visibleCount);
+        const backY = getUnitValue(offsetY, visibleCount);
+        const startX = getUnitValue(offsetX, visibleCount - 1);
+        const startY = getUnitValue(offsetY, visibleCount - 1);
+
+        const incomingSet: gsap.TweenVars = { opacity: 0, zIndex: 999 - visibleCount };
+        if (offsetX.includes("%")) incomingSet.xPercent = parseFloat(backX);
+        else incomingSet.x = backX;
+        if (offsetY.includes("%")) incomingSet.yPercent = parseFloat(backY);
+        else incomingSet.y = backY;
+        gsap.set(incomingBack, incomingSet);
+
+        const incomingTo: gsap.TweenVars = { opacity: 1 };
+        if (offsetX.includes("%")) incomingTo.xPercent = parseFloat(startX);
+        else incomingTo.x = startX;
+        if (offsetY.includes("%")) incomingTo.yPercent = parseFloat(startY);
+        else incomingTo.y = startY;
+        tl.to(incomingBack, incomingTo, 0);
+      }
+
+      function animatePrev() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const incomingTop = cardAt(-1);
+        const leavingBack = cardAt(visibleCount - 1);
+        const tl = gsap.timeline({
+          defaults: { duration, ease: mainEase },
+          onComplete: () => {
+            activeIndex = mod(activeIndex - 1, total);
+            applyState();
+            isAnimating = false;
+          },
+        });
+
+        gsap.set(leavingBack, { zIndex: 1 });
+
+        // Prev: Move a card from top-offset to active position
+        gsap.set(incomingTop, {
+          opacity: 0,
+          x: 0,
+          xPercent: 0,
+          yPercent: -200,
+          zIndex: 2000,
+        });
+        tl.to(incomingTop, { yPercent: 0 }, 0);
+        tl.to(
+          incomingTop,
+          { opacity: 1, duration: duration * 0.2, ease: "none" },
+          duration * 0.3
+        );
+
+        // Prev: Push current stack cards back one level
+        for (let depth = 0; depth < visibleCount - 1; depth++) {
+          const xVal = getUnitValue(offsetX, depth + 1);
+          const yVal = getUnitValue(offsetY, depth + 1);
+          const move: gsap.TweenVars = { zIndex: 999 - (depth + 1) };
+
+          if (offsetX.includes("%")) move.xPercent = parseFloat(xVal);
+          else move.x = xVal;
+          if (offsetY.includes("%")) move.yPercent = parseFloat(yVal);
+          else move.y = yVal;
+
+          tl.to(cardAt(depth), move, 0);
+        }
+
+        // Prev: Slide the back-most card into the "invisible" position
+        const backX = getUnitValue(offsetX, visibleCount);
+        const backY = getUnitValue(offsetY, visibleCount);
+        const hideBack: gsap.TweenVars = { opacity: 0 };
+        if (offsetX.includes("%")) hideBack.xPercent = parseFloat(backX);
+        else hideBack.x = backX;
+        if (offsetY.includes("%")) hideBack.yPercent = parseFloat(backY);
+        else hideBack.y = backY;
+        tl.to(leavingBack, hideBack, 0);
+      }
+
+      // Keyboard Arrow controls next/prev
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isActive = entry.isIntersecting && entry.intersectionRatio >= 0.6;
+          });
+        },
+        { threshold: [0, 0.6, 1] }
+      );
+
+      observer.observe(stackEl);
+
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (!isActive) return;
+        if (isAnimating) return;
+
+        const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : "";
+        const isTyping =
+          tag === "input" ||
+          tag === "textarea" ||
+          tag === "select" ||
+          (e.target as HTMLElement | null)?.isContentEditable;
+        if (isTyping) return;
+
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          animateNext(false);
+        }
+
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          animatePrev();
+        }
+      };
+
+      window.addEventListener("keydown", onKeyDown);
+
+      syncCardHeight();
+      applyState();
+
+      if (nextBtn) nextBtn.addEventListener("click", () => animateNext(false));
+      if (prevBtn) prevBtn.addEventListener("click", animatePrev);
+
+      window.addEventListener("resize", () => {
+        syncCardHeight();
+        applyState();
+      });
+
+      if (document.fonts) {
+        document.fonts.ready.then(() => {
+          syncCardHeight();
+          applyState();
+        });
+      }
+
+      /* Click-to-copy */
+      list.addEventListener("click", async (e: Event) => {
+        const btn = (e.target as HTMLElement).closest("[data-copy-btn]") as HTMLButtonElement | null;
+        if (!btn) return;
+        const card = btn.closest("[data-dropping-stack-item]");
+        const quote = card?.querySelector("[data-prompt-text]");
+        const text = quote?.textContent?.trim() || "";
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        const label = btn.querySelector("[data-copy-label]");
+        if (label) label.textContent = "Copié ✓";
+        btn.classList.add("is-done");
+        window.setTimeout(() => {
+          if (label) label.textContent = "Copier";
+          btn.classList.remove("is-done");
+        }, 2000);
+      });
     });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initDroppingCardsStack();
   });
 </script>

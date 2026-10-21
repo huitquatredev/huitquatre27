@@ -1,0 +1,46 @@
+---
+interface Props {
+  href: string;
+  theme?: "default" | "secondary" | "inverted";
+  size?: "default" | "large";
+  variant?: "default" | "ghost";
+}
+
+const {
+  href,
+  theme = "default",
+  size = "default",
+  variant = "default",
+} = Astro.props;
+
+const icon = variant !== "ghost";
+const classes = [
+  "btn",
+  size === "large" && "btn--large",
+  variant === "ghost" && "btn--ghost",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<a href={href} class={classes} data-btn-theme={theme === "default" ? undefined : theme}>
+  {icon && (
+    <span class="btn__icon-wrap is--default">
+      <span class="btn__icon-bg"></span>
+      <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path>
+        <path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path>
+      </svg>
+    </span>
+  )}
+  <span class="btn__text-wrap"><span class="btn__text"><slot /></span></span>
+  {icon && (
+    <span class="btn__icon-wrap is--hover">
+      <span class="btn__icon-bg"></span>
+      <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path>
+        <path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path>
+      </svg>
+    </span>
+  )}
+</a>

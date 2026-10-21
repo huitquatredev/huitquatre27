@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button/Button.astro";
 import { realisations } from "../../data/realisations";
 
 export function getStaticPaths() {
@@ -24,92 +25,110 @@ if (!project) return Astro.redirect("/#realisations");
       <p class="case__baseline">{project.activity} — {project.baseline}</p>
       <dl class="case__meta">
         <div><dt>Année</dt><dd>{project.year}</dd></div>
-        <div><dt>Durée</dt><dd>{project.duration}</dd></div>
+        {project.duration && (
+          <div>
+            <dt>Durée</dt>
+            <dd>{project.duration}</dd>
+          </div>
+        )}
         <div><dt>Stack</dt><dd>{project.stack.join(" · ")}</dd></div>
       </dl>
-      <video
-        class="case__video"
-        muted
-        loop
-        playsinline
-        autoplay
-        preload="metadata"
-        poster={project.poster}
-      >
-        <source src={`/videos/${project.video}.webm`} type="video/webm" />
-        <source src={`/videos/${project.video}.mp4`} type="video/mp4" />
-      </video>
+      {project.video && (
+        <video
+          class="case__video"
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="metadata"
+          poster={project.poster}
+        >
+          <source src={`/videos/${project.video}.webm`} type="video/webm" />
+          <source src={`/videos/${project.video}.mp4`} type="video/mp4" />
+        </video>
+      )}
     </header>
 
-    <section class="case__block">
-      <h2 class="case__heading">Le besoin</h2>
-      <div class="case__grid">
-        {project.need.map((n) => (
-          <article class="case__card">
-            <h3>{n.title}</h3>
-            <p>{n.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+    {project.need.length > 0 && (
+      <section class="case__block">
+        <h2 class="case__heading">Le besoin</h2>
+        <div class="case__grid">
+          {project.need.map((n) => (
+            <article class="case__card">
+              <h3>{n.title}</h3>
+              <p set:html={n.text}></p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
 
-    <section class="case__block">
-      <h2 class="case__heading">Ce qu'on a fait</h2>
-      <div class="case__grid">
-        {project.work.map((w) => (
-          <article class="case__card">
-            <h3>{w.title}</h3>
-            <p set:html={w.text}></p>
-          </article>
-        ))}
-      </div>
-    </section>
+    {project.work.length > 0 && (
+      <section class="case__block">
+        <h2 class="case__heading">Ce qu'on a fait</h2>
+        <div class="case__grid">
+          {project.work.map((w) => (
+            <article class="case__card">
+              <h3>{w.title}</h3>
+              <p set:html={w.text}></p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
 
-    <section class="case__block">
-      <h2 class="case__heading">Résultats</h2>
-      <div class="case__results">
-        {project.results.map((r) => (
-          <div class="case__stat">
-            <span class="case__value">{r.value}</span>
-            <span class="case__label">{r.label}</span>
-            {r.note && <span class="case__note">{r.note}</span>}
-          </div>
-        ))}
-      </div>
-    </section>
+    {project.results.length > 0 && (
+      <section class="case__block">
+        <h2 class="case__heading">Résultats</h2>
+        <div class="case__results">
+          {project.results.map((r) => (
+            <div class="case__stat">
+              <span class="case__value">{r.value}</span>
+              <span class="case__label">{r.label}</span>
+              {r.note && <span class="case__note">{r.note}</span>}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
-    <section class="case__block">
-      <h2 class="case__heading">Ils en parlent</h2>
-      <blockquote class="case__quote">
-        <p>« {project.quote.text} »</p>
-        <footer>— {project.quote.author}</footer>
-      </blockquote>
-    </section>
+    {project.quote && (
+      <section class="case__block">
+        <h2 class="case__heading">Ils en parlent</h2>
+        <blockquote class="case__quote">
+          <p>« {project.quote.text} »</p>
+          <footer>— {project.quote.author}</footer>
+        </blockquote>
+      </section>
+    )}
 
-    <section class="case__block">
-      <h2 class="case__heading">La confiance renouvelée</h2>
-      <ol class="case__timeline">
-        {project.timeline.map((t) => (
-          <li><strong>{t.date}</strong><span>{t.text}</span></li>
-        ))}
-      </ol>
-    </section>
+    {project.followup && (
+      <section class="case__block">
+        <h2 class="case__heading">La suite</h2>
+        <div class="case__card case__card--followup">
+          <h3>{project.followup.title}</h3>
+          <p>{project.followup.text}</p>
+        </div>
+      </section>
+    )}
+
+    {project.timeline.length > 0 && (
+      <section class="case__block">
+        <h2 class="case__heading">La confiance renouvelée</h2>
+        <ol class="case__timeline">
+          {project.timeline.map((t) => (
+            <li>
+              <strong>{t.date}</strong>
+              <span>{t.text}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
 
     <footer class="case__cta">
-      <a href="/realisations" class="btn" data-btn-theme="secondary">
-        <span class="btn__text-wrap"><span class="btn__text">Autres réalisations</span></span>
-      </a>
-      <a href="/contact" class="btn">
-        <span class="btn__icon-wrap is--default">
-          <span class="btn__icon-bg"></span>
-          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
-        </span>
-        <span class="btn__text-wrap"><span class="btn__text">Démarrer mon projet</span></span>
-        <span class="btn__icon-wrap is--hover">
-          <span class="btn__icon-bg"></span>
-          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
-        </span>
-      </a>
+      <Button href="/realisations" theme="secondary">Autres réalisations</Button>
+      <Button href="/contact">Démarrer mon projet</Button>
     </footer>
   </main>
 </Layout>
@@ -129,7 +148,7 @@ if (!project) return Astro.redirect("/#realisations");
   }
   .case__title {
     font-size: var(--text-4xl); text-transform: uppercase;
-    letter-spacing: -0.03em; line-height: 1.05; color: var(--color-accent-ink);
+    letter-spacing: -0.03em; line-height: 1.05; color: var(--color-argile);
   }
   .case__baseline { font-size: var(--text-lg); color: var(--color-neutral); margin-top: var(--space-sm); max-width: 640px; }
   .case__meta {
@@ -157,6 +176,11 @@ if (!project) return Astro.redirect("/#realisations");
   .case__card h3 { font-size: var(--text-lg); margin-bottom: var(--space-sm); }
   .case__card p { color: var(--color-neutral); }
   .case__card a { color: var(--color-accent-ink); font-weight: 700; }
+  .case__card--followup {
+    background: var(--color-accent-light);
+    border-color: var(--accent-soft-border);
+    max-width: 640px;
+  }
   .case__results { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
   .case__stat {
     display: flex; flex-direction: column; gap: 4px;

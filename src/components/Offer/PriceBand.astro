@@ -1,0 +1,128 @@
+---
+import { offer } from "../../data/offre";
+
+const marqueeItems = ["Zéro frais récurrents", "Sans abonnement", "Tout compris", "Hébergement et maintenance inclus"];
+---
+
+<div class="price-band" data-reveal>
+  <div class="price-band__inner">
+    <p class="price-band__eyebrow">Le vrai prix d'un bon site</p>
+    <p class="price-band__price">
+      <span class="price-band__amount">{offer.price}</span>
+      <span class="price-band__once">une fois.</span>
+    </p>
+  </div>
+  <div class="price-band__marquee" aria-hidden="true">
+    <div class="price-band__track">
+      {[0, 1].map(() => (
+        <span class="price-band__chunk">
+          {[0, 1, 2].map(() =>
+            marqueeItems.map((item) => (
+              <span class="price-band__item">{item}<span class="price-band__star">✦</span></span>
+            ))
+          )}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .price-band {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-top: var(--space-xl);
+    overflow: hidden;
+    background: var(--color-primary);
+    color: var(--color-secondary);
+  }
+  .price-band__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) var(--container-padding);
+  }
+  .price-band__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  }
+  .price-band__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+  .price-band__amount {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 11vw, 8.5rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+  }
+  .price-band__once {
+    font-family: var(--font-mono);
+    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-argile);
+  }
+  .price-band__marquee {
+    border-top: 3px solid var(--color-secondary);
+    border-bottom: 3px solid var(--color-secondary);
+    padding: var(--space-sm) 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .price-band__track {
+    display: inline-flex;
+    animation: price-marquee 22s linear infinite;
+  }
+  .price-band__marquee:hover .price-band__track {
+    animation-play-state: paused;
+  }
+  .price-band__chunk {
+    display: inline-flex;
+  }
+  .price-band__item {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+  }
+  .price-band__star {
+    font-size: var(--text-base);
+    margin: 0 var(--space-md);
+  }
+  .price-band.is-in .price-band__amount {
+    animation: price-stamp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes price-stamp {
+    from {
+      opacity: 0;
+      transform: translateY(0.3em) scale(1.04);
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      clip-path: inset(0 0 -15% 0);
+    }
+  }
+  @keyframes price-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .price-band__track,
+    .price-band.is-in .price-band__amount {
+      animation: none;
+    }
+  }
+</style>

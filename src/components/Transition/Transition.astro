@@ -1,221 +1,185 @@
 ---
+
 ---
 
-<div class="px__solid" data-px-solid aria-hidden="true"></div>
-<div class="px" data-px aria-hidden="true">
-  <div class="px__grid" data-px-grid></div>
+<div data-transition-wrap class="transition" aria-hidden="true">
+  <div class="transition__panels">
+    <div data-transition-panel="1" class="transition__panel-1"></div>
+    <div data-transition-panel="2" class="transition__panel-2"></div>
+  </div>
 </div>
 
 <script is:inline>
   // Watchdog: never trap the visitor if the animation bundle fails.
-  window.__hqLoaderDone = false;
+  window.__hqLoaderDone = false
   setTimeout(function () {
     if (!window.__hqLoaderDone) {
-      var px = document.querySelector("[data-px]");
-      if (px) px.style.display = "none";
-      var solid = document.querySelector("[data-px-solid]");
-      if (solid) solid.style.display = "none";
-      document.body.style.overflow = "";
+      var wrap = document.querySelector("[data-transition-wrap]")
+      if (wrap) wrap.style.display = "none"
+      document.documentElement.classList.remove("hq-wipe-go")
+      document.body.style.overflow = ""
     }
-  }, 6000);
+  }, 6000)
 </script>
 
 <style is:global>
-  /* is:global — les cellules sont créées en JS (createElement),
-     sans l'attribut de scope Astro. Préfixe px__ unique. */
-  .px {
-    position: fixed;
-    inset: 0;
+  /* is:global — le wrap est fixé et piloté par une classe sur <html>,
+     posée avant le premier paint (voir Layout). */
+  .transition {
     z-index: 300;
     pointer-events: none;
-    display: none;
-  }
-  .px.is-live { display: block; }
-  .px__solid {
     position: fixed;
     inset: 0;
-    z-index: 300;
-    background: var(--color-accent);
+    overflow: clip;
     display: none;
-    pointer-events: none;
   }
-  .px__grid {
-    position: absolute;
-    inset: 0;
-    display: flex;
+
+  .transition.is-live,
+  html.hq-wipe-go .transition {
+    display: block;
   }
-  .px__grid--row { flex-direction: column; }
-  .px__col {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .px__grid--row .px__col { flex-direction: row; }
-  .px__pixel {
+
+  .transition__panels {
     width: 100%;
-    aspect-ratio: 1 / 1;
-    background: var(--color-accent);
-    opacity: 0;
-  }
-  .px__grid--row .px__pixel {
-    width: auto;
     height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .transition__panel-1 {
+    background-color: var(--color-argile);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    will-change: transform;
+  }
+
+  .transition__panel-2 {
+    background-color: var(--color-primary);
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-primary) 82%, var(--color-argile)),
+      var(--color-primary)
+    );
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    will-change: transform;
   }
 </style>
 
 <script>
-  import { gsap } from "gsap";
+  import { gsap } from "gsap"
 
   document.addEventListener("DOMContentLoaded", () => {
-    const overlay = document.querySelector("[data-px]") as HTMLElement;
-    const grid = overlay?.querySelector("[data-px-grid]") as HTMLElement;
-    if (!overlay || !grid) return;
+    const wrap = document.querySelector(
+      "[data-transition-wrap]"
+    ) as HTMLElement | null
+    if (!wrap) return
+    const panel1 = wrap.querySelector(
+      "[data-transition-panel='1']"
+    ) as HTMLElement
+    const panel2 = wrap.querySelector(
+      "[data-transition-panel='2']"
+    ) as HTMLElement
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual"
 
-    // Pixel grid: 12 lines sweeping. Cover fills left→right (stays lit),
-    // reveal clears right→left. MPA: the swap hides behind full lime.
-    const LINES = 12;
-
-    function buildGrid() {
-      const portrait = window.innerHeight > window.innerWidth;
-      const main = portrait ? window.innerHeight : window.innerWidth;
-      const cross = portrait ? window.innerWidth : window.innerHeight;
-      const lineSize = Math.max(1, Math.ceil(main / LINES));
-      const crossAmount = Math.max(1, Math.ceil(cross / lineSize));
-      grid.classList.toggle("px__grid--row", portrait);
-      let html = "";
-      for (let i = 0; i < LINES; i++) {
-        html += `<div class="px__col" data-px-col>${`<div class="px__pixel" data-px-pixel></div>`.repeat(crossAmount)}</div>`;
-      }
-      grid.innerHTML = html;
-    }
-
-    function gridLines(): HTMLElement[] {
-      return Array.from(grid.children) as HTMLElement[];
-    }
-
-    function gridPixels(): HTMLElement[] {
-      return Array.from(grid.querySelectorAll("[data-px-pixel]")) as HTMLElement[];
-    }
-
-    function hideSolid() {
-      const solid = document.querySelector("[data-px-solid]") as HTMLElement | null;
-      if (solid) solid.style.display = "none";
-    }
-
-    function show() {
-      overlay.classList.add("is-live");
-      document.body.style.overflow = "hidden";
-    }
-
-    function complete() {
-      overlay.classList.remove("is-live");
-      hideSolid();
+    const KEY = "hq-wipe-go"
+    const readFlag = () => {
       try {
-        document.documentElement.classList.remove("hq-px-go");
-      } catch { /* ignore */ }
-      document.body.style.overflow = "";
-      (window as any).__hqLoaderDone = true;
-      try {
-        window.sessionStorage.setItem("hq-loader-seen", "1");
-        window.sessionStorage.removeItem("hq-px-go");
-      } catch { /* private mode */ }
-      window.dispatchEvent(new Event("loaderComplete"));
-    }
-
-    function readFlags() {
-      try {
-        return {
-          seen: !!window.sessionStorage.getItem("hq-loader-seen"),
-          go: !!window.sessionStorage.getItem("hq-px-go"),
-        };
+        return window.sessionStorage.getItem(KEY) === "1"
       } catch {
-        return { seen: false, go: false };
+        return false
+      }
+    }
+    const writeFlag = (on: boolean) => {
+      try {
+        if (on) window.sessionStorage.setItem(KEY, "1")
+        else window.sessionStorage.removeItem(KEY)
+      } catch {
+        /* private mode */
       }
     }
 
-    /* ——— Boot: no intro. Reveal only when arriving from a pixel cover. ——— */
-    const flags = readFlags();
-    if (flags.go) playReveal();
-    else complete();
+    function finish() {
+      wrap.classList.remove("is-live")
+      document.documentElement.classList.remove("hq-wipe-go")
+      document.body.style.overflow = ""
+      gsap.set([panel1, panel2], { clearProps: "transform" })
+      writeFlag(false)
+      ;(window as any).__hqLoaderDone = true
+      window.dispatchEvent(new Event("loaderComplete"))
+    }
 
-    /* ——— Cover then navigate ——— */
-    let covering = false;
+    /* ——— Arrivée : le cover est déjà posé (top: 0) dès le premier paint ——— */
+    if (readFlag() && !reduceMotion) {
+      document.body.style.overflow = "hidden"
+      const tl = gsap.timeline({ onComplete: finish })
+      tl.add("startEnter", 0.1)
+      tl.set(panel1, { yPercent: -100 }, "startEnter")
+      tl.to(
+        panel2,
+        { yPercent: -100, duration: 1.2, ease: "power4.out" },
+        "startEnter"
+      )
+    } else {
+      finish()
+    }
+
+    /* ——— Départ : deux panneaux montent, puis navigation ——— */
+    let covering = false
     function coverAndGo(href: string) {
-      if (covering) return;
-      covering = true;
+      if (covering) return
+      covering = true
       if (reduceMotion) {
-        try {
-          window.sessionStorage.setItem("hq-loader-seen", "1");
-        } catch { /* ignore */ }
-        window.location.href = href;
-        return;
+        window.location.href = href
+        return
       }
-      show();
-      playCover(() => {
-        try {
-          window.sessionStorage.setItem("hq-loader-seen", "1");
-          window.sessionStorage.setItem("hq-px-go", "1");
-        } catch { /* ignore */ }
-        window.location.href = href;
-      });
+      gsap.set([panel1, panel2], { yPercent: 100 })
+      wrap.classList.add("is-live")
+      document.body.style.overflow = "hidden"
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          writeFlag(true)
+          window.location.href = href
+        }
+      })
+
+      tl.to(panel1, { yPercent: 0, duration: 0.6, ease: "power4.in" }, 0)
+      tl.to(panel2, { yPercent: 0, duration: 0.6, ease: "power4.in" }, 0.25)
     }
 
-    /* ——— Cover: pixels light up left→right and STAY lit ——— */
-    function playCover(done: () => void) {
-      buildGrid();
-      const lines = gridLines();
-      const all = gridPixels();
-      gsap.set(all, { opacity: 0 });
-      const tl = gsap.timeline({ onComplete: done });
-      lines.forEach((line, i) => {
-        const pixels = Array.from(line.children) as HTMLElement[];
-        if (!pixels.length) return;
-        tl.to(pixels, {
-          opacity: 1, duration: 0.15, ease: "none",
-          stagger: { amount: 0.08, from: "random" },
-        }, i * 0.03);
-      });
-    }
-
-    /* ——— Reveal on arrival: pixels turn off right→left ——— */
-    function playReveal() {
-      show();
-      buildGrid();
-      hideSolid();
-      const all = gridPixels();
-      gsap.set(all, { opacity: 1 });
-      if (reduceMotion) {
-        complete();
-        return;
-      }
-      const lines = gridLines();
-      const tl = gsap.timeline({ onComplete: complete });
-      lines.forEach((line, i) => {
-        const pixels = Array.from(line.children) as HTMLElement[];
-        if (!pixels.length) return;
-        tl.to(pixels, {
-          opacity: 0, duration: 0.15, ease: "none",
-          stagger: { amount: 0.08, from: "random" },
-        }, 0.05 + (lines.length - 1 - i) * 0.03);
-      });
-    }
+    /* ——— bfcache : la page revient dans son état de départ (cover posé) ——— */
+    window.addEventListener("pageshow", (e) => {
+      if (!e.persisted) return
+      covering = false
+      finish()
+    })
 
     /* ——— Intercept internal navigations ——— */
     document.addEventListener("click", (e: MouseEvent) => {
-      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      const anchor = (e.target as HTMLElement).closest?.("a[href]") as HTMLAnchorElement | null;
-      if (!anchor) return;
-      if (anchor.target === "_blank" || anchor.hasAttribute("download")) return;
-      const url = new URL(anchor.href, window.location.href);
-      if (url.origin !== window.location.origin) return;
-      // Same-page anchors: let the browser smooth-scroll
-      if (url.pathname === window.location.pathname && url.hash) return;
-      e.preventDefault();
-      coverAndGo(url.href);
-    });
-  });
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return
+      const anchor = (e.target as HTMLElement).closest?.(
+        "a[href]"
+      ) as HTMLAnchorElement | null
+      if (!anchor) return
+      if (anchor.target === "_blank" || anchor.hasAttribute("download")) return
+      const url = new URL(anchor.href, window.location.href)
+      if (url.origin !== window.location.origin) return
+      // Same-page anchors: let the browser scroll
+      if (url.pathname === window.location.pathname && url.hash) return
+      e.preventDefault()
+      coverAndGo(url.href)
+    })
+  })
 </script>

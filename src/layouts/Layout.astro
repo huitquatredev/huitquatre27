@@ -2,15 +2,68 @@
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = 'huitquatre — Création de sites internet performants et écologiques',
-  description = 'huitquatre crée des sites internet performants, écologiques et faciles à gérer. Un seul paiement, hébergement et maintenance offerts.'
+  description = 'huitquatre crée des sites internet performants, écologiques et faciles à gérer. Un seul paiement, hébergement et maintenance offerts.',
+  noindex = false,
 } = Astro.props;
 
 import SideNav from "../components/SideNav/SideNav.astro";
 import Transition from "../components/Transition/Transition.astro";
+
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const canonical = new URL(path, Astro.site ?? "https://huitquatre.fr").href;
+const ogImage = new URL("/og.png", Astro.site ?? "https://huitquatre.fr").href;
+
+// Données structurées de l'entité — le socle du référencement local et des moteurs génératifs.
+const org = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://huitquatre.fr/#organization",
+  name: "huitquatre",
+  url: "https://huitquatre.fr",
+  logo: new URL("/logo-bw.svg", "https://huitquatre.fr").href,
+  image: ogImage,
+  description:
+    "Agence web à Piolenc (Vaucluse) : sites internet statiques, sur-mesure, performants et écologiques. Offre unique à 1 990 € payés une fois, hébergement et maintenance inclus.",
+  slogan: "le silence qui en dit long.",
+  priceRange: "€€",
+  foundingDate: "2019",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Piolenc",
+    addressRegion: "Vaucluse",
+    addressCountry: "FR",
+  },
+  areaServed: { "@type": "Country", name: "France" },
+  founder: { "@type": "Person", name: "Julien" },
+  knowsAbout: [
+    "sites internet statiques",
+    "Astro",
+    "développement web sur-mesure",
+    "performance web",
+    "référencement naturel",
+    "accessibilité web",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Offre huitquatre",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "Site complet — offre unique",
+        price: "1990",
+        priceCurrency: "EUR",
+        description:
+          "Rebranding, design et site internet livré en 30 jours. Un seul paiement, hébergement et maintenance inclus.",
+        url: "https://huitquatre.fr/offre/",
+      },
+    ],
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -20,23 +73,41 @@ import Transition from "../components/Transition/Transition.astro";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
   <title>{title}</title>
-  
-  <!-- Preconnect for Fontshare -->
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  
+
+  <!-- Indexation -->
+  <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
+  <link rel="canonical" href={canonical} />
+  <meta name="author" content="huitquatre" />
+  <meta name="theme-color" content="#F7F3E8" />
+
+  <!-- Partage social (LinkedIn, WhatsApp, Slack…) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="huitquatre" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Données structurées -->
+  <script type="application/ld+json" set:html={JSON.stringify(org)} />
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- Skip states synchronously before first paint -->
   <script is:inline>
     try {
-      if (window.sessionStorage.getItem("hq-loader-seen")) {
-        document.documentElement.classList.add("hq-loader-seen");
+      if (window.sessionStorage.getItem("hq-wipe-go")) {
+        document.documentElement.classList.add("hq-wipe-go");
       }
-      if (window.sessionStorage.getItem("hq-px-go")) {
-        document.documentElement.classList.add("hq-px-go");
-      }
-    } catch (e) { /* private mode: play everything */ }
+    } catch (e) { /* private mode: no cover */ }
   </script>
 </head>
 <body id="top">

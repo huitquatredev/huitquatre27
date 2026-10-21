@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer.astro";
 
 <Layout
   title="Contact — démarrer mon projet | huitquatre"
-  description="Parlez-nous de votre projet : site vitrine, boutique ou refonte. Réponse sous 24 h ouvrées."
+  description="Parlez-nous de votre projet : site vitrine, boutique ou refonte. Réponse sous 24 h ouvrées."
 >
   <main class="contact">
     <header class="contact__header">
@@ -14,7 +14,28 @@ import Footer from "../../components/Footer/Footer.astro";
       <p class="contact__subtitle">Ici, pas de formulaire glacial : on discute. Répondez comme à un humain — il y en a un qui lit derrière.</p>
     </header>
 
+    <address class="contact__info">
+      <div class="contact__info-item">
+        <span class="contact__info-label">Email</span>
+        <a class="contact__info-value" href="mailto:hello@huitquatre.fr">hello@huitquatre.fr</a>
+      </div>
+      <div class="contact__info-item">
+        <span class="contact__info-label">Téléphone</span>
+        <a class="contact__info-value" href="tel:+33776699453">07 76 69 94 53</a>
+      </div>
+      <div class="contact__info-item">
+        <span class="contact__info-label">Adresse</span>
+        <a
+          class="contact__info-value"
+          href="https://www.google.com/maps/dir/?api=1&amp;destination=760%20route%20d%27Uchaux%2C%2084420%20Piolenc"
+          target="_blank"
+          rel="noopener noreferrer">760 route d'Uchaux, 84420 Piolenc</a>
+      </div>
+      <p class="contact__info-note">Par téléphone : du lundi au vendredi, de 11 h à 12 h et de 14 h à 16 h, sauf le mercredi.</p>
+    </address>
+
     <div class="chat" data-chat aria-live="polite"></div>
+    <input class="chat__hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
   </main>
 
   <Footer />
@@ -26,8 +47,34 @@ import Footer from "../../components/Footer/Footer.astro";
   .contact { max-width: 760px; margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
   .contact__eyebrow { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-neutral); margin-bottom: var(--space-sm); }
   .contact__title { color: var(--color-primary); font-size: var(--text-4xl); text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.05; }
-  .contact__accent { color: var(--color-accent-ink); }
+  .contact__accent { color: var(--color-argile); }
   .contact__subtitle { font-size: var(--text-lg); color: var(--color-neutral); margin-top: var(--space-md); }
+
+  .contact__info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-style: normal;
+  }
+  .contact__info-item { display: flex; flex-direction: column; gap: 2px; }
+  .contact__info-label {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral);
+  }
+  .contact__info-value { color: var(--color-primary); font-weight: 700; }
+  a.contact__info-value { text-decoration: none; }
+  a.contact__info-value:hover { color: var(--color-accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+  .contact__info-note {
+    grid-column: 1 / -1;
+    font-size: var(--text-sm); color: var(--color-neutral);
+    margin: 0;
+  }
 
   .chat {
     margin-top: var(--space-xl);
@@ -37,7 +84,9 @@ import Footer from "../../components/Footer/Footer.astro";
     padding: var(--space-lg); border-radius: 16px;
     background: var(--surface); border: 1px solid var(--line);
     scroll-behavior: smooth;
+    scrollbar-width: none;
   }
+  .chat::-webkit-scrollbar { display: none; }
   .chat__row { display: flex; gap: var(--space-sm); align-items: flex-end; animation: chatIn 0.3s ease; }
   .chat__row--user { justify-content: flex-end; }
   @keyframes chatIn { from { opacity: 0; transform: translateY(8px); } }
@@ -52,12 +101,11 @@ import Footer from "../../components/Footer/Footer.astro";
     border-bottom-left-radius: 4px;
   }
   .chat__row--user .chat__bubble {
-    background: var(--color-accent); color: #000; font-weight: 500;
+    background: var(--color-accent); color: var(--color-secondary); font-weight: 500;
     border-bottom-left-radius: 16px; border-bottom-right-radius: 4px;
   }
-  .chat__bubble--total { border: 1px solid var(--accent-soft-border); }
   .chat__bubble--total strong { color: var(--color-accent-ink); }
-  .chat__row--user .chat__bubble--total strong { color: #000; }
+  .chat__row--user .chat__bubble--total strong { color: var(--color-secondary); }
   .chat__typing { display: inline-flex; gap: 4px; padding: 4px 0; }
   .chat__typing span {
     width: 7px; height: 7px; border-radius: 50%;
@@ -76,7 +124,13 @@ import Footer from "../../components/Footer/Footer.astro";
   .chat__chip:hover:not(:disabled) { background: var(--color-accent-light); }
   .chat__chip:disabled { opacity: 0.4; cursor: default; }
   .chat__chip small { font-weight: 400; opacity: 0.8; }
-  .chat__chip.is-on { background: var(--color-accent); color: #000; }
+  .chat__chip.is-on { background: var(--color-accent); color: var(--color-secondary); }
+  .chat__chip--next {
+    background: var(--color-accent); color: var(--color-secondary);
+    border-color: var(--color-accent);
+    margin-left: auto;
+  }
+  .chat__chip--next:hover:not(:disabled) { background: var(--color-accent-ink); border-color: var(--color-accent-ink); }
   .chat__input-row { display: flex; gap: 8px; padding-left: 40px; }
   .chat__input {
     flex: 1; min-width: 0; padding: 10px 16px; border-radius: 2.5em;
@@ -86,7 +140,7 @@ import Footer from "../../components/Footer/Footer.astro";
   .chat__input:focus { outline: none; border-color: var(--color-accent-ink); }
   .chat__send {
     flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
-    background: var(--color-accent); color: #000;
+    background: var(--color-accent); color: var(--color-secondary);
     display: flex; align-items: center; justify-content: center;
   }
   .chat__send:disabled { opacity: 0.5; }
@@ -102,6 +156,7 @@ import Footer from "../../components/Footer/Footer.astro";
 
   @media (max-width: 768px) {
     .contact__title { font-size: var(--text-2xl); }
+    .contact__info { grid-template-columns: 1fr; }
     .chat__bubble { max-width: 90%; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -132,8 +187,8 @@ import Footer from "../../components/Footer/Footer.astro";
     const state: Record<string, string> = { options: "" };
     const selected = new Set<string>();
 
-    const fmt = (n: number) => n.toLocaleString("fr-FR") + " €";
-    const fmt4 = (n: number) => (n / 4).toFixed(2).replace(".", ",") + " €";
+    const fmt = (n: number) => n.toLocaleString("fr-FR") + " €";
+    const fmt4 = (n: number) => (n / 4).toFixed(2).replace(".", ",") + " €";
     const total = () => BASE_PRICE + Array.from(selected).reduce((s, id) => s + (OPTION_PRICES[id]?.price || 0), 0);
 
     function scrollDown() { chat.scrollTop = chat.scrollHeight; }
@@ -142,7 +197,7 @@ import Footer from "../../components/Footer/Footer.astro";
       const div = document.createElement("div");
       div.className = `chat__row chat__row--${kind}`;
       div.innerHTML = kind === "bot"
-        ? `<span class="chat__avatar" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 400 400" fill="#000"><path d="M99.758 64h115.219a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103H99.758a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 99.758 64"/><path d="M235.184 226.524h115.22a10.103 10.103 0 0 1 10.104 10.104v88.142a10.103 10.103 0 0 1-10.104 10.104h-115.22a10.103 10.103 0 0 1-10.103-10.104v-88.142a10.103 10.103 0 0 1 10.103-10.104"/><path d="M302.898 64h47.506a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103h-47.506a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 302.898 64"/><path d="M99.758 226.524h47.506a10.103 10.103 0 0 1 10.103 10.104v88.142a10.103 10.103 0 0 1-10.103 10.104h-47.506a10.103 10.103 0 0 1-10.104-10.104v-88.142a10.103 10.103 0 0 1 10.104-10.104"/></svg></span><div class="chat__bubble">${html}</div>`
+        ? `<span class="chat__avatar" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 400 400" fill="#F7F3E8"><path d="M99.758 64h115.219a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103H99.758a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 99.758 64"/><path d="M235.184 226.524h115.22a10.103 10.103 0 0 1 10.104 10.104v88.142a10.103 10.103 0 0 1-10.104 10.104h-115.22a10.103 10.103 0 0 1-10.103-10.104v-88.142a10.103 10.103 0 0 1 10.103-10.104"/><path d="M302.898 64h47.506a10.103 10.103 0 0 1 10.104 10.103v88.143a10.103 10.103 0 0 1-10.104 10.103h-47.506a10.103 10.103 0 0 1-10.104-10.103V74.103A10.103 10.103 0 0 1 302.898 64"/><path d="M99.758 226.524h47.506a10.103 10.103 0 0 1 10.103 10.104v88.142a10.103 10.103 0 0 1-10.103 10.104h-47.506a10.103 10.103 0 0 1-10.104-10.104v-88.142a10.103 10.103 0 0 1 10.104-10.104"/></svg></span><div class="chat__bubble">${html}</div>`
         : `<div class="chat__bubble">${html}</div>`;
       chat.appendChild(div);
       scrollDown();
@@ -231,7 +286,7 @@ import Footer from "../../components/Footer/Footer.astro";
       wrap.className = "chat__choices";
       wrap.innerHTML = Object.entries(OPTION_PRICES).map(([id, o]) =>
         `<button type="button" class="chat__chip" data-id="${id}">${o.label} <small>+${fmt(o.price)}</small></button>`
-      ).join("") + `<button type="button" class="chat__chip" data-next>Continuer →</button>`;
+      ).join("") + `<button type="button" class="chat__chip chat__chip--next" data-next>Continuer →</button>`;
       chat.appendChild(wrap);
       scrollDown();
       selected.forEach((id) => wrap.querySelector(`[data-id="${id}"]`)?.classList.add("is-on"));
@@ -274,6 +329,7 @@ import Footer from "../../components/Footer/Footer.astro";
     }
 
     async function stepSite() {
+      await say("Avez-vous déjà un site, ou on part d'une page blanche ?");
       const hasSite = await choose([
         { label: "Oui, j'ai déjà un site", value: "oui" },
         { label: "Non, création", value: "non" },
@@ -290,7 +346,7 @@ import Footer from "../../components/Footer/Footer.astro";
     async function stepIdentity() {
       await say("Comment puis-je vous appeler ?");
       state.name = await askText({ placeholder: "Votre nom" });
-      await say(`Enchanté ${esc(state.name)} ! <strong>Votre email</strong> pour vous répondre sous 24 h ?`);
+      await say(`Enchanté ${esc(state.name)} ! <strong>Votre email</strong> pour vous répondre sous 24 h ?`);
       state.email = await askText({
         placeholder: "vous@exemple.fr", type: "email",
         validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "Hmm, cet email semble invalide.",
@@ -331,6 +387,7 @@ import Footer from "../../components/Footer/Footer.astro";
         btn.disabled = true;
         btn.textContent = "Envoi…";
         try {
+          const gotcha = document.querySelector<HTMLInputElement>('.chat__hp[name="_gotcha"]')?.value || "";
           const res = await fetch(ENDPOINT, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -342,12 +399,12 @@ import Footer from "../../components/Footer/Footer.astro";
               options: state.options,
               total: `${fmt(t)} (ou 4 × ${fmt4(t)})`,
               message: state.message || "—",
-              _gotcha: "",
+              _gotcha: gotcha,
             }),
           });
           const data = await res.json().catch(() => ({} as { error?: string }));
           if (!res.ok) throw new Error(data.error || "Envoi refusé, réessayez.");
-          row("bot", "<strong>Bien reçu ! 🎉</strong> Je vous réponds sous 24 h ouvrées. À très vite.");
+          row("bot", "<strong>Bien reçu ! 🎉</strong> Je vous réponds sous 24 h ouvrées. À très vite.");
         } catch (err) {
           row("bot", `<strong>Oups.</strong> ${(err as Error).message} Vous pouvez aussi me décrire votre projet par email le temps que ça remarche.`);
           btn.disabled = false;
