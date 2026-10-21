@@ -242,9 +242,11 @@ import Footer from "../../components/Footer/Footer.astro";
           </button>
           ${opts.optional ? `<button type="button" class="chat__chip" data-skip>Passer</button>` : ""}`;
         chat.appendChild(wrap);
-        scrollDown();
         const input = wrap.querySelector("input")!;
+        // Focus avant le scroll : sinon le scrollIntoView du focus annule le
+        // défilement et laisse le champ sous le bord bas du chat.
         input.focus();
+        scrollDown();
         const done = (value: string) => {
           wrap.querySelectorAll("button").forEach((b) => ((b as HTMLButtonElement).disabled = true));
           input.disabled = true;
