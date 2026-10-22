@@ -496,6 +496,9 @@ const faqSchema = {
         draggableInstance = Draggable.create(dragCard, {
           type: "x,y",
           inertia: false,
+          // Sans ça, un tap sur "Copier" avec un léger mouvement du doigt
+          // devient un drag et le navigateur annule le click.
+          dragClickables: false,
           onPress: function () {
             if (isAnimating) return;
             gsap.killTweensOf(dragCard);
