@@ -43,7 +43,6 @@ import Footer from "../components/Footer/Footer.astro"
     window.setTimeout(go, 1200)
   }
   window.addEventListener("loaderComplete", () => {
-    document.querySelector(".hero")?.classList.add("hero--visible")
     landOnHash()
   })
   // Loader may have been skipped synchronously before this listener attached
@@ -53,10 +52,10 @@ import Footer from "../components/Footer/Footer.astro"
 
 <style is:global>
   .hero {
-    opacity: 0;
     transition: opacity 0.1s ease;
   }
-  .hero--visible {
-    opacity: 1;
+  /* Seulement quand le rideau de transition est posé (navigation interne). */
+  html.hq-wipe-go .hero {
+    opacity: 0;
   }
 </style>

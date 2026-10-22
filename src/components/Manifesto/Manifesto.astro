@@ -176,10 +176,16 @@
 
       headings.forEach((heading, index) => {
         // Preserve the full sentence for screen readers.
-        heading.setAttribute("aria-label", heading.textContent ?? "")
+        // aria-label is not allowed on <p>: use a visually hidden copy instead.
+        const text = heading.textContent ?? ""
 
         const split = new SplitText(heading, { type: "words,chars" })
         split.words.forEach((word) => word.setAttribute("aria-hidden", "true"))
+
+        const srOnly = document.createElement("span")
+        srOnly.className = "sr-only"
+        srOnly.textContent = text
+        heading.appendChild(srOnly)
 
         gsap.set(heading, { visibility: "visible" })
 

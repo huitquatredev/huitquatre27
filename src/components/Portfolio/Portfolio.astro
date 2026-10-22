@@ -51,11 +51,14 @@ const slugsWithCase = new Set(realisations.map((r) => r.slug))
             </span>
             <img
               class="portfolio__thumb"
-              src={`/videos/${p.slug}-poster.jpg`}
+              src={`/videos/${p.slug}-poster-640.webp`}
+              srcset={`/videos/${p.slug}-poster-640.webp 640w, /videos/${p.slug}-poster-960.webp 960w, /videos/${p.slug}-poster.jpg 1280w`}
+              sizes="(max-width: 768px) 100vw, 400px"
               alt={`Aperçu du site ${p.name}`}
               width="1280"
               height="720"
               loading="lazy"
+              decoding="async"
             />
           </>
         )
@@ -116,8 +119,8 @@ const slugsWithCase = new Set(realisations.map((r) => r.slug))
           muted
           loop
           playsinline
-          preload="metadata"
-          poster={`/videos/${p.slug}-poster.jpg`}>
+          preload="none"
+          poster={`/videos/${p.slug}-poster-640.webp`}>
           <source src={`/videos/${p.slug}.webm`} type="video/webm" />
           <source src={`/videos/${p.slug}.mp4`} type="video/mp4" />
         </video>

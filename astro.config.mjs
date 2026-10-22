@@ -6,5 +6,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://huitquatre.fr',
   trailingSlash: 'never',
+  build: { inlineStylesheets: 'always' },
   integrations: [sitemap()],
 });
