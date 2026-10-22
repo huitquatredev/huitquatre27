@@ -14,7 +14,7 @@ const paths = [
 ].sort()
 
 export const GET: APIRoute = ({ site }) => {
-  const base = site ?? new URL("https://huitquatre.fr")
+  const base = site ?? new URL("https://www.huitquatre.fr")
   const urls = paths
     .map((path) => `  <url><loc>${new URL(path, base).href}</loc></url>`)
     .join("\n")

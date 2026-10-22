@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer/Footer.astro";
+---
+
+<Layout
+  title="Mentions légales — huitquatre"
+  description="Éditeur, directeur de la publication et hébergeur du site huitquatre.fr."
+>
+  <main class="legal">
+    <div class="legal__inner">
+      <p class="legal__eyebrow">Informations légales</p>
+      <h1 class="legal__title">Mentions légales</h1>
+
+      <p>
+        Conformément aux dispositions des articles 6-III et 19 de la loi n° 2004-575 du 21 juin 2004
+        pour la confiance dans l'économie numérique (L.C.E.N.), voici les informations des
+        utilisateurs et visiteurs du site www.huitquatre.fr.
+      </p>
+
+      <h2>Éditeur du site</h2>
+      <p>
+        Le site www.huitquatre.fr est la propriété exclusive de Julien Fayard, autoentrepreneur,
+        qui l'édite.
+      </p>
+      <p>
+        760 route d'Uchaux, 84420 Piolenc<br />
+        Téléphone : <a href="tel:+33776699453">07 76 69 94 53</a><br />
+        Email : <a href="mailto:hello@huitquatre.fr">hello@huitquatre.fr</a><br />
+        SIRET : 75153795200036 — TVA intracommunautaire : non applicable
+      </p>
+
+      <h2>Directeur de la publication</h2>
+      <p>Julien Fayard.</p>
+
+      <h2>Hébergement</h2>
+      <p>
+        Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789,
+        États-Unis — <a href="https://vercel.com" rel="noopener">vercel.com</a>.
+      </p>
+
+      <h2>Conception et rédaction</h2>
+      <p>
+        Conception et développement : huitquatre. Rédaction web et SEO : agence de marketing
+        digital <a href="https://annmof.fr/" rel="noopener">annmof</a> (Manon Fayard), en qualité
+        de Content Manager et consultante SEO.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal {
+    padding: var(--space-3xl) var(--container-padding) var(--space-2xl);
+  }
+  .legal__inner {
+    max-width: 68ch;
+    margin: 0 auto;
+  }
+  .legal__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral);
+  }
+  .legal__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: var(--space-sm) 0 var(--space-lg);
+  }
+  .legal h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+  .legal p {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+  .legal a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal a:hover {
+    color: var(--color-accent-ink);
+  }
+</style>

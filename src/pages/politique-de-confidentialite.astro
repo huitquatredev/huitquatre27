@@ -1,0 +1,92 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer/Footer.astro";
+---
+
+<Layout
+  title="Politique de confidentialité — huitquatre"
+  description="Ce site ne dépose aucun cookie et ne collecte aucune donnée personnelle, hors les informations que vous envoyez via le formulaire de contact."
+>
+  <main class="legal">
+    <div class="legal__inner">
+      <p class="legal__eyebrow">Vie privée</p>
+      <h1 class="legal__title">Politique de confidentialité</h1>
+
+      <p>
+        Parce que huitquatre respecte votre vie privée, ce site ne dépose aucun cookie et
+        n'utilise aucun outil de mesure d'audience ou de suivi publicitaire.
+      </p>
+
+      <h2>Formulaire de contact</h2>
+      <p>
+        Les informations que vous saisissez (nom, email, description de votre projet) sont
+        utilisées uniquement pour vous recontacter. Elles sont transmises par email via notre
+        prestataire d'envoi <a href="https://resend.com" rel="noopener">Resend</a> et ne sont ni
+        revendues, ni utilisées à d'autres fins.
+      </p>
+
+      <h2>Conservation</h2>
+      <p>
+        Ces informations sont conservées le temps nécessaire à l'échange, puis supprimées sur
+        simple demande.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous pouvez demander l'accès, la rectification ou la suppression de
+        vos données en écrivant à
+        <a href="mailto:hello@huitquatre.fr">hello@huitquatre.fr</a>.
+      </p>
+
+      <p class="legal__updated">Dernière mise à jour : octobre 2026.</p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal {
+    padding: var(--space-3xl) var(--container-padding) var(--space-2xl);
+  }
+  .legal__inner {
+    max-width: 68ch;
+    margin: 0 auto;
+  }
+  .legal__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral);
+  }
+  .legal__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: var(--space-sm) 0 var(--space-lg);
+  }
+  .legal h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+  .legal p {
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+  .legal a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal a:hover {
+    color: var(--color-accent-ink);
+  }
+  .legal__updated {
+    margin-top: var(--space-lg);
+    font-size: var(--text-sm);
+    color: var(--color-neutral);
+  }
+</style>

@@ -14,18 +14,20 @@ const {
 import SideNav from "../components/SideNav/SideNav.astro";
 import Transition from "../components/Transition/Transition.astro";
 
+const site = Astro.site ?? new URL("https://www.huitquatre.fr");
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const canonical = new URL(path, Astro.site ?? "https://huitquatre.fr").href;
-const ogImage = new URL("/og.png", Astro.site ?? "https://huitquatre.fr").href;
+const canonical = new URL(path, site).href;
+const ogImage = new URL("/og.png", site).href;
+const url = (p: string) => new URL(p, site).href;
 
 // Données structurées de l'entité — le socle du référencement local et des moteurs génératifs.
 const org = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "@id": "https://huitquatre.fr/#organization",
+  "@id": url("/#organization"),
   name: "huitquatre",
-  url: "https://huitquatre.fr",
-  logo: new URL("/logo-bw.svg", "https://huitquatre.fr").href,
+  url: url("/"),
+  logo: url("/logo-bw.svg"),
   image: ogImage,
   description:
     "Agence web à Piolenc (Vaucluse) : sites internet statiques, sur-mesure, performants et écologiques. Offre unique à 1 990 € payés une fois, hébergement et maintenance inclus.",
@@ -59,7 +61,7 @@ const org = {
         priceCurrency: "EUR",
         description:
           "Rebranding, design et site internet livré en 30 jours. Un seul paiement, hébergement et maintenance inclus.",
-        url: "https://huitquatre.fr/offre/",
+        url: url("/offre"),
       },
     ],
   },
