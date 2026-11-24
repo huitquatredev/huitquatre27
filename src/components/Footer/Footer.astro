@@ -17,6 +17,12 @@ const links = [
       ))}
     </nav>
 
+    <nav class="footer__local" aria-label="Ressources">
+      <a href="/comment-creer-site-internet">Guide : créer un site</a>
+      <a href="/agence-web-avignon">Agence web à Avignon</a>
+      <a href="/devis-site-internet">Devis & tarifs</a>
+    </nav>
+
     <div class="footer__row">
       <p class="footer__tagline">Votre site web. L'esprit tranquille.</p>
       <div class="footer__meta">
@@ -88,6 +94,19 @@ const links = [
     transition: color var(--transition-base);
   }
   .footer__link:hover { color: var(--color-accent-ink); }
+  .footer__local {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+  .footer__local a {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-neutral);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .footer__local a:hover { color: var(--color-accent-ink); }
   .footer__row {
     display: flex;
     flex-wrap: wrap;

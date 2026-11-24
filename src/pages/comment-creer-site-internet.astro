@@ -1,0 +1,377 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button/Button.astro";
+import FAQ from "../components/FAQ/FAQ.astro";
+import FinalCTA from "../components/CTA/FinalCTA.astro";
+import Footer from "../components/Footer/Footer.astro";
+import type { FaqItem } from "../data/faq";
+
+const site = Astro.site ?? new URL("https://www.huitquatre.fr");
+const url = (path: string) => new URL(path, site).href;
+
+const faq: FaqItem[] = [
+  {
+    q: "Combien de temps pour créer un site internet ?",
+    a: "Cela dépend de la solution : quelques jours avec un site builder, 4 à 8 semaines avec WordPress, 30 jours chez nous. Dans tous les cas, le contenu est le facteur limitant — pas le code.",
+  },
+  {
+    q: "Combien coûte un site internet ?",
+    a: "De 0 € (votre temps) à plusieurs milliers d'euros. Un site vitrine WordPress correct coûte 1 500 à 3 000 €, plus 400 à 900 €/an d'entretien. Notre offre est à <strong>1 990 € une fois</strong>, hébergement et maintenance inclus. Le détail est sur la page <a href=\"/devis-site-internet\">devis</a>.",
+  },
+  {
+    q: "Peut-on créer un site soi-même sans coder ?",
+    a: "Oui, avec un site builder ou un CMS. Vous gagnez en autonomie, vous perdez en contrôle et en performance. Ce n'est pas un mauvais choix, c'est un choix — à condition de savoir ce qu'on échange.",
+  },
+  {
+    q: "Faut-il un site pour être visible sur Google ?",
+    a: "Non : une fiche Google Business Profile bien remplie suffit pour apparaître localement. Un site sert à convertir et à répondre à ce que la fiche ne peut pas dire — vos tarifs, vos réalisations, votre méthode.",
+  },
+  {
+    q: "Faut-il choisir le nom de domaine avant tout ?",
+    a: "Oui. C'est la seule chose vraiment difficile à changer sans perdre du référencement. Prenez-le avant le design, et gardez-le à votre nom, pas à celui de l'agence.",
+  },
+  {
+    q: "WordPress ou site statique ?",
+    a: "WordPress si vous avez besoin d'un écosystème d'extensions et d'un prestataire pour l'entretien. Statique si vous voulez un site rapide, sûr et sans frais récurrents. La comparaison chiffrée est sur <a href=\"/offre\">la page offre</a>.",
+  },
+];
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Comment créer un site internet",
+  description:
+    "Les quatre façons de créer un site internet, leur vrai coût sur cinq ans et les erreurs qui coûtent cher.",
+  inLanguage: "fr",
+  datePublished: "2026-11-09",
+  dateModified: "2026-11-09",
+  mainEntityOfPage: url("/comment-creer-site-internet"),
+  author: { "@type": "Organization", name: "huitquatre", url: url("/") },
+  publisher: {
+    "@type": "Organization",
+    name: "huitquatre",
+    logo: { "@type": "ImageObject", url: url("/logo-bw.svg") },
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: url("/") },
+    { "@type": "ListItem", position: 2, name: "Comment créer un site internet", item: url("/comment-creer-site-internet") },
+  ],
+};
+
+const toc = [
+  { id: "ce-qu-un-site-doit-faire", label: "Ce qu'un site doit faire" },
+  { id: "les-quatre-facons", label: "Les quatre façons de faire" },
+  { id: "le-vrai-cout", label: "Le vrai coût sur 5 ans" },
+  { id: "les-etapes", label: "Les étapes, dans l'ordre" },
+  { id: "preparer", label: "Ce qu'il faut préparer" },
+  { id: "erreurs", label: "Les erreurs qui coûtent cher" },
+  { id: "faire-soi-meme", label: "Faire appel à une agence" },
+];
+---
+
+<Layout
+  title="Comment créer un site internet — le guide | huitquatre"
+  description="Les 4 façons de créer un site internet, le vrai coût sur 5 ans et les erreurs qui coûtent cher. Guide sans jargon, écrit par une agence web."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(article)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <main class="guide">
+    <header class="guide__hero">
+      <p class="guide__eyebrow">Guide</p>
+      <h1 class="guide__title">Comment créer<br /><span class="guide__accent">un site internet.</span></h1>
+      <p class="guide__subtitle">
+        Quatre façons de faire, leur vrai coût sur cinq ans et les erreurs qui coûtent cher.
+        Écrit par une agence — utile même si vous ne travaillez pas avec elle.
+      </p>
+    </header>
+
+    <nav class="guide__toc" aria-label="Sommaire">
+      <p class="guide__toc-label">Au sommaire</p>
+      <ol>
+        {toc.map((item) => (
+          <li><a href={`#${item.id}`}>{item.label}</a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <section class="guide__section" id="ce-qu-un-site-doit-faire">
+      <h2 class="guide__heading">Ce qu'un site doit faire, avant d'être joli</h2>
+      <p class="guide__prose">
+        Un site n'est pas une brochure en ligne. Il travaille : il répond à une recherche, il
+        rassure en quelques secondes, il déclenche un appel ou un message. S'il ne fait pas ces
+        trois choses, son design est un détail.
+      </p>
+      <ul class="guide__list">
+        <li><strong>Être trouvé.</strong> Une structure lisible par Google, des pages qui répondent à une question réelle.</li>
+        <li><strong>Rassurer.</strong> Qui vous êtes, ce que vous faites, combien ça coûte, où vous êtes.</li>
+        <li><strong>Faire agir.</strong> Un bouton clair, un formulaire court, un numéro visible.</li>
+      </ul>
+      <p class="guide__prose">
+        Le reste — animations, effets, vidéos — est un bonus. Agréable, jamais prioritaire.
+      </p>
+    </section>
+
+    <section class="guide__section" id="les-quatre-facons">
+      <h2 class="guide__heading">Les quatre façons de créer un site</h2>
+      <p class="guide__prose">
+        Il n'y a pas une bonne réponse universelle. Il y a quatre chemins, avec chacun son prix
+        et sa contrepartie.
+      </p>
+      <div class="guide__table-wrap">
+        <table class="guide__table">
+          <thead>
+            <tr><th scope="col">Solution</th><th scope="col">Prix indicatif</th><th scope="col">Délai</th><th scope="col">La contrepartie</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Site builder<br /><span>Wix, Squarespace…</span></th>
+              <td data-label="Prix">15–40 €/mois</td>
+              <td data-label="Délai">Quelques jours</td>
+              <td data-label="Contrepartie">Rapide, mais vous louez la plateforme : export limité, frais à vie.</td>
+            </tr>
+            <tr>
+              <th scope="row">WordPress</th>
+              <td data-label="Prix">1 500–3 000 €<br /><span>puis 400–900 €/an</span></td>
+              <td data-label="Délai">4–8 semaines</td>
+              <td data-label="Contrepartie">Vous possédez le site, mais il faut l'entretenir : mises à jour, plugins, sécurité.</td>
+            </tr>
+            <tr>
+              <th scope="row">Fait soi-même<br /><span>code ou CMS</span></th>
+              <td data-label="Prix">Le prix du temps</td>
+              <td data-label="Délai">Semaines ou mois</td>
+              <td data-label="Contrepartie">Contrôle total, compétence à acquérir et à maintenir.</td>
+            </tr>
+            <tr>
+              <th scope="row">Agence sur-mesure</th>
+              <td data-label="Prix">à partir de 1 990 €<br /><span>une fois</span></td>
+              <td data-label="Délai">30 jours</td>
+              <td data-label="Contrepartie">Délégué et cadré, mais il faut choisir la bonne agence.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="guide__prose">
+        Le site builder est le bon choix pour tester une idée en trois jours. WordPress, pour
+        une équipe qui a déjà un prestataire et un budget annuel. Le sur-mesure, quand le site
+        est un outil de travail et pas une expérience.
+      </p>
+      <p class="guide__prose">
+        Si vous débutez et que le budget est nul, un builder fera le travail. Ce guide n'a pas
+        vocation à vous vendre un site à 1 990 €.
+      </p>
+    </section>
+
+    <section class="guide__section" id="le-vrai-cout">
+      <h2 class="guide__heading">Le vrai coût, sur cinq ans</h2>
+      <p class="guide__prose">
+        Le prix affiché n'est jamais le prix payé. Un site à 500 € peut coûter plus cher qu'un
+        site à 2 000 €, à cause de ce qui vient après.
+      </p>
+      <div class="guide__table-wrap">
+        <table class="guide__table guide__table--cost">
+          <thead>
+            <tr><th scope="col"></th><th scope="col">WordPress</th><th scope="col">huitquatre</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Création</th><td>1 500 – 3 000 €</td><td class="guide__hq">1 990 €, une fois</td></tr>
+            <tr><th scope="row">Hébergement / an</th><td>100 – 300 €</td><td class="guide__hq">0 €</td></tr>
+            <tr><th scope="row">Maintenance + plugins / an</th><td>300 – 600 €</td><td class="guide__hq">0 €</td></tr>
+            <tr class="guide__total"><th scope="row">Total sur 5 ans</th><td>≈ 2 500 – 4 000 €</td><td class="guide__hq">1 990 €, une fois</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="guide__prose">
+        Ce n'est pas un argument contre WordPress : c'est le prix de l'entretien. Un site
+        statique n'a rien à mettre à jour, donc rien à payer après. Le détail du calcul est sur
+        <a href="/offre">la page offre</a>.
+      </p>
+    </section>
+
+    <section class="guide__section" id="les-etapes">
+      <h2 class="guide__heading">Les étapes, dans l'ordre</h2>
+      <ol class="guide__steps">
+        <li>
+          <strong>Le nom de domaine</strong>
+          <p>Prenez-le en .fr si vous visez la France : court, sans tiret, sans chiffre. Gardez-le chez un registrar que vous contrôlez — c'est votre adresse, pas celle de l'agence.</p>
+        </li>
+        <li>
+          <strong>L'hébergement</strong>
+          <p>Un hébergeur rapide et sérieux. Pour un site statique, un CDN suffit ; pour WordPress, un hébergement géré, avec sauvegardes.</p>
+        </li>
+        <li>
+          <strong>Le contenu</strong>
+          <p>Écrivez avant de designer. Qui vous êtes, ce que vous faites, pour qui, combien, où. Cinq pages de texte valent mieux que cinquante maquettes.</p>
+        </li>
+        <li>
+          <strong>Le design</strong>
+          <p>Une direction, pas un moodboard. Deux polices, une palette, de l'espace. La cohérence bat l'originalité à tout prix.</p>
+        </li>
+        <li>
+          <strong>Le développement et le SEO</strong>
+          <p>Structure sémantique, vitesse, mobile, données structurées, sitemap, Search Console. Ça se fait pendant, pas après.</p>
+        </li>
+        <li>
+          <strong>La mise en ligne et la mesure</strong>
+          <p>Un site n'est pas fini au lancement. Regardez ce que les gens cherchent, ce qu'ils cliquent, ce qui bloque — puis ajustez.</p>
+        </li>
+      </ol>
+      <p class="guide__prose">
+        Les trois premières étapes peuvent tenir en une semaine. C'est le contenu qui bloque
+        presque toujours un projet, pas le code.
+      </p>
+    </section>
+
+    <section class="guide__section" id="preparer">
+      <h2 class="guide__heading">Ce qu'il faut préparer avant de commencer</h2>
+      <ul class="guide__checklist">
+        <li>Votre logo et vos couleurs — ou l'envie d'en changer.</li>
+        <li>Des photos utilisables, pas des captures d'écran.</li>
+        <li>Vos textes : activité, zone, tarifs, horaires, coordonnées.</li>
+        <li>Vos accès : nom de domaine, hébergement, fiche Google.</li>
+        <li>Trois avis clients, même courts.</li>
+      </ul>
+      <p class="guide__prose">
+        Si vous n'avez rien de tout ça, ce n'est pas bloquant. Mais chaque élément manquant
+        ajoute une semaine au calendrier.
+      </p>
+    </section>
+
+    <section class="guide__section" id="erreurs">
+      <h2 class="guide__heading">Les erreurs qui coûtent cher</h2>
+      <ul class="guide__list">
+        <li><strong>Choisir le prix avant le besoin.</strong> Un site trop petit pour l'usage se refait dans l'année.</li>
+        <li><strong>Négliger la vitesse.</strong> Sur mobile, chaque seconde de chargement fait partir des visiteurs.</li>
+        <li><strong>Oublier le mobile.</strong> Une bonne part des recherches locales se fait sur téléphone, souvent en marchant.</li>
+        <li><strong>Copier les concurrents.</strong> Vous finissez invisible, avec les mêmes mots qu'eux.</li>
+        <li><strong>Sous-estimer le contenu.</strong> Un beau site vide ne convertit rien.</li>
+        <li><strong>Croire que le site est fini au lancement.</strong> Le référencement se gagne en mois, pas en jours.</li>
+      </ul>
+    </section>
+
+    <section class="guide__section" id="faire-soi-meme">
+      <h2 class="guide__heading">Et si vous ne voulez pas le faire vous-même</h2>
+      <p class="guide__prose">
+        C'est notre métier : rebranding, design, développement, SEO technique, formation. Un
+        prix fixe, 30 jours, hébergement et maintenance inclus. Si votre projet rentre dans le
+        cadre, le devis tient sur une page. S'il n'y rentre pas, on le dit avant de commencer.
+      </p>
+      <div class="guide__actions">
+        <Button href="/offre">Voir l'offre</Button>
+        <Button href="/devis-site-internet" variant="ghost">Le détail du devis →</Button>
+      </div>
+    </section>
+
+    <p class="guide__back">
+      ← <a href="/agence-web-avignon">Agence web à Avignon</a> ·
+      <a href="/realisations">Les réalisations</a>
+    </p>
+  </main>
+
+  <FAQ items={faq} eyebrow="Guide" titleA="Questions" titleB="courantes." sectionId="faq-guide" />
+  <FinalCTA />
+  <Footer />
+</Layout>
+
+<style>
+  .guide { max-width: var(--container-max); margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
+  .guide__hero { max-width: 860px; }
+  .guide__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .guide__title { color: var(--color-primary); font-size: var(--text-4xl); letter-spacing: -0.03em; line-height: 1.02; }
+  .guide__accent { color: var(--color-argile); }
+  .guide__subtitle { font-size: var(--text-lg); color: var(--color-neutral); max-width: 640px; margin-top: var(--space-md); }
+
+  .guide__toc {
+    max-width: 70ch; margin-top: var(--space-xl); padding: var(--space-md);
+    border-radius: 12px; background: var(--surface); border: 1px solid var(--line);
+  }
+  .guide__toc-label {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .guide__toc ol { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md); counter-reset: toc; }
+  .guide__toc li { counter-increment: toc; }
+  .guide__toc li::before { content: counter(toc, decimal-leading-zero) " "; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); }
+  .guide__toc a { font-size: var(--text-sm); color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
+  .guide__toc a:hover { color: var(--color-accent-ink); }
+
+  .guide__section { margin-top: var(--space-2xl); scroll-margin-top: 6rem; }
+  .guide__heading { font-size: var(--text-2xl); text-transform: uppercase; margin-bottom: var(--space-md); }
+  .guide__prose { color: var(--color-neutral); max-width: 70ch; }
+  .guide__prose + .guide__prose { margin-top: var(--space-sm); }
+  .guide__prose a { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  .guide__list { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md); max-width: 70ch; }
+  .guide__list li { padding-left: 1.1em; position: relative; color: var(--color-neutral); }
+  .guide__list li::before { content: "—"; position: absolute; left: 0; color: var(--color-accent-ink); }
+  .guide__list strong { color: var(--color-primary); }
+
+  .guide__table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin-top: var(--space-md); }
+  .guide__table { width: 100%; border-collapse: collapse; font-size: var(--text-base); min-width: 620px; }
+  .guide__table th,
+  .guide__table td { padding: var(--space-sm) var(--space-md); text-align: left; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  .guide__table thead th {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-neutral); font-weight: 400;
+  }
+  .guide__table tbody tr:last-child th,
+  .guide__table tbody tr:last-child td { border-bottom: none; }
+  .guide__table tbody th { color: var(--color-primary); font-weight: 700; white-space: nowrap; }
+  .guide__table tbody th span { font-size: var(--text-xs); font-weight: 400; color: var(--color-neutral); }
+  .guide__table td { color: var(--color-neutral); }
+  .guide__table--cost td:not(.guide__hq) { white-space: nowrap; }
+  .guide__hq { color: var(--color-accent-ink) !important; font-weight: 700; }
+  .guide__total th, .guide__total td { border-bottom: none; font-size: var(--text-lg); }
+
+  .guide__steps { list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: var(--space-md); margin-top: var(--space-md); }
+  .guide__steps li { counter-increment: step; padding-left: 3.25em; position: relative; }
+  .guide__steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute; left: 0; top: 0;
+    font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700;
+    color: var(--color-accent-ink);
+  }
+  .guide__steps strong { display: block; font-family: var(--font-display); font-size: var(--text-lg); text-transform: uppercase; color: var(--color-primary); }
+  .guide__steps p { font-size: var(--text-sm); color: var(--color-neutral); margin-top: 2px; max-width: 65ch; }
+
+  .guide__checklist { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md); max-width: 70ch; }
+  .guide__checklist li { padding-left: 1.6em; position: relative; color: var(--color-neutral); }
+  .guide__checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--color-accent-ink); font-weight: 700; }
+
+  .guide__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); }
+
+  .guide__back { margin-top: var(--space-2xl); font-size: var(--text-sm); color: var(--color-neutral); }
+  .guide__back a { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 768px) {
+    .guide__title { font-size: var(--text-2xl); }
+
+    .guide__table:not(.guide__table--cost) { min-width: 0; }
+    .guide__table:not(.guide__table--cost) thead { display: none; }
+    .guide__table:not(.guide__table--cost) tbody { display: block; }
+    .guide__table:not(.guide__table--cost) tr {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm) var(--space-md);
+      padding: var(--space-md) 0; border-bottom: 1px solid var(--line-soft);
+    }
+    .guide__table:not(.guide__table--cost) tr:last-child { border-bottom: none; }
+    .guide__table:not(.guide__table--cost) th,
+    .guide__table:not(.guide__table--cost) td { padding: 0; border: none; white-space: normal; }
+    .guide__table:not(.guide__table--cost) tbody th { grid-column: 1 / -1; }
+    .guide__table:not(.guide__table--cost) td::before {
+      content: attr(data-label); display: block;
+      font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--color-neutral); margin-bottom: 2px;
+    }
+    .guide__table--cost { min-width: 0; }
+    .guide__table--cost th,
+    .guide__table--cost td { padding: var(--space-sm); font-size: var(--text-sm); white-space: normal; }
+  }
+</style>

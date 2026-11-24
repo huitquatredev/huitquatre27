@@ -1,0 +1,134 @@
+---
+// Eco — la promesse écologique, expliquée. Section sombre entre Portfolio et Prompts.
+const points = [
+  {
+    title: "Statique, donc léger",
+    text: "Les pages sont générées à la compilation et servies depuis un CDN. Pas de base de données à interroger, pas de serveur qui tourne entre deux visites.",
+  },
+  {
+    title: "Pas de plugins à empiler",
+    text: "Un WordPress charge un thème, des extensions et leurs mises à jour. Ici, chaque script présent a une raison d'être là.",
+  },
+  {
+    title: "Rien à maintenir",
+    text: "Pas de CMS qui tourne en permanence, pas de faille de plugin à patcher. Le site vieillit sans grossir, sans renouvellement imposé.",
+  },
+  {
+    title: "Une durée de vie, pas un abonnement",
+    text: "Payé une fois, pensé pour durer : moins de refontes, moins de matériel remplacé, moins de factures.",
+  },
+];
+---
+
+<section class="eco" id="ecologie">
+  <div class="eco__inner">
+    <p class="eco__eyebrow">Écoconception</p>
+    <h2 class="eco__title">Écologique,<br /><span class="eco__accent">par construction.</span></h2>
+    <p class="eco__lead">
+      huitquatre est une agence web écologique au sens littéral : moins de code, moins de
+      serveurs, moins de mises à jour. Pas de label acheté, pas de compensation à l'autre bout
+      du monde — un site qui pèse moins lourd à chaque visite.
+    </p>
+
+    <ul class="eco__grid">
+      {points.map((point) => (
+        <li class="eco__card">
+          <strong>{point.title}</strong>
+          <span>{point.text}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="eco__foot">
+      <p>
+        On ne prétend pas qu'un site n'a aucun impact : il en a un, même léger. On réduit ce
+        qui peut l'être — le poids, les requêtes, le renouvellement — et on ne maquille pas le
+        reste.
+      </p>
+      <a href="/offre">Voir ce que ça change concrètement →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eco {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    padding: var(--space-3xl) var(--container-padding);
+  }
+  .eco__inner { max-width: var(--container-max); margin: 0 auto; }
+  .eco__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    opacity: 0.7; margin-bottom: var(--space-sm);
+  }
+  .eco__title {
+    color: var(--color-secondary);
+    font-size: var(--text-4xl);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+  .eco__accent { color: var(--color-argile); }
+  .eco__lead {
+    font-size: var(--text-lg);
+    max-width: 680px;
+    margin-top: var(--space-md);
+    opacity: 0.85;
+  }
+  .eco__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+  .eco__card {
+    padding: var(--space-md);
+    border-radius: 12px;
+    border: 1px solid rgb(247 243 232 / 0.18);
+  }
+  .eco__card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-xs);
+  }
+  .eco__card span {
+    font-size: var(--text-sm);
+    color: var(--color-secondary);
+    opacity: 0.75;
+  }
+  .eco__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgb(247 243 232 / 0.18);
+  }
+  .eco__foot p {
+    font-size: var(--text-sm);
+    max-width: 62ch;
+    opacity: 0.75;
+  }
+  .eco__foot a {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+  .eco__foot a:hover { color: var(--color-argile); }
+
+  @media (max-width: 768px) {
+    .eco__title { font-size: var(--text-2xl); }
+    .eco__grid { grid-template-columns: 1fr; }
+  }
+</style>

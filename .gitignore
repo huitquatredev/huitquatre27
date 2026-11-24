@@ -19,6 +19,10 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+# search console service account key
+gsc-service-account*.json
+# search console exports
+gsc-*.csv
 
 # macOS-specific files
 .DS_Store

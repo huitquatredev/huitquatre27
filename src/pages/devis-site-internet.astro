@@ -1,0 +1,310 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button/Button.astro";
+import FAQ from "../components/FAQ/FAQ.astro";
+import FinalCTA from "../components/CTA/FinalCTA.astro";
+import Footer from "../components/Footer/Footer.astro";
+import { offer } from "../data/offre";
+import type { FaqItem } from "../data/faq";
+
+const site = Astro.site ?? new URL("https://www.huitquatre.fr");
+const url = (path: string) => new URL(path, site).href;
+
+const lines = [
+  {
+    label: "Site complet",
+    detail: "Rebranding, design, développement, formation, hébergement et maintenance",
+    price: offer.price,
+  },
+  {
+    label: "Paiement en plusieurs fois",
+    detail: "Sans frais, sans organisme de crédit",
+    price: offer.installments,
+  },
+  ...offer.options.map((option) => ({
+    label: option.name,
+    detail: option.desc,
+    price: option.price,
+  })),
+  {
+    label: "Nom de domaine",
+    detail: "À votre charge, chez le registrar de votre choix",
+    price: "~15 €/an",
+  },
+];
+
+const included = offer.included.slice(0, 6);
+
+const faq: FaqItem[] = [
+  {
+    q: "Le devis est-il payant ?",
+    a: "Non. Le formulaire, la visio d'1 h et le devis écrit sont gratuits. Ce qui est payant, c'est le site — et le prix est connu d'avance.",
+  },
+  {
+    q: "Puis-je payer en plusieurs fois ?",
+    a: `Oui : <strong>${offer.price} en une fois</strong>, ou <strong>${offer.installments}</strong>, sans organisme de crédit.`,
+  },
+  {
+    q: "Que se passe-t-il si mon projet ne rentre pas dans l'offre ?",
+    a: "Deux options : les options chiffrées ci-dessus, ou un devis sur-mesure pour une fonctionnalité métier. Dans les deux cas, le prix est fixé <strong>avant</strong> de commencer.",
+  },
+  {
+    q: "Y a-t-il des frais récurrents après la livraison ?",
+    a: "Non. Hébergement et maintenance inclus, <strong>sans limite de durée</strong>. Seul le nom de domaine (~15 €/an) reste à votre charge.",
+  },
+  {
+    q: "Combien de temps pour recevoir le devis ?",
+    a: "<strong>Sous 24 h ouvrées</strong> après votre message. Si le projet demande une visio pour être cadré, on la place dans la foulée.",
+  },
+  {
+    q: "Pourquoi le prix est-il public ?",
+    a: "Parce que la prestation est cadrée et qu'un prix public fait gagner du temps aux deux côtés. Vous savez si c'est dans votre budget avant même de nous écrire.",
+  },
+];
+
+const pricedOptions = offer.options
+  .map((option) => ({
+    "@type": "Offer",
+    name: option.name,
+    price: option.price.replace(/[^\d.,]/g, "").replace(",", "."),
+    priceCurrency: "EUR",
+  }))
+  .filter((option) => option.price !== "");
+
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Création de site internet — devis et tarifs",
+  serviceType: "Création de site internet",
+  provider: { "@id": url("/#organization") },
+  areaServed: { "@type": "Country", name: "France" },
+  url: url("/devis-site-internet"),
+  offers: {
+    "@type": "OfferCatalog",
+    name: "Tarifs huitquatre",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "Site complet",
+        price: "1990",
+        priceCurrency: "EUR",
+        url: url("/offre"),
+      },
+      ...pricedOptions,
+    ],
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: url("/") },
+    { "@type": "ListItem", position: 2, name: "Devis site internet", item: url("/devis-site-internet") },
+  ],
+};
+---
+
+<Layout
+  title="Devis site internet — prix fixe 1 990 € | huitquatre"
+  description="Pas de devis au temps passé : un prix fixe de 1 990 €, des options chiffrées et un devis qui tient sur une page. Réponse sous 24 h ouvrées."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(service)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <main class="devis">
+    <header class="devis__hero">
+      <p class="devis__eyebrow">Devis & tarifs</p>
+      <h1 class="devis__title">Un devis clair.<br /><span class="devis__accent">Pas de surprise.</span></h1>
+      <p class="devis__subtitle">
+        Pas de facture au temps passé, pas de ligne cachée. Un prix fixe, des options
+        chiffrées, et un devis qui tient sur une page.
+      </p>
+      <div class="devis__actions">
+        <Button href="/contact" size="large">Demander mon devis</Button>
+        <Button href="/offre" variant="ghost">Voir l'offre complète →</Button>
+      </div>
+
+      <dl class="devis__facts">
+        <div><dt>Site complet</dt><dd>{offer.price}, une fois</dd></div>
+        <div><dt>Paiement</dt><dd>4 × 497,50 € sans frais</dd></div>
+        <div><dt>Réponse</dt><dd>Sous 24 h ouvrées</dd></div>
+      </dl>
+    </header>
+
+    <section class="devis__section">
+      <h2 class="devis__heading">Le calcul, en une ligne</h2>
+      <p class="devis__lead">
+        Un prix de base, des options connues à l'avance. Additionnez ce dont vous avez
+        besoin, le reste ne vous sera pas facturé.
+      </p>
+      <div class="devis__table-wrap">
+        <table class="devis__table">
+          <thead>
+            <tr><th scope="col">Poste</th><th scope="col">Prix</th></tr>
+          </thead>
+          <tbody>
+            {lines.map((line) => (
+              <tr class:list={[{ "devis__row--base": line.label === "Site complet" }]}>
+                <th scope="row">
+                  {line.label}
+                  <span class="devis__note">{line.detail}</span>
+                </th>
+                <td class="devis__price">{line.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="devis__example">
+        Exemple : site complet + réservation en ligne = <strong>2 480 €, une fois</strong>.
+        Pas d'abonnement, pas de frais de maintenance.
+      </p>
+    </section>
+
+    <section class="devis__section">
+      <h2 class="devis__heading">Ce qui est inclus dans le prix de base</h2>
+      <ul class="devis__grid">
+        {included.map((item) => (
+          <li class="devis__card">
+            <strong>{item.title}</strong>
+            <span set:html={item.desc}></span>
+          </li>
+        ))}
+      </ul>
+      <p class="devis__lead devis__after-grid">
+        Les trois autres — formulaire de contact, support humain 1 an, pages sans surcoût —
+        sont détaillés sur <a href="/offre">la page offre</a>.
+      </p>
+    </section>
+
+    <section class="devis__section">
+      <h2 class="devis__heading">Pourquoi un prix fixe plutôt qu'un devis au temps passé</h2>
+      <p class="devis__lead">
+        Un devis au temps passé, c'est une incertitude facturée à l'heure : plus le projet
+        traîne, plus il coûte. Ici, le périmètre est cadré — rebranding, design, 30 jours,
+        formation — donc le prix peut l'être aussi. L'incertitude est de notre côté, pas du
+        vôtre.
+      </p>
+      <p class="devis__lead">
+        Et si votre besoin sort du cadre ? Il y a les options, ou un devis sur-mesure.
+        Dans les deux cas, le montant est fixé avant le premier jour de travail.
+      </p>
+    </section>
+
+    <section class="devis__section">
+      <h2 class="devis__heading">Comment obtenir votre devis</h2>
+      <ol class="devis__steps">
+        <li class="devis__step">
+          <span>01 — Deux minutes</span>
+          <strong>Vous écrivez</strong>
+          <p>Quelques lignes sur votre activité, votre besoin et votre échéance. Réponse sous 24 h ouvrées.</p>
+        </li>
+        <li class="devis__step">
+          <span>02 — Une page</span>
+          <strong>Vous recevez le devis</strong>
+          <p>Le prix, les options retenues, le calendrier. Pas de PDF de douze pages.</p>
+        </li>
+        <li class="devis__step">
+          <span>03 — Une heure</span>
+          <strong>On démarre</strong>
+          <p>Visio d'1 h pour créer les comptes ensemble. Les 30 jours commencent ici.</p>
+        </li>
+      </ol>
+      <div class="devis__cta">
+        <Button href="/contact" size="large">Demander mon devis</Button>
+        <p>Gratuit, sans engagement. Réponse sous 24 h ouvrées.</p>
+      </div>
+    </section>
+
+    <p class="devis__back">
+      ← <a href="/agence-web-avignon">Agence web à Avignon</a> ·
+      <a href="/offre">L'offre complète</a>
+    </p>
+  </main>
+
+  <FAQ items={faq} eyebrow="Devis" titleA="Avant de" titleB="signer." sectionId="faq-devis" />
+  <FinalCTA />
+  <Footer />
+</Layout>
+
+<style>
+  .devis { max-width: var(--container-max); margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
+  .devis__hero { max-width: 860px; }
+  .devis__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .devis__title { color: var(--color-primary); font-size: var(--text-4xl); letter-spacing: -0.03em; line-height: 1.02; }
+  .devis__accent { color: var(--color-argile); }
+  .devis__subtitle { font-size: var(--text-lg); color: var(--color-neutral); max-width: 640px; margin-top: var(--space-md); }
+  .devis__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); }
+  .devis__facts {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md);
+    margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--line);
+  }
+  .devis__facts dt {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-neutral);
+  }
+  .devis__facts dd { font-weight: 700; color: var(--color-primary); margin-top: 2px; }
+
+  .devis__section { margin-top: var(--space-2xl); }
+  .devis__heading { font-size: var(--text-2xl); text-transform: uppercase; margin-bottom: var(--space-md); }
+  .devis__lead { color: var(--color-neutral); max-width: 70ch; }
+  .devis__lead + .devis__lead { margin-top: var(--space-sm); }
+  .devis__lead a { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  .devis__table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin-top: var(--space-md); }
+  .devis__table { width: 100%; border-collapse: collapse; font-size: var(--text-base); }
+  .devis__table th,
+  .devis__table td { padding: var(--space-sm) var(--space-md); text-align: left; border-bottom: 1px solid var(--line-soft); }
+  .devis__table thead th {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-neutral); font-weight: 400;
+  }
+  .devis__table thead th:last-child,
+  .devis__table td { text-align: right; }
+  .devis__table tbody tr:last-child th,
+  .devis__table tbody tr:last-child td { border-bottom: none; }
+  .devis__table tbody th { color: var(--color-primary); font-weight: 700; }
+  .devis__note { display: block; font-size: var(--text-xs); font-weight: 400; color: var(--color-neutral); margin-top: 2px; }
+  .devis__price { font-family: var(--font-display); color: var(--color-accent-ink); white-space: nowrap; }
+  .devis__row--base { background: var(--surface); }
+
+  .devis__example {
+    margin-top: var(--space-md); padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--color-accent); font-size: var(--text-sm); color: var(--color-neutral);
+  }
+  .devis__example strong { color: var(--color-primary); }
+
+  .devis__grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .devis__card { padding: var(--space-md); border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+  .devis__card strong { display: block; color: var(--color-primary); margin-bottom: 2px; }
+  .devis__card span { font-size: var(--text-sm); color: var(--color-neutral); }
+  .devis__card :global(a) { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .devis__after-grid { margin-top: var(--space-md); font-size: var(--text-sm); }
+
+  .devis__steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .devis__step { padding: var(--space-md) 0 0; border-top: 2px solid var(--color-accent); }
+  .devis__step span { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-neutral); }
+  .devis__step strong { display: block; font-family: var(--font-display); font-size: var(--text-lg); text-transform: uppercase; margin: var(--space-xs) 0; }
+  .devis__step p { font-size: var(--text-sm); color: var(--color-neutral); }
+
+  .devis__cta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md);
+    margin-top: var(--space-lg); padding: var(--space-lg); border-radius: 16px;
+    background: var(--surface); border: 1px solid var(--line);
+  }
+  .devis__cta p { font-size: var(--text-sm); color: var(--color-neutral); }
+
+  .devis__back { margin-top: var(--space-2xl); font-size: var(--text-sm); color: var(--color-neutral); }
+  .devis__back a { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 768px) {
+    .devis__title { font-size: var(--text-2xl); }
+    .devis__facts { grid-template-columns: 1fr; gap: var(--space-sm); }
+    .devis__grid { grid-template-columns: 1fr; }
+    .devis__steps { grid-template-columns: 1fr; }
+  }
+</style>

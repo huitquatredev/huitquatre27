@@ -1,0 +1,284 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button/Button.astro";
+import FAQ from "../components/FAQ/FAQ.astro";
+import FinalCTA from "../components/CTA/FinalCTA.astro";
+import Footer from "../components/Footer/Footer.astro";
+import { offer } from "../data/offre";
+import type { FaqItem } from "../data/faq";
+
+const site = Astro.site ?? new URL("https://www.huitquatre.fr");
+const url = (path: string) => new URL(path, site).href;
+
+const localFaq: FaqItem[] = [
+  {
+    q: "Combien coûte un site internet à Avignon ?",
+    a: "Le même prix qu'ailleurs : <strong>1 990 € une fois</strong> — ou 4 × 497,50 € sans frais. Rebranding, design, développement, formation, hébergement et maintenance inclus. Seul le nom de domaine reste à votre charge (~15 €/an). Le détail est sur la page <a href=\"/devis-site-internet\">devis</a>.",
+  },
+  {
+    q: "Faut-il se déplacer pour travailler ensemble ?",
+    a: "Non. Tout se fait en visio, avec un calendrier partagé et une URL de preview en temps réel. L'atelier est à Piolenc, à 25 km d'Avignon : on s'y voit pour le lancement et la formation si vous préférez le faire de vive voix.",
+  },
+  {
+    q: "Travaillez-vous avec des entreprises hors d'Avignon ?",
+    a: "Oui — Orange, Carpentras, Châteauneuf-du-Pape, Villeneuve-lès-Avignon, Le Pontet, Sorgues — et partout ailleurs en France. La distance n'a jamais bloqué un projet ; l'essentiel est de pouvoir échanger simplement.",
+  },
+  {
+    q: "Mon site sera-t-il visible sur Google ?",
+    a: "Le référencement technique est inclus : structure propre, vitesse, données structurées, sitemap, robots et branchement Search Console. <strong>Aucune agence honnête ne garantit la première place</strong> : les avis, le contenu et l'ancienneté font le reste. On pose les fondations, on mesure, on ajuste.",
+  },
+  {
+    q: "Combien de temps pour être en ligne ?",
+    a: "<strong>30 jours</strong> à partir de la mise en route. Il faut compter 7 jours pour vos contenus et 48 h pour vos retours à chaque étape : ce sont les deux seuls points où le calendrier dépend de vous.",
+  },
+];
+
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Création de site internet à Avignon",
+  serviceType: "Création de site internet",
+  provider: { "@id": url("/#organization") },
+  areaServed: [
+    { "@type": "City", name: "Avignon" },
+    { "@type": "AdministrativeArea", name: "Vaucluse" },
+  ],
+  url: url("/agence-web-avignon"),
+  offers: {
+    "@type": "Offer",
+    price: "1990",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: url("/offre"),
+  },
+};
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: url("/") },
+    { "@type": "ListItem", position: 2, name: "Agence web à Avignon", item: url("/agence-web-avignon") },
+  ],
+};
+---
+
+<Layout
+  title="Agence web à Avignon — site à 1 990 € | huitquatre"
+  description="Agence web à Avignon et dans le Vaucluse : sites sur-mesure, performants et écologiques, livrés en 30 jours. 1 990 € une fois, hébergement et maintenance inclus."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(service)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <main class="av">
+    <header class="av__hero">
+      <p class="av__eyebrow">Avignon · Vaucluse</p>
+      <h1 class="av__title">Agence web<br /><span class="av__accent">à Avignon.</span></h1>
+      <p class="av__subtitle">
+        Un site sur-mesure, performant et écologique, livré en 30 jours. Un seul prix,
+        hébergement et maintenance inclus. L'atelier est à Piolenc, à 25 km.
+      </p>
+      <div class="av__actions">
+        <Button href="/contact" size="large">Démarrer mon projet</Button>
+        <Button href="/devis-site-internet" variant="ghost">Le devis, en détail →</Button>
+      </div>
+
+      <dl class="av__facts">
+        <div><dt>Prix</dt><dd>{offer.price}, une fois</dd></div>
+        <div><dt>Délai</dt><dd>30 jours</dd></div>
+        <div><dt>Atelier</dt><dd>Piolenc, à 25 km</dd></div>
+      </dl>
+    </header>
+
+    <section class="av__section">
+      <h2 class="av__heading">Pourquoi une agence d'ici</h2>
+      <p class="av__lead">
+        Travailler avec une agence à 700 km, c'est possible. Se voir quand un détail bloque,
+        c'est mieux. On est à 25 km d'Avignon : on vient pour le lancement, on revient pour
+        la formation, et on décroche le téléphone quand ça compte. Pas d'intermédiaire, pas
+        de sous-traitance à l'autre bout du fuseau horaire.
+      </p>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Ce que vous obtenez</h2>
+      <ul class="av__grid">
+        {offer.included.map((item) => (
+          <li class="av__card">
+            <strong>{item.title}</strong>
+            <span set:html={item.desc}></span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Le prix, sans devis surprise</h2>
+      <div class="av__price">
+        <div>
+          <p class="av__price-value">{offer.price}</p>
+          <p class="av__price-note">une fois — ou {offer.installments}</p>
+          <Button href="/devis-site-internet" theme="secondary">Voir le devis détaillé</Button>
+        </div>
+        <ul>
+          <li>Rebranding, design, développement</li>
+          <li>Hébergement et maintenance inclus, sans limite de durée</li>
+          <li>Formation 1:1 et guide écrit pour votre site</li>
+          <li>Nom de domaine (~15 €/an) à votre charge</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Un exemple dans le Vaucluse</h2>
+      <div class="av__case">
+        <p class="av__case-name">Graphicaderme · Orange</p>
+        <p>
+          Deux salons, 179 visuels et une exigence simple : être trouvé quand on cherche un
+          tatoueur à Orange ou à Bastia. Données structurées par ville, galerie filtrable,
+          avis clients et accès : le site travaille sans qu'on ait à répondre au téléphone.
+        </p>
+        <p class="av__case-metric">4,7/5 sur plus de 235 avis Google</p>
+        <a href="/realisations/tattoo">Voir l'étude de cas →</a>
+      </div>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Avec qui on travaille</h2>
+      <p class="av__lead">
+        Des structures à taille humaine, qui préfèrent un site qui dure à un site qui brille
+        trois mois. À Avignon et dans le Vaucluse, cela ressemble souvent à :
+      </p>
+      <ul class="av__tags">
+        <li>Artisans et TPE</li>
+        <li>Cabinets d'avocats et d'experts-comptables</li>
+        <li>Commerces et restaurants</li>
+        <li>Thérapeutes et professions du bien-être</li>
+        <li>Domaines viticoles et producteurs</li>
+        <li>Agences immobilières</li>
+      </ul>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Le référencement local, sans promesse magique</h2>
+      <p class="av__lead">
+        Un site ne se classe pas parce qu'il existe. Il se classe parce qu'il répond mieux
+        que les autres à une question, et parce que Google a des raisons de lui faire
+        confiance.
+      </p>
+      <p class="av__lead">
+        Ce qu'on fait : structure technique et sémantique, vitesse, données structurées,
+        sitemap, Search Console branchée dès la mise en ligne, et des pages locales quand
+        elles ont un vrai contenu à porter — pas une page par ville. Ce qu'on ne fait pas :
+        promettre la première place. Les avis Google, l'ancienneté du domaine et la
+        régularité des contenus pèsent autant que le code.
+      </p>
+      <p class="av__lead">
+        <a class="av__inline-link" href="/faq">Les questions fréquentes sur le référencement →</a>
+      </p>
+    </section>
+
+    <section class="av__section">
+      <h2 class="av__heading">Le déroulé, en 30 jours</h2>
+      <ol class="av__steps">
+        <li class="av__step">
+          <span>01 — Mise en route</span>
+          <strong>Visio d'1 h</strong>
+          <p>On crée vos comptes ensemble et on partage le calendrier. Le compteur démarre ici.</p>
+        </li>
+        <li class="av__step">
+          <span>02 — Design et développement</span>
+          <strong>3 semaines</strong>
+          <p>Rebranding, design sur-mesure, intégration. Trois allers-retours inclus, preview en temps réel.</p>
+        </li>
+        <li class="av__step">
+          <span>03 — Formation et mise en ligne</span>
+          <strong>Quelques jours</strong>
+          <p>Formation 1:1, guide écrit pour votre site, audits performance et SEO, lancement.</p>
+        </li>
+      </ol>
+    </section>
+
+    <p class="av__back">← <a href="/offre">Voir l'offre complète</a> · <a href="/realisations">Les réalisations</a></p>
+  </main>
+
+  <FAQ items={localFaq} eyebrow="Avignon" titleA="Questions" titleB="locales." sectionId="faq-avignon" />
+  <FinalCTA />
+  <Footer />
+</Layout>
+
+<style>
+  .av { max-width: var(--container-max); margin: 0 auto; padding: var(--space-2xl) var(--container-padding) var(--space-3xl); }
+  .av__hero { max-width: 860px; }
+  .av__eyebrow {
+    font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral); margin-bottom: var(--space-sm);
+  }
+  .av__title { color: var(--color-primary); font-size: var(--text-4xl); letter-spacing: -0.03em; line-height: 1.02; }
+  .av__accent { color: var(--color-argile); }
+  .av__subtitle { font-size: var(--text-lg); color: var(--color-neutral); max-width: 640px; margin-top: var(--space-md); }
+  .av__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); }
+  .av__facts {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md);
+    margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--line);
+  }
+  .av__facts dt {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--color-neutral);
+  }
+  .av__facts dd { font-weight: 700; color: var(--color-primary); margin-top: 2px; }
+
+  .av__section { margin-top: var(--space-2xl); }
+  .av__heading { font-size: var(--text-2xl); text-transform: uppercase; margin-bottom: var(--space-md); }
+  .av__lead { color: var(--color-neutral); max-width: 68ch; }
+  .av__lead + .av__lead { margin-top: var(--space-sm); }
+  .av__inline-link { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  .av__grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .av__card { padding: var(--space-md); border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+  .av__card strong { display: block; color: var(--color-primary); margin-bottom: 2px; }
+  .av__card span { font-size: var(--text-sm); color: var(--color-neutral); }
+  .av__card :global(a) { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  .av__price {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-lg); align-items: center;
+    padding: var(--space-lg); border-radius: 16px; background: var(--surface); border: 1px solid var(--line);
+  }
+  .av__price-value { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 700; color: var(--color-accent-ink); line-height: 1; }
+  .av__price-note { color: var(--color-neutral); margin: var(--space-xs) 0 var(--space-md); }
+  .av__price ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: var(--text-sm); color: var(--color-neutral); }
+  .av__price li { padding-left: 1.1em; position: relative; }
+  .av__price li::before { content: "—"; position: absolute; left: 0; color: var(--color-accent-ink); }
+
+  .av__case { padding: var(--space-lg); border-radius: 16px; background: var(--color-primary); color: var(--color-secondary); }
+  .av__case-name {
+    font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: var(--space-sm);
+  }
+  .av__case p { color: var(--color-secondary); max-width: 62ch; }
+  .av__case-metric { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; margin-top: var(--space-md) !important; }
+  .av__case a { display: inline-block; margin-top: var(--space-sm); color: var(--color-secondary); text-decoration: underline; text-underline-offset: 3px; }
+
+  .av__tags { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-md); }
+  .av__tags li {
+    padding: 6px 14px; border: 1px solid var(--line-strong); border-radius: 2.5em;
+    font-size: var(--text-sm); color: var(--color-primary);
+  }
+
+  .av__steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .av__step { padding: var(--space-md) 0 0; border-top: 2px solid var(--color-accent); }
+  .av__step span { font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-neutral); }
+  .av__step strong { display: block; font-family: var(--font-display); font-size: var(--text-lg); text-transform: uppercase; margin: var(--space-xs) 0; }
+  .av__step p { font-size: var(--text-sm); color: var(--color-neutral); }
+
+  .av__back { margin-top: var(--space-2xl); font-size: var(--text-sm); color: var(--color-neutral); }
+  .av__back a { color: var(--color-accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 768px) {
+    .av__title { font-size: var(--text-2xl); }
+    .av__facts { grid-template-columns: 1fr; gap: var(--space-sm); }
+    .av__grid { grid-template-columns: 1fr; }
+    .av__price { grid-template-columns: 1fr; }
+    .av__steps { grid-template-columns: 1fr; }
+  }
+</style>

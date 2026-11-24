@@ -7,10 +7,11 @@ interface Props {
 
 const {
   title = 'huitquatre — Création de sites internet performants et écologiques',
-  description = 'huitquatre crée des sites internet performants, écologiques et faciles à gérer. Un seul paiement, hébergement et maintenance offerts.',
+  description = 'Agence web écologique : huitquatre crée des sites internet performants, sobres et faciles à gérer. Un seul paiement, hébergement et maintenance inclus.',
   noindex = false,
 } = Astro.props;
 
+import Analytics from "@vercel/analytics/astro";
 import SideNav from "../components/SideNav/SideNav.astro";
 import Transition from "../components/Transition/Transition.astro";
 
@@ -47,6 +48,7 @@ const org = {
     "Astro",
     "développement web sur-mesure",
     "performance web",
+    "écoconception web",
     "référencement naturel",
     "accessibilité web",
   ],
@@ -124,6 +126,7 @@ const org = {
   <SideNav />
   <slot />
   <Transition />
+  <Analytics />
 </body>
 </html>
 

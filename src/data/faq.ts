@@ -29,7 +29,7 @@ export const generalFaq: FaqItem[] = [
   },
   {
     q: "Pourquoi pas WordPress ?",
-    a: "Mises à jour, failles de sécurité, conflits de plugins, frais récurrents : WordPress demande un entretien permanent. Un site statique supprime ces problèmes à la racine — <strong>rien à pirater, rien à mettre à jour</strong>.",
+    a: "Mises à jour, failles de sécurité, conflits de plugins, frais récurrents : WordPress demande un entretien permanent. Un site statique supprime ces problèmes à la racine — <strong>rien à pirater, rien à mettre à jour</strong>. Le comparatif chiffré est dans <a href=\"/comment-creer-site-internet\">le guide pour créer un site internet</a>.",
   },
   {
     q: "Mon site sera-t-il visible sur Google ?",
@@ -44,7 +44,7 @@ export const generalFaq: FaqItem[] = [
 export const prixFaq: FaqItem[] = [
   {
     q: "Pourquoi un prix fixe et pas un devis ?",
-    a: "Parce que la prestation est cadrée : rebranding, design, 30 jours, formation. Le <strong>prix fixe</strong> supprime la négociation et les mauvaises surprises, des deux côtés. Au-delà du cadre, les <strong>options</strong> et le <strong>sur-mesure</strong> prennent le relais.",
+    a: "Parce que la prestation est cadrée : rebranding, design, 30 jours, formation. Le <strong>prix fixe</strong> supprime la négociation et les mauvaises surprises, des deux côtés. Au-delà du cadre, les <strong>options</strong> et le <strong>sur-mesure</strong> prennent le relais. Le <a href=\"/devis-site-internet\">détail du devis</a> est chiffré ligne par ligne.",
   },
   {
     q: "Puis-je payer en plusieurs fois ?",
