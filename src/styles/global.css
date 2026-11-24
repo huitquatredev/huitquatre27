@@ -117,6 +117,27 @@
 }
 
 /* ============================================
+   Lenis smooth scroll
+   ============================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Ancres : dégagent le header flottant, en natif comme avec Lenis. */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* ============================================
    Reset & Base
    ============================================ */
 *,
@@ -129,7 +150,6 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

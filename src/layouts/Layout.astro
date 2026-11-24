@@ -13,6 +13,7 @@ const {
 
 import Analytics from "@vercel/analytics/astro";
 import SideNav from "../components/SideNav/SideNav.astro";
+import SmoothScroll from "../components/SmoothScroll/SmoothScroll.astro";
 import Transition from "../components/Transition/Transition.astro";
 
 const site = Astro.site ?? new URL("https://www.huitquatre.fr");
@@ -126,6 +127,7 @@ const org = {
   <SideNav />
   <slot />
   <Transition />
+  <SmoothScroll />
   <Analytics />
 </body>
 </html>

@@ -36,7 +36,10 @@ import Footer from "../components/Footer/Footer.astro"
       const el = document.getElementById(window.location.hash.slice(1))
       if (!el) return
       if (Math.abs(el.getBoundingClientRect().top) > 4) {
-        el.scrollIntoView({ behavior: "instant", block: "start" })
+        // Lenis owns the scroll when active; immediate + force for the loader landing.
+        const lenis = (window as any).lenis
+        if (lenis) lenis.scrollTo(el, { immediate: true, force: true })
+        else el.scrollIntoView({ behavior: "instant", block: "start" })
       }
     }
     go()

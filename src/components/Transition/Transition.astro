@@ -139,6 +139,7 @@
     function coverAndGo(href: string) {
       if (covering) return
       covering = true
+      window.dispatchEvent(new Event("hq:transition-start"))
       if (reduceMotion) {
         window.location.href = href
         return
