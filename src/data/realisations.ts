@@ -222,6 +222,10 @@ export const realisations: Realisation[] = [
       { value: "99", label: "de score PageSpeed sur mobile", note: "100 % statique, 0 serveur à l'arrivée" },
       { value: "90", label: "séances réservables en ligne", note: "17 activités, 16 professionnelles" },
     ],
+    quote: {
+      text: "J'ai fait appel à l'agence Huitquatre pour créer le site internet de notre lieu pluridisciplinaire dédié au soin des femmes et des familles. Dans un premier temps, Julien m'a construit la structure et j'ai voulu essayer de gérer le site toute seule. La première version faite uniquement par moi était fonctionnelle mais j'ai eu besoin d'aide (par manque de temps!) pour rendre le site encore plus efficace. Aidée de Manon qui s'est occupée de tout le volet SEO et de Julien qui a rajouté un module \"planning\" qui nous faisait cruellement défaut, nous avons mis en ligne la V2 qui est une réussite! J'ai particulièrement apprécié l'autonomie que je garde pour améliorer ou modifier des infos, la clarté du guide quasi \"pas à pas\" qui me permet de régler la plupart des problèmes et enfin la disponibilité de Julien qui résout les bugs très rapidement (il y en a rarement mais ça peut arriver). Quant au travail de Manon, elle a su prendre en compte la difficulté du nombre (nous sommes 18 professionnelles) pour rendre plus fluide le parcours utilisateur et elle a avancé sur toute la partie \"technique de SEO\" que j'avais négligée. Bref, une charge mentale allégée et un super site en ligne qui me permet de me concentrer sur l'essentiel : prendre soin des femmes qui poussent les portes de La Parent'Elle ❤️",
+      author: "Cécile Paulin — directrice, La Parent'elle",
+    },
     timeline: [
       { date: "2026", text: "Après son expérience sur La Parent'elle, Cécile Paulin, directrice du lieu, nous confie la refonte de son site personnel." },
     ],
